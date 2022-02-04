@@ -1,0 +1,33 @@
+/* LOADER */
+.p-loader-fading-squares {
+	background: url("../img/loader/fading-squares.gif") center center no-repeat;
+	width: 160px;
+	height: 24px;
+}
+.p-loader-fading-balls {
+	background: url("../img/loader/fading-balls.gif") center center no-repeat;
+	width: 64px;
+	height: 64px;
+}
+.p-loader-fountain {
+	background: url("../img/loader/fountain.gif") center center no-repeat;
+	width: 160px;
+	height: 20px;
+}
+.p-loader-snake {
+	background: url("../img/loader/snake.gif") center center no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.p-loader-snake-big {
+	background: url("../img/loader/snake-big.gif") center center no-repeat;
+	width: 24px;
+	height: 24px;
+}
+.p-loader-squares-circle {
+	background: url("../img/loader/squares-circle.gif") center center no-repeat;
+	width: 31px;
+	height: 31px;
+}
+
+

@@ -1,0 +1,52 @@
+.p-alert {
+	margin: 5px 0 15px 0;
+}
+
+/** alternative for bootstrap text-* */
+.p-error {
+	color: #a94442;
+}
+.p-warn {
+	/*color: #ffa500;*/
+	color: #8a6d3b;
+}
+.p-info {
+	color: #31708f;
+}
+.p-success {
+	color: #3c763d;
+}
+
+.p-alert ul.fa-ul {
+	margin: 0 8px 0 48px;
+}
+.p-alert li, ul.p-field-errors li {
+	padding: 5px 0;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+.p-alert i.fa-li, ul.p-field-errors i.fa-li {
+	font-size: 200%;
+	top: 0;
+	width: auto;
+}
+.p-alert i.fa-li, .p-alert ul.p-field-errors i.fa-li {
+	left: -42px;
+}
+
+ul.p-field-errors {
+	margin: 0 0 10px 30px;
+}
+ul.p-field-errors i.fa-li {
+	left: -30px;
+}
+
+/*
+.p-field-errors {
+	color: #b94a48;
+}
+*/
+
+.p-field-errors-caret {
+	font-size: 80%;
+}

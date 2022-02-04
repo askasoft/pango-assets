@@ -1,0 +1,136 @@
+.p-required {
+	color: #f00;
+	font-family: Verdana;
+}
+.p-descrip {
+	display: block;
+	padding: 3px;
+	font-size: 90%;
+	color: #777;
+}
+
+/** xhtml table layout */
+.p-xhtml {
+	width: 100%;
+}
+.p-xhtml > tbody > tr > th, .p-xhtml > tbody > tr > td {
+	padding: 2px 5px;
+	vertical-align: top;
+}
+.p-xhtml > tbody > tr > th > label,
+.p-xhtml > tbody > tr > td > .radio,
+.p-xhtml > tbody > tr > td > .checkbox,
+.p-xhtml > tbody > tr > td > .radio-inline,
+.p-xhtml > tbody > tr > td > .checkbox-inline {
+	padding-top: 5px;
+}
+.p-xform input.form-control[size], .p-xform select.form-control,
+.p-xform .p-radiomap input.form-control, .p-xform .p-checkboxlist input.form-control, .p-xform input.p-checkbox,
+.p-xform .input-group-addon, .p-xform .input-group-btn {
+	width: auto;
+}
+
+/** bootstrap form layout */
+.p-form.form-horizontal {
+	color: #333;
+	padding: 10px;
+}
+.p-form.form-horizontal > .form-group {
+	margin: 0;
+	padding: 5px 0;
+}
+.p-form.form-horizontal > .p-buttons.form-group {
+	padding: 10px 0;
+}
+.p-eform.form-horizontal,
+.p-cform.form-horizontal,
+.p-vform.form-horizontal,
+.p-sform.form-horizontal {
+	background-color: #f9f9f9;
+}
+.p-eform.form-horizontal > .form-group,
+.p-cform.form-horizontal > .form-group,
+.p-vform.form-horizontal > .form-group,
+.p-sform.form-horizontal > .form-group {
+	border-top: 1px solid #ccc;
+}
+.p-eform.form-horizontal > div.form-group:first-of-type,
+.p-cform.form-horizontal > div.form-group:first-of-type,
+.p-vform.form-horizontal > div.form-group:first-of-type,
+.p-sform.form-horizontal > div.form-group:first-of-type {
+	border-top: 0;
+}
+
+/** form control */
+.p-form .control-label {
+	overflow-wrap: break-word;
+	white-space: pre-wrap;
+}
+.p-form .form-control {
+	color: #333;
+}
+.p-form .form-control, .p-form input.form-control, 
+.p-form .input-group-addon, .p-form .input-group-btn {
+	padding: 4px 10px;
+}
+.p-form select.form-control {
+	padding: 0 10px;
+}
+.p-form input.form-control[size], .p-form select.form-control,
+.p-form .p-radiomap input.form-control, .p-form .p-checkboxlist input.form-control, .p-form input.p-checkbox,
+.p-form .input-group-addon, .p-form .input-group-btn {
+	width: auto;
+}
+.p-form.form-horizontal .control-label,
+.p-form.form-horizontal .radio,
+.p-form.form-horizontal .checkbox,
+.p-form.form-horizontal .radio-inline,
+.p-form.form-horizontal .checkbox-inline {
+	padding-top: 5px;
+}
+.p-form.form-horizontal .form-control-static {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin-bottom: 0;
+}
+
+/** form inputs */
+.p-form label {
+	font-weight: normal;
+}
+.p-radiomap {
+	min-height: 34px;
+}
+.p-checkboxlist.break label.checkbox-inline,
+.p-radiomap.break label.radio-inline {
+	display: block;
+}
+.p-checkboxlist label.checkbox-inline,
+.p-radiomap label.radio-inline {
+	padding-right: 20px;
+}
+.p-checkboxlist .checkbox-inline+.checkbox-inline,
+.p-radiomap .radio-inline+.radio-inline {
+	margin-left: 0;
+}
+.p-checkboxlist hr {
+	margin: 5px 0;
+	border-color: #ccc;
+	border-style: dashed;
+}
+
+/** trigger, datetimepicker */
+div.p-textfield, div.p-triggerfield, div.p-datepicker, div.p-timepicker, div.p-datetimepicker {
+}
+div.p-textfield > .input-group-addon, 
+div.p-triggerfield > .input-group-addon, 
+div.p-datepicker > .input-group-addon, 
+div.p-timepicker > .input-group-addon, 
+div.p-datetimepicker > .input-group-addon {
+	color: #666;
+	cursor: pointer;
+	background-color: #f9f9f9;
+}
+div.p-textfield i, div.p-triggerfield i, div.p-datepicker i, div.p-timepicker i, div.p-datetimepicker i {
+}
+
