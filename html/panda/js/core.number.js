@@ -1,37 +1,3 @@
-if (typeof Number.trim != "function") {
-	Number.trim = function(s) {
-		if (typeof(s) != 'string') {
-			return s;
-		}
-		var h = '1234567890';
-		var z = '１２３４５６７８９０';
-		var ss = s.replace(/,/g, '').split('');
-		for (i = 0; i < ss.length; i++) {
-			var j = z.indexOf(ss[i]);
-			if (j >= 0) {
-				ss[i] = h[j];
-			}
-		}
-		return ss.join('');
-	};
-}
-if (typeof Number.parseInt != "function") {
-	Number.parseInt = function(s, r) {
-		return parseInt(Number.trim(s), r);
-	};
-}
-if (typeof Number.parseFloat != "function") {
-	Number.parseFloat = function(s) {
-		return parseFloat(Number.trim(s));
-	};
-}
-
-if (typeof Number.prototype.format != "function") {
-	Number.prototype.format = function(pattern) {
-		return (new DecimalFormat(pattern)).format(this);
-	};
-}
-
 /**
  * @class DecimalFormat
  * @constructor
@@ -317,4 +283,55 @@ DecimalFormat.prototype.getNumericString = function(str){
 		return numStr;
 	}
 	return str;
+}
+
+//--------------------------------------------------
+if (typeof Number.trim != "function") {
+	Number.trim = function(s) {
+		if (typeof(s) != 'string') {
+			return s;
+		}
+		var h = '1234567890';
+		var z = '１２３４５６７８９０';
+		var ss = s.replace(/,/g, '').split('');
+		for (i = 0; i < ss.length; i++) {
+			var j = z.indexOf(ss[i]);
+			if (j >= 0) {
+				ss[i] = h[j];
+			}
+		}
+		return ss.join('');
+	};
+}
+if (typeof Number.parseInt != "function") {
+	Number.parseInt = function(s, r) {
+		return parseInt(Number.trim(s), r);
+	};
+}
+if (typeof Number.parseFloat != "function") {
+	Number.parseFloat = function(s) {
+		return parseFloat(Number.trim(s));
+	};
+}
+
+if (typeof Number.format != "function") {
+	Number.format = function(pattern, n) {
+		return (new DecimalFormat(pattern)).format(n);
+	};
+}
+if (typeof Number.comma != "function") {
+	Number.comma = function(n) {
+		return (new DecimalFormat('###,###.#########')).format(n);
+	};
+}
+
+if (typeof Number.prototype.format != "function") {
+	Number.prototype.format = function(pattern) {
+		return (new DecimalFormat(pattern)).format(this);
+	};
+}
+if (typeof Number.prototype.comma != "function") {
+	Number.prototype.comma = function() {
+		return (new DecimalFormat('###,###.#########')).format(this);
+	};
 }
