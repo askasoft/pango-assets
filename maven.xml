@@ -11,9 +11,11 @@
 	<description>A HTML/JavaScript/CSS library.</description>
 
 	<build>
+		<directory>${project.basedir}/out</directory>
+
 		<resources>
 			<resource>
-				<directory>${project.basedir}/src/html</directory>
+				<directory>${project.basedir}/html</directory>
 			</resource>
 		</resources>
 
@@ -21,6 +23,7 @@
 			<!-- build js & css -->
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.8</version>
 				<executions>
 					<execution>
 						<id>compile</id>
@@ -49,12 +52,6 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
-
-			<!-- git commit id -->
-			<plugin>
-				<groupId>pl.project13.maven</groupId>
-				<artifactId>git-commit-id-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
