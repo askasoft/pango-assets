@@ -1,0 +1,16 @@
+.p-trigger {
+	position: absolute;
+	color: #ccc;
+	margin: 10px 0 0 -18px;
+	z-index: 3;
+	cursor: pointer;
+}
+.p-trigger:hover {
+	color: #999;
+}
+.p-has-trigger, 
+.p-form .form-control.p-has-trigger, 
+.p-form input.form-control.p-has-trigger, 
+.p-form select.form-control.p-has-trigger {
+	padding-right: 20px;
+}
