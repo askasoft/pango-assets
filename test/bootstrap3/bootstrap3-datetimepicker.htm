@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Date/Time Picker for Twitter Boostrap">
+<title>Bootstrap Date/Time Picker</title>
+<link href="../../html/bootstrap3/css/bootstrap.css" rel="stylesheet">
+<link href="../../html/font-awesome4/css/font-awesome.css" rel="stylesheet">
+<link href="../../html/datetimepicker/bootstrap-datetimepicker.css" rel="stylesheet">
+
+</head>
+<body>
+	<div class="container">
+		<h1>bootstrap-datetimepicker</h1>
+		<h2>Date/Time Picker for Twitter Boostrap</h2>
+
+		<h3 id="demo">Demo</h3>
+
+		<h4
+			id="default_behavior_in_ptbr_picks_datetime_with_fast_masked_input_typing_need_only_to_type_the_numbers_the_static_part_of_the_mask_is_inserted_automatically_if_missing_or_via_the_popup_widget_which_supports_year_month_day_hour_and_minute_views">Default
+			behavior in pt-BR, picks date/time with fast masked input typing (need only to type the numbers, the static part of
+			the mask is inserted automatically if missing) or via the popup widget, which supports year, month, day, hour and
+			minute views:</h4>
+		<div class="well">
+			<div class="input-group" data-spy="datetimepicker" data-language='pt-BR'>
+				<input class="form-control" data-format="MM/dd/yyyy HH:mm:ss" type="text"> <div class="input-group-addon"><i
+					class="fa fa-calendar"></i></div>
+			</div>
+		</div>
+
+		<h4 id="similar_to_above_example_but_in_us_datehour_format">Similar to above example, but in US date/hour format:</h4>
+		<div class="well">
+			<div class="input-group" data-spy="datetimepicker" data-language='en'>
+				<input class="form-control" data-format="MM/dd/yyyy HH:mm:ss PP" type="text"> <span class="input-group-addon"><i
+					class="fa fa-calendar"></i></span>
+			</div>
+		</div>
+
+		<h4 id="disables_date_picker">Disables date picker:</h4>
+		<div class="well">
+			<div class="input-group" data-spy="datetimepicker" data-pick-date="false">
+				<input class="form-control" data-format="hh:mm:ss" type="text"> <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+			</div>
+		</div>
+
+		<h4 id="disables_time_picker">Disables time picker:</h4>
+		<div class="well">
+			<div class="input-group" data-spy="datetimepicker" data-pick-time="false">
+				<input class="form-control" data-format="yyyy-MM-dd" type="text"> <span class="input-group-addon"><i
+					class="fa fa-calendar"></i></span>
+			</div>
+		</div>
+
+		<h4 id="time_picker_hhmm">HH:mm time picker:</h4>
+		<div class="well">
+			<div class="input-group" data-spy="datetimepicker" data-pick-date="false">
+				<input class="form-control" data-format="HH:mm" type="text" size="22"><span class="input-group-addon"><i
+					class="fa fa-clock-o"></i></span>
+			</div>
+		</div>
+
+		<h3 id="api">API</h3>
+		<p>The widget class provides 4 methods to manipulate dates: ‘getDate’/’setDate’ for working with UTC and
+			‘getLocalDate’/’setLocalDate’ for working with local dates:</p>
+		<div class="highlight">
+			<pre>
+				<code class="js"></code>
+			</pre>
+		</div>
+		<p>The date value can be unset by passing ‘null’ to any of the ‘set’ methods or by erasing the input:</p>
+		<div class="highlight">
+			<pre>
+				<code class="js"></code>
+			</pre>
+		</div>
+		<p>The only event exposed is ‘changeDate’, which will expose ‘date’ and ‘localDate’ properties on the event
+			object:</p>
+		<div class="highlight">
+			<pre>
+				<code class="js"></code>
+			</pre>
+		</div>
+
+		<h3 id="options">Options</h3>
+		<p>These are the default options for initializing the widget:</p>
+		<div class="highlight">
+			<pre>
+				<code class="js"></code>
+			</pre>
+		</div>
+
+		<p>Examples of using these options can be seen in the file test/specs.coffee.</p>
+
+		<h3 id="complete_sample_markup">Complete sample markup</h3>
+
+		<p>Copy and paste the following code in a file(eg: test.html) and it should produce a widget similar to the
+			first demo:</p>
+		<div class="highlight">
+			<pre>
+				<code class="html"></code>
+			</pre>
+		</div>
+	</div>
+
+	<script src="../../html/jquery/js/jquery-1.12.4.js"></script>
+	<script src="../../html/bootstrap3/js/bootstrap.js"></script>
+	<script src="../../html/datetimepicker/bootstrap-datetimepicker.js"></script>
+	<script src="../../html/datetimepicker/lang/bootstrap-datetimepicker.pt-BR.js"></script>
+</body>
+</html>
