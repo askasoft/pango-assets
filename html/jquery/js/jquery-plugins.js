@@ -327,12 +327,12 @@
 
 		var $t = $('<textarea>').css({ 'width' : '0px', 'height': '0px' }).text(s);
 		$('body').append($t);
-		
+
 		$t.get(0).select();
 		document.execCommand('copy');
 
-		$('body').remove($t);
-	}
+		$t.remove();
+	};
 })(jQuery);
 
 /**
@@ -1394,3 +1394,23 @@ jQuery.jcookie = function(name, value, options) {
 		$('textarea[autosize]').autosize();
 	});
 })(jQuery);
+(function($) {
+	$.fn.totop = function() {
+		$(this).each(function() {
+			var $t = $(this);
+			$t.click(function() {
+				$('html,body').animate({ scrollTop: 0 }, 'slow');
+			}).css({cursor: 'pointer'});
+	
+			var $w = $(window);
+			$w.scroll(function() {
+				$t[$w.scrollTop() > $w.height() ? 'show' : 'hide']();
+			});
+		});
+	};
+
+	$(window).on('load', function() {
+		$('[totop]').totop();
+	});
+})(jQuery);
+
