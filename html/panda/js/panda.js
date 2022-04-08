@@ -1810,7 +1810,7 @@ if (typeof(panda) == "undefined") { panda = {}; }
 			success: function(d) {
 				$a.palert('actionAlert', d, $f);
 				if (d.result) {
-					$f.vals(d.result);
+					$f.values(d.result, true);
 					$f.find('div.p-datepicker, div.p-datetimepicker, div.p-timepicker').each(function() {
 						var v = $(this).find('input').val();
 						if (v) {

@@ -593,16 +593,6 @@ jQuery.jcookie = function(name, value, options) {
 	};
 })(jQuery);
 (function($) {
-	$.fn.changeValue = function(v) {
-		var o = this.val();
-		
-		this.val(v);
-		if (o != v) {
-			this.trigger('change');
-		}
-	};
-})(jQuery);
-(function($) {
 	function collapse($el) {
 		if (!$el.hasClass('ui-collapsed')) {
 			$el.addClass('ui-collapsed')
@@ -710,7 +700,16 @@ jQuery.jcookie = function(name, value, options) {
 	});
 })(jQuery);
 (function($) {
-	$.fn.vals = function(vs) {
+	$.fn.changeValue = function(v) {
+		var o = this.val();
+		
+		this.val(v);
+		if (o != v) {
+			this.trigger('change');
+		}
+	};
+
+	$.fn.values = function(vs, trigger) {
 		if (vs) {
 			for (var n in vs) {
 				var v = vs[n];
@@ -722,11 +721,23 @@ jQuery.jcookie = function(name, value, options) {
 					case 'submit':
 						break;
 					case 'checkbox':
+						var va = $.isArray(v) ? v : [ v ];
+						var oc = $t.prop('checked'), nc = $.inArray($t.val(), va);
+						$t.prop('checked', nc);
+						if (trigger && nc != oc) {
+							$t.trigger('change');
+						}
+						break;
 					case 'radio':
-						$t.prop('checked', $t.val() == v);
+						var oc = $t.prop('checked'), nc = ($t.val() == v);
+						$t.prop('checked', nc);
+						if (trigger && nc && !oc) {
+							$t.trigger('change');
+						}
 						break;
 					default:
-						$t.changeValue(v);
+						trigger ? $t.changeValue(v) : $t.val(v);
+						break;
 					}
 				});
 			}
