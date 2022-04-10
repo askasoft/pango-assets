@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+<link href="../../html/jquery/css/jquery.ui.loadmask.css" rel="stylesheet" type="text/css"/>
+<link href="../../html/bootstrap3/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+<link href="../../html/font-awesome4/css/font-awesome.css" rel="stylesheet" type="text/css"/>
+<style>
+/**
+ * ui-loadmask hack
+ * https://icons8.com/preloaders/
+ * Foreground color: #435BD1   Background color: #FFFFFF
+ */
+.custom .ui-loadmask-loading {
+	background-image: url('../../html/panda/img/loader/fountain.gif');
+	width: 160px;
+	height: 20px;
+}
+.custom .ui-loadmask-hasmsg .ui-loadmask-loading {
+	background-image: url('../../html/panda/img/loader/squares-circle.gif');
+	width: 32px;
+	height: 32px;
+}
+.custom .ui-loadmask-big .ui-loadmask-loading {
+	background-image: url('../../html/panda/img/loader/squares-circle-big.gif');
+	width: 64px;
+	height: 64px;
+}
+</style>
+</head>
+
+<body style="padding: 20px;">
+
+<div style="text-align: center; padding: 20px 50px;">
+	<div>
+		<label><input type="radio" name="use" id="usedefault" checked> use default</label>
+		<label><input type="radio" name="use" id="usefontawe"> use font awesome</label>
+		<label><input type="radio" name="use" id="usecustom"> use custom</label>
+	</div>
+	
+	<div>
+		<button id="loadmask">loadmask</button> 
+		<button id="loadmaskm">loadmask with text</button> 
+		<button id="loadmaskm2">loadmask with 2 line text</button> 
+		<button id="loadmaskm3">loadmask with long text</button> 
+		<button id="unloadmask">unloadmask</button> 
+	</div>
+</div>
+
+<hr>
+
+<div id="d" style="min-width: 400px; width: 100%; height: 400px; border: solid 1px #999;">
+<hr>
+<select><option value="a">aaaaaaaaaaa</option><option value="b">bbbbbbbbbbb</option></select>
+<hr>
+</div>
+
+<script src="../../html/jquery/js/jquery-1.12.4.js" type="text/javascript"></script>
+<script src="../../html/jquery/js/jquery.browser.js" type="text/javascript"></script>
+<script src="../../html/jquery/js/jquery.ui.center.js" type="text/javascript"></script>
+<script src="../../html/jquery/js/jquery.ui.loadmask.js" type="text/javascript"></script>
+<script src="../../html/bootstrap3/js/bootstrap.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+	$(function() {
+		$('#usedefault, #usefontawe, #usecustom').change(function() {
+			$.loadmask.defaults.iconClass = ($('#usefontawe').prop('checked') ? "fa fa-refresh fa-spin fa-3x fa-fw" : "ui-loadmask-loading");
+			$('body')[$('#usedefault').prop('checked') ? 'removeClass' : 'addClass']('custom');
+		});
+		$('#loadmask').click(function() {
+			$('#d').loadmask();
+		});
+		$('#loadmaskm').click(function() {
+			$('#d').loadmask('Loading...');
+		});
+		$('#loadmaskm2').click(function() {
+			$('#d').loadmask({ cssClass: 'ui-loadmask-big', html: 'Loading...<br>Loading...'});
+		});
+		$('#loadmaskm3').click(function() {
+			$('#d').loadmask({ cssClass: 'ui-loadmask-big', text: 'Loading... Loading... Loading... Loading... Loading... Loading... Loading...'});
+		});
+		$('#unloadmask').click(function() {
+			$('#d').unloadmask();
+		});
+	});
+</script>
+</body>
+</html>
