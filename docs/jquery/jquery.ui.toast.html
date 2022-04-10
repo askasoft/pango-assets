@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Demo - Toast Plugin</title>
-    <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../../html/jquery/css/jquery.ui.toast.css">
     <style type="text/css">
         * { font-family: 'Roboto Slab', serif; margin: 0; padding: 0; }
@@ -484,10 +484,10 @@
         <h2 id="toasts-events"><span class="muted">11.</span> Toast Events</h2>
         <p>Toast exposes the following events for you to bind to whatever you want</p>
         <ul>
-            <li><span class="code">beforeShow</span> will be triggered right before the toast is about to appear</li>
-            <li><span class="code">afterShown</span> will be triggered after the toast has appeared</li>
-            <li><span class="code">beforeHide</span> will be triggered before the toast is about to hide</li>
-            <li><span class="code">afterHidden</span> will be triggered right after the toast gets hidden</li>
+            <li><span class="code">toast.beforeShow</span> will be triggered right before the toast is about to appear</li>
+            <li><span class="code">toast.afterShown</span> will be triggered after the toast has appeared</li>
+            <li><span class="code">toast.beforeHide</span> will be triggered before the toast is about to hide</li>
+            <li><span class="code">toast.afterHidden</span> will be triggered right after the toast gets hidden</li>
         </ul>
             
         <div class="code-runner">
@@ -720,16 +720,16 @@ $.toast().reset('all');
     <span class="toast-textAlign-line"><span class="k">textAlign</span>: '<span class="s toast-textAlign">left</span>', <span class="c"> // Text alignment i.e. left, right or center</span></span>
     <span class="toast-loader-line"><span class="k">loader</span>: <span class="s toast-textLoader">true</span>, <span class="c"> // Whether to show loader or not. True by default</span></span>
     <span class="toast-loaderBg-line"><span class="k">loaderBg</span>: '<span class="s toast-textLoaderBg">#9EC600</span>', <span class="c"> // Background color of the toast loader</span></span>
-    <span class="toast-beforeShow-line"><span class="nb k">beforeShow</span>: <span class="nf toast-beforeShow">function ()</span> {}, <span class="c">// will be triggered before the toast is shown</span></span>
-    <span class="toast-afterShown-line"><span class="nb k">afterShown</span>: <span class="nf toast-afterShown">function ()</span> {}, <span class="c">// will be triggered after the toat has been shown</span></span>
-    <span class="toast-beforeHide-line"><span class="nb k">beforeHide</span>: <span class="nf toast-beforeHide">function ()</span> {}, <span class="c">// will be triggered before the toast gets hidden</span></span>
-    <span class="toast-afterHidden-line"><span class="nb k">afterHidden</span>: <span class="nf toast-afterHidden">function ()</span> {} <span class="c"> // will be triggered after the toast has been hidden</span></span>
+    <span class="toast-beforeShow-line"><span class="nb k">toast.beforeShow</span>: <span class="nf toast-beforeShow">function ()</span> {}, <span class="c">// will be triggered before the toast is shown</span></span>
+    <span class="toast-afterShown-line"><span class="nb k">toast.afterShown</span>: <span class="nf toast-afterShown">function ()</span> {}, <span class="c">// will be triggered after the toat has been shown</span></span>
+    <span class="toast-beforeHide-line"><span class="nb k">toast.beforeHide</span>: <span class="nf toast-beforeHide">function ()</span> {}, <span class="c">// will be triggered before the toast gets hidden</span></span>
+    <span class="toast-afterHidden-line"><span class="nb k">toast.afterHidden</span>: <span class="nf toast-afterHidden">function ()</span> {} <span class="c"> // will be triggered after the toast has been hidden</span></span>
 });
               </code></pre>
 
     </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="../../html/jquery/js/jquery-1.12.4.min.js"></script>
     <script type="text/javascript" src="../../html/jquery/js/jquery.ui.toast.js"></script>
 
     <script type="text/javascript">
