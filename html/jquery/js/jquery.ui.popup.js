@@ -1,402 +1,341 @@
 (function($) {
-	var __inited = false;
-	var __active = null;
-	var __tclose = null;
-	var __tenter = null;
+	function __click(evt) {
+		var el = evt.target;
+		if (!el || el.tagName == "HTML") {
+			return;
+		}
 
-	function __emptyFn() {
+		var $e = $(el);
+		if ($e.hasClass('ui-popup') || $e.closest('.ui-popup').length) {
+			return;
+		}
+		
+		var $p = $('.ui-popup:visible'), c = $p.data('popup');
+		if (c && c.trigger == el) {
+			return;
+		}
+
+		$('.ui-popup').hide();
+		$(document).unbind('click', __click);
 	}
 	
-	function __init() {
-		if (!__inited) {
-			__inited = true;
-			$('<div id="ui_popup_loader" style="display:none"></div>').appendTo('body');
-			$('<div id="ui_popup_shadow" style="display:none">'
-				+ ($.browser.msie && parseInt($.browser.version, 10) < 7 ?
-						'<iframe src="javascript:false;" frameborder="0"></iframe>' : '')
-				+ '</div>').appendTo('body');
-			$('<i id="ui_popup_closer" class="fa fa-times-circle" style="display:none"></i>')
-				.appendTo('body')
-				.mousedown(__mousedown);
-
-			$(document).mousedown(__mousedown);
+	function __ajaxError(xhr, status, err) {
+		if (xhr && xhr.responseJSON) {
+			return JSON.stringify(xhr.responseJSON, null, 2);
 		}
-	}
-
-	function __mousedown(e) {
-		if (__active && !__tclose) {
-			__tclose = setTimeout(function() { 
-				__tclose = null;
-				__close(e.target); 
-			}, 200);
+	
+		msg = '';
+		if (err) {
+			msg += err + '\n';
 		}
+		
+		return msg || 'Server Error';
 	}
 
-	function __center($p) {
-		var $w = $(window);
-		$p.css({
-			top: ($w.scrollTop() + 30) + "px",
-			left: ($w.scrollLeft() + 30) + "px",
-			width: ($.browser.width() - 60) + "px",
-			height: ($.browser.height() - 60) + "px"
-		});
-	}
+	function __align($p, trigger, position) {
+		var $t = $(trigger), tw = $t.outerWidth(), th = $t.outerHeight();
 
-	function __shadow() {
-		if (__active) {
-			var $p = $('#' + __active);
-			if ($p.hasClass('ui-popup-center')) {
-				__center($p);
-			}
-			var p = $p[0];
-			$('#ui_popup_shadow').css({
-				top: p.offsetTop + 'px',
-				left: p.offsetLeft + 'px',
-				width: p.offsetWidth + 'px',
-				height: p.offsetHeight + 'px',
-				display: 'block'
-			}).children('iframe').css({
-				width: p.firstChild.offsetWidth + 'px',
-				height: p.firstChild.offsetHeight + 'px'
+		var $a = $p.find('.ui-popup-arrow').hide(), pw = $p.outerWidth(), ph = $p.outerHeight();
+
+		if (trigger == window) {
+			var left = (tw - pw) / 2, top = (th - pw) / 2;
+			$p.css({
+				position: 'fixed',
+				left: (left < 10 ? 10 : left),
+				top: (top < 10 ? 10 : top)
 			});
-			$('#ui_popup_closer').css({
-				top: p.offsetTop - 4 + 'px',
-				left: p.offsetLeft + p.offsetWidth - 12 + 'px',
-				display: 'block'
-			})
-			setTimeout(__shadow, 100);
-		}
-		else {
-			$('#ui_popup_shadow, #ui_popup_closer').css('display', 'none');
-		}
-	}
-
-	function __close(el) {
-		if (!__active || (el && el.tagName == "HTML")) {
 			return;
 		}
 
-		if (el.id == 'ui_popup_closer') {
-			_hide();
-			return;
-		}
-		
-		var $p = $("#" + __active), p = $p.get(0);
-		var elt = $p.data('popup').trigger;
+		var p = $t.offset(), $w = $(window);
+		console.log(p.left, p.top, tw, th, pw, ph);
 
-		// is self or trigger clicked?
-		while (el && el.tagName != 'BODY') {
-			if (el === p || el === elt || $(el).css('position') == 'absolute') {
-				return;
+		switch (position) {
+		case 'top left':
+			p.top -= (ph + 11); // arrow height
+			p.left -= (pw - 50);
+			$a.attr('class', 'ui-popup-arrow dn hr1 vb');
+			break;
+		case 'top right':
+			p.top -= (ph + 11); // arrow height
+			p.left += (tw - 50);
+			$a.attr('class', 'ui-popup-arrow dn hl1 vb');
+			break;
+		case 'top center':
+			p.top -= (ph + 11); // arrow height
+			p.left += (tw - pw) / 2;
+			$a.attr('class', 'ui-popup-arrow dn hc vb');
+			break;
+		case 'top':
+			p.top -= (ph + 11); // arrow height
+			var x = p.left + (tw - pw) / 2;
+			if (x > $w.scrollLeft()) {
+				p.left = x;
+				$a.attr('class', 'ui-popup-arrow dn hc vb');
+			} else {
+				p.left += (tw - 50);
+				$a.attr('class', 'ui-popup-arrow dn hl1 vb');
 			}
-			el = el.parentNode;
-		}
-		
-		if (el) {
-			_hide({silent: true});
-		}
-	}
-	
-	function __align(c, $el) {
-		var $t = $(c.target || c.trigger);
-		if (c.popover || $t.length < 1) {
-			$el.addClass('ui-popup-center');
-			return;
-		}
-
-		var p = $t.offset();
-		p.top += $t.outerHeight();
-
-		var bw = $.browser.width();
-		var ow = $el.outerWidth();
-		if (p.left + ow > bw) {
-			p.left = bw - ow - 20;
-			if (p.left < 0) {
-				p.left = 0;
+			break;
+		case 'bottom left':
+			p.top += th + 11; // arrow height
+			p.left -= (pw - 50);
+			$a.attr('class', 'ui-popup-arrow up hr1 vt');
+			break;
+		case 'bottom right':
+			p.top += th + 11; // arrow height
+			p.left += (tw - 50);
+			$a.attr('class', 'ui-popup-arrow up hl1 vt');
+			break;
+		case 'bottom center':
+			p.top += th + 11; // arrow height
+			p.left += (tw - pw) / 2;
+			$a.attr('class', 'ui-popup-arrow up hc vt');
+			break;
+		case 'bottom':
+			p.top += th + 11; // arrow height
+			var x = p.left + (tw - pw) / 2;
+			if (x > $w.scrollLeft()) {
+				p.left = x;
+				$a.attr('class', 'ui-popup-arrow up hc vt');
+			} else {
+				p.left += (tw - 50);
+				$a.attr('class', 'ui-popup-arrow up hl1 vt');
 			}
+			break;
+		case 'left down':
+			p.left -= (pw + 11); // arrow width
+			p.top -= 20;
+			$a.attr('class', 'ui-popup-arrow rt hr vt1');
+			break;
+		case 'left up':
+			p.left -= (pw + 11); // arrow width
+			p.top = p.top - ph + th + 20;
+			$a.attr('class', 'ui-popup-arrow rt hr vb1');
+			break;
+		case 'left middle':
+			p.left -= (pw + 11); // arrow width
+			p.top -= (ph / 2 - 20);
+			$a.attr('class', 'ui-popup-arrow rt hr vm');
+			break;
+		case 'left':
+			p.left -= (pw + 11); // arrow width
+			var y = p.top - (ph / 2 - 20);
+			if (y > $w.scrollTop()) {
+				p.top = y;
+				$a.attr('class', 'ui-popup-arrow rt hr vm');
+			} else {
+				p.top -= 20;
+				$a.attr('class', 'ui-popup-arrow rt hr vt1');
+			}
+			break;
+		case 'right down':
+			p.left += tw + 11; // arrow width
+			p.top -= 20;
+			$a.attr('class', 'ui-popup-arrow lt hl vt1');
+			break;
+		case 'right up':
+			p.left += tw + 11; // arrow width
+			p.top = p.top - ph + th + 20;
+			$a.attr('class', 'ui-popup-arrow lt hl vb1');
+			break;
+		case 'right middle':
+			p.left += tw + 11; // arrow width
+			p.top -= (ph / 2 - 20);
+			$a.attr('class', 'ui-popup-arrow lt hl vm');
+			break;
+		case 'right':
+			p.left += tw + 11; // arrow width
+			var y = p.top - (ph / 2 - 20);
+			if (y > $w.scrollTop()) {
+				p.top = y;
+				$a.attr('class', 'ui-popup-arrow lt hl vm');
+			} else {
+				p.top -= 20;
+				$a.attr('class', 'ui-popup-arrow lt hl vt1');
+			}
+			break;
+		case 'auto':
+		default:
+			var x = p.left + (pw/2) - $w.scrollLeft(), y = p.top + (ph/2) - $w.scrollTop();
+			if (y > $w.height() / 2 && p.top - ph - 11 >= 0) {
+				p.top -= (ph + 11); // arrow height
+				p.left += (tw - pw) / 2;
+				$a.attr('class', 'ui-popup-arrow dn hc vb');
+			} else {
+				p.top += th + 11; // arrow height
+				p.left += (tw - pw) / 2;
+				$a.attr('class', 'ui-popup-arrow up hc vt');
+			}
+			break;
 		}
-		
-		$el.css({
+
+		$p.css({
+			position: 'absolute',
 			top: p.top + "px",
 			left: p.left + "px"
-		}).removeClass('ui-popup-center');
+		});
+		$a.show();
 	}
 	
-	function __activeTarget($t) {
-		if ($t.length > 0) {
-			var el = $t.get(0);
-			if (el.setActive) {
-				el.setActive();
-			}
-			else {
-				el.focus();
-			}
+	function _toggle(c, trigger) {
+		var $p = $("#" + c.id); 
+		if ($p.is(':hidden')) {
+			_show(c, trigger);
+			return;
 		}
-	}
 
-	function __clearTimer() {
-		if (__tclose) {
-			clearTimeout(__tclose);
-			__tclose = null;
-		}
-	}
-	
-	function _toggle(c) {
-		c = $.extend({ id: __active }, c);
-		if (!c.id) {
-			return this;
-		}
-	
-		__clearTimer();
-		
-		if (c.id == __active) {
-			var $p = $("#" + c.id), trigger = $p.data('popup').trigger;
-			if (c.trigger === trigger) {
-				c.silent = true;
-			}
+		if (c.trigger === trigger) {
 			_hide(c);
-			return this;
+			return;
 		}
 
-		_show(c);
-		return this;
+		_show(c, trigger);
 	}
 
-	function __popup($pc, c) {
-		$pc.css({
-			top : "0px",
-			left : "0px",
-		}).addClass('ui-popup-opacity0').show();
+	function _show(c, trigger) {
+		$('.ui-popup').hide();
 
-		__align(c, $pc.parent(), true);
-		
-		$pc.hide().removeClass('ui-popup-opacity0').slideDown('fast', c.onpopup);
-		
-		__shadow();
-	}
-	
-	function _show(c) {
-		c = $.extend({ id: __active }, c);
-		if (!c.id) {
-			return this;
-		}
-	
-		__clearTimer();
+		var $p = $("#" + c.id).show();
 
-		if (c.id == __active) {
-			return this;
-		}
-		
-		_hide({silent: true});
-
-		__active = c.id;
-	
-		__activeTarget($(c.target || c.trigger));
-	
-		var $p = $("#" + c.id), $pc = $p.children(".ui-popup-content");
-
-		c = $.extend($p.data('popup'), { slient: null, trigger: null }, c);
-
-		if (c.autoClear) {
-			c.loaded = null;
-		}
-		
-		if (c.loaded) {
-			__popup($pc, c);
-		}
-		else if (c.loaded !== false){
+		if (!c.loaded) {
+			c.showing = trigger || window;
+			__align($p, c.showing, c.position);
 			_load(c);
+			return;
 		}
-		return this;
+
+		c.trigger = trigger || window;
+		__align($p, c.trigger, c.position);
+		$p.children(".ui-popup-content")
+			.hide().css('visibility', 'visible')
+			[c.transition || 'slideDown']();
+
+		if (c.trigger !== window && c.clickHide) {
+			$(document).click(__click);
+		}
 	}
 	
 	function _hide(c) {
-		c = $.extend({ id: __active }, c);
-		if (c.id) {
-			__clearTimer();
-
-			__active = null;
-			__shadow();
-		
-			var $p = $("#" + c.id); 
-
-			$p.css({
-				top : "-999999px",
-				left : "-999999px"
-			});
-
-			c = $.extend($p.data('popup'), c);
-
-			if (c.silent !== true) {
-				__activeTarget($(c.target || c.trigger));
-			}
-
-			if (typeof(c.onhide) == 'function') {
-				c.onhide();
-			}
+		var $p = $('#' + c.id);
+		if ($p.is(':visible')) {
+			$p.hide();
+			$(document).unbind('click', __click);
 		}
-		$('body').removeClass('ui-popop-over');
-		return this;
 	}
 
-	function __loadPage(c, html, e) {
-		html = (html || "").trim();
-		
-		var $p = $("#" + c.id);
-		var $pc = $p.children(".ui-popup-content");
-
-		if (c.prepare) {
-			var $c = c.prepare(html, e);
-			if ($c) {
-				$pc.append($c);
-				$p.data('popup').loaded = true;
-				return $pc;
-			}
-		}
-		else {
-			if (html) {
-				$pc.html(html);
-				$p.data('popup').loaded = true;
-				return $pc;
-			}
-		}
-		$p.data('popup').loaded = false;
-		return null;
-	}
-	
 	function _load(c) {
-		c = $.extend({ id: __active }, c);
-		if (c.id) {
-			__align(c, $("#ui_popup_loader").show(), false);
+		var $p = $('#' + c.id), $pc = $p.children(".ui-popup-content");
 
-			var $pc = null;
-			$.ajax({
-				url: c.url, 
-				data: c.params,
-				dataType: 'html',
-				success: function(html) {
-					$pc = __loadPage(c, html);
-				},
-				error: function(xhr, status, e) {
-					$pc = __loadPage(c, null, e);
-				},
-				complete: function(xhr, status) {
-					if (c.id == __active) {
-						$("#ui_popup_loader").hide();
-						if ($pc) {
-							if ($pc.is(':hidden')) {
-								__popup($pc, c);
-							}
-							else {
-								__align(c, $pc.parent(), true);
-							}
-						}
+		$pc.html('<div class="ui-popup-loading"></div>');
+		$.ajax({
+			url: c.url, 
+			data: c.params,
+			dataType: 'html',
+			method: c.method || 'GET',
+			success: function(html) {
+				$pc.css('visibility', 'hidden').html(html);
+			},
+			error: function(xhr, status, err) {
+				$pc.css('visibility', 'hidden').html(c, (c.ajaxError || __ajaxError)(xhr, status, err));
+			},
+			complete: function(xhr, status) {
+				c.loaded = true;
+				if (c.showing) {
+					if ($p.is(':visible')) {
+						_show(c, c.showing);
 					}
+					c.trigger = c.showing;
+					delete c.showing;
 				}
-			});
-		}
-		return this;
-	}
-	
-	function _callback(data) {
-		if (__active) {
-			var pd = $('#' + __active).data('popup');
-			if (pd && pd.callback) {
-				pd.callback(data, pd.trigger);
 			}
+		});
+	}
+
+	function _update(c, o) {
+		if (o) {
+			$.extend(c, o, { id: c.id });
 		}
 	}
 
-	var api = {
-			load: _load,
-			callback: _callback,
-			toggle: _toggle,
-			show: _show,
-			hide: _hide
+	function _callback(c, args) {
+		if (typeof(c.callback) == 'function') {
+			c.callback.apply(window, args);
+		}
+	}
+
+	function __api(c) {
+		return {
+			callback: function() {
+				_callback(c, arguments);
+			},
+			update: function(o) {
+				_update(o);
+				return this;
+			},
+			load: function() {
+				_load(c);
+				return this;
+			},
+			toggle: function(trigger) {
+				_toggle(c, trigger || window);
+				return this;
+			},
+			show: function(trigger) {
+				_show(c, trigger);
+				return this;
+			},
+			hide: function() {
+				_hide(c);
+				return this;
+			}
 		};
+	}
 
 	$.popup = function(c) {
-		__init();
-		
 		c = c || {};
-		if (c.id) {
-			var $p = $('#' + c.id);
-			if ($p.length < 1) {
-				$p = $('<div id="' + c.id + '" class="ui-popup">'
-					+ '<div class="ui-popup-content"></div></div>').appendTo('body');
-
-				if (c.cssClass) {
-					$p.addClass(c.cssClass);
-				}
-				$p.data('popup', c);
-				if (c.content) {
-					var $pc = $p.children(".ui-popup-content");
-					$(c.content).detach().appendTo($pc);
-					c.loaded = true;
-					delete c.content;
-				}
-				else if (c.autoload) {
-					$.ajax({
-						url: c.url, 
-						data: c.params, 
-						dataType: 'html',
-						success: function(html) {
-							__loadPage(c, html);
-						},
-						error: function(xhr, status, e) {
-							__loadPage(c, null, e);
-						}
-					});
-				}
-			}
+		if (typeof c == 'string') {
+			c = { id: c };
+		}
+		if (!c.id) {
+			c.id = $('.ui-popup:visible').attr('id');
+		}
+		if (!c.id) {
+			return;
 		}
 
-		return api; 
-	};
-	
-	function __onclick() {
-		$.popup().toggle($.extend({trigger: this}, $(this).data('popup')));
-		return false;
-	}
-	function __onleave() {
-		if (__tenter) {
-			clearTimeout(__tenter);
-			__tenter = null;
-		}
-	}
-	function __onenter() {
-		__onleave();
+		var $p = $('#' + c.id);
 
-		var c = $.extend({trigger: this}, $(this).data('popup'));
-		if (c.mouseenter === true) {
-			$.popup().show(c);
+		if ($p.length > 0) {
+			var o = $p.data('popup');
+			c = $.extend(o, c, { id: o.id });
+			return __api(c); 
 		}
-		else {
-			__tenter = setTimeout(function() {
-				$.popup().show(c);
-			}, c.mouseenter);
-		}
-		return false;
-	}
-	
-	$.fn.popup = function(c) {
-		c = c || {};
 
-		this.data('popup', c)
-			.unbind('click', __onclick)
-			.unbind('mouseenter', __onenter)
-			.unbind('mouseleave', __onleave);
-		
-		if (c.mouseclick !== false) {
-			this.click(__onclick);
+		$p = $('<div class="ui-popup">').attr('id', c.id).css('display', 'none')
+			.append($('<div class="ui-popup-arrow">'))
+			.append($('<i class="ui-popup-close">&times;</i>'))
+			.append($('<div class="ui-popup-content">'))
+			.appendTo('body');
+
+		if (c.cssClass) {
+			$p.addClass(c.cssClass);
 		}
-		if (c.mouseenter === true) {
-			this.mouseenter(__onenter);
+
+		$p.find('.ui-popup-close').click(function() { _hide(c); });
+
+		$p.data('popup', c);
+		if (c.content) {
+			$(c.content).detach().appendTo($p.children(".ui-popup-content"));
+			c.loaded = true;
+			delete c.content;
+			return __api(c);
 		}
-		else if (c.mouseenter > 0) {
-			this.mouseenter(__onenter).mouseleave(__onleave);
+
+		if (c.autoload && c.url) {
+			_load(c);
 		}
-		
-		return this;
+
+		return __api(c); 
 	};
 })(jQuery);

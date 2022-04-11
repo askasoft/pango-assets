@@ -23,10 +23,10 @@ Features
    | jquery.cookie.js             | cookie plugin                       |
    | jquery.disable.js            | $.disable function                  |
    | jquery.jscript.js            | dynamic load javascript             |
-   | [jquery.ui.center.js](./docs/jquery/jquery.ui.center.html)          | Move the selected element(s) to the center position of parent element (default: body)               |
+   | [jquery.ui.center.js](./docs/jquery/jquery.ui.center.html)         | Move the selected element(s) to the center position of parent element (default: body)               |
    | jquery.ui.fieldset.js        | collapseable fieldset               |
-   | [jquery.ui.loadmask.js](./docs/jquery/jquery.ui.loadmask.html)        | loader mask                         |
-   | jquery.ui.popup.js           | a popup pulldown                    |
+   | [jquery.ui.loadmask.js](./docs/jquery/jquery.ui.loadmask.html)     | loader mask                         |
+   | [jquery.ui.popup.js](./docs/jquery/jquery.ui.popup.html)           | a popup plugin   |
    | jquery.ui.scrollIntoView.js  | $.scrollIntoView function           |
    | jquery.ui.selecttext.js      | $.selectText function               |
    | jquery.ui.textarea.js        | textarea auto expand and fire event on Ctrl+Enter   |
@@ -43,7 +43,7 @@ Features
 Acknowledgements
 ----------------
 
-Panda HTML use the following software packages:
+Pango Assets use the following software packages:
 
 | Name                    | License                                                       | Source                                                 |
 |-------------------------|---------------------------------------------------------------|--------------------------------------------------------|
@@ -55,5 +55,5 @@ Panda HTML use the following software packages:
 | jQuery                  | [jQuery](https://jquery.org/license/)                         | [https://jquery.com/](https://jquery.com/) |
 | jquery-lightbox         |                                                               | [http://leandrovieira.com](http://leandrovieira.com) |
 | jquery-toast            | [MIT](https://opensource.org/licenses/MIT)                    | [https://github.com/kamranahmedse/jquery-toast-plugin](https://github.com/kamranahmedse/jquery-toast-plugin) |
-| [summernote](./docs/summernote.html) | [MIT](https://opensource.org/licenses/MIT)                    | [https://summernote.org](https://summernote.org) |
+| [summernote](./docs/summernote.html) | [MIT](https://opensource.org/licenses/MIT)       | [https://summernote.org](https://summernote.org) |
 
