@@ -36,7 +36,9 @@ Features
 
    | Name                     | Description                              |
    |--------------------------|------------------------------------------|
-   | jquery.ui.lightbox.js    | LightBox Plugin                          |
+   | [jquery.ui.lightbox.js](./docs/jquery/jquery.ui.lightbox.html)    | LightBox Plugin  |
+
+ - [summernote](./docs/summernote.html)
 
 
 
@@ -55,5 +57,5 @@ Pango Assets use the following software packages:
 | jQuery                  | [jQuery](https://jquery.org/license/)                         | [https://jquery.com/](https://jquery.com/) |
 | jquery-lightbox         |                                                               | [http://leandrovieira.com](http://leandrovieira.com) |
 | jquery-toast            | [MIT](https://opensource.org/licenses/MIT)                    | [https://github.com/kamranahmedse/jquery-toast-plugin](https://github.com/kamranahmedse/jquery-toast-plugin) |
-| [summernote](./docs/summernote.html) | [MIT](https://opensource.org/licenses/MIT)       | [https://summernote.org](https://summernote.org) |
+| summernote              | [MIT](https://opensource.org/licenses/MIT)       | [https://summernote.org](https://summernote.org) |
 

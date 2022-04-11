@@ -1123,16 +1123,19 @@ jQuery.jcookie = function(name, value, options) {
 		__align($p, c.trigger, c.position);
 		$p.children(".ui-popup-content")
 			.hide().css('visibility', 'visible')
-			.slideDown('fast');
+			[c.transition || 'slideDown']();
 
-		if (c.trigger !== window) {
+		if (c.trigger !== window && c.clickHide) {
 			$(document).click(__click);
 		}
 	}
 	
 	function _hide(c) {
-		$('#' + c.id).hide();
-		$(document).unbind('click', __click);
+		var $p = $('#' + c.id);
+		if ($p.is(':visible')) {
+			$p.hide();
+			$(document).unbind('click', __click);
+		}
 	}
 
 	function _load(c) {

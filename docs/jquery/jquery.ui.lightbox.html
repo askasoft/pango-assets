@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+<link href="../../html/bootstrap3/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+<link href="../../html/font-awesome4/css/font-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="../../html/lightbox/jquery.ui.lightbox.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<style>
+	#demo a {
+		width: 192px;
+		height: 192px;
+		display: inline-block;
+		margin: 10px;
+	}
+	#demo a > img {
+		width: 100%;
+		height: auto;
+	}
+</style>
+<body>
+	<h1 style="text-align: center;">jQuery Lightbox Plugin</h1>
+
+	<hr/>
+
+	<div id="demo" class="text-center">
+		<h2>Default Settings</h2>
+		<div id="default">
+			<a href="https://images6.alphacoders.com/519/519287.jpg"><img src="https://images6.alphacoders.com/519/thumb-350-519287.jpg"></a>
+			<a href="https://images5.alphacoders.com/870/870117.png"><img src="https://images5.alphacoders.com/870/thumb-350-870117.png"></a>
+			<a href="https://images4.alphacoders.com/670/670904.jpg"><img src="https://images4.alphacoders.com/670/thumb-350-670904.jpg"></a>
+			<a href="https://images.alphacoders.com/519/519286.jpg"><img src="https://images.alphacoders.com/519/thumb-350-519286.jpg"></a>
+			<a href="https://images8.alphacoders.com/612/612717.jpg"><img src="https://images8.alphacoders.com/612/thumb-350-612717.jpg"></a>
+			<a href="https://images.alphacoders.com/568/568410.jpg"><img src="https://images.alphacoders.com/568/thumb-350-568410.jpg"></a>
+			<a href="https://images7.alphacoders.com/528/528388.jpg"><img src="https://images7.alphacoders.com/528/thumb-350-528388.jpg"></a>
+			<a href="https://images8.alphacoders.com/528/528387.jpg"><img src="https://images8.alphacoders.com/528/thumb-350-528387.jpg"></a>
+		</div>
+		<hr/>
+
+		<h2>Circle Settings</h2>
+		<div id="circle">
+			<a href="https://images7.alphacoders.com/520/520455.png"><img src="https://images7.alphacoders.com/520/thumb-350-520455.png"></a>
+			<a href="https://images7.alphacoders.com/519/519285.jpg"><img src="https://images7.alphacoders.com/519/thumb-350-519285.jpg"></a>
+			<a href="https://images8.alphacoders.com/519/519282.jpg"><img src="https://images8.alphacoders.com/519/thumb-350-519282.jpg"></a>
+			<a href="https://images4.alphacoders.com/568/568411.jpg"><img src="https://images4.alphacoders.com/568/thumb-350-568411.jpg"></a>
+			<a href="https://images8.alphacoders.com/519/519288.jpg"><img src="https://images8.alphacoders.com/519/thumb-350-519288.jpg"></a>
+			<a href="https://images6.alphacoders.com/519/519283.jpg"><img src="https://images6.alphacoders.com/519/thumb-350-519283.jpg"></a>
+			<a href="https://images7.alphacoders.com/766/766567.jpg"><img src="https://images7.alphacoders.com/766/thumb-350-766567.jpg"></a>
+			<a href="https://images6.alphacoders.com/907/907908.jpg"><img src="https://images6.alphacoders.com/907/thumb-350-907908.jpg"></a>
+			<a href="https://images6.alphacoders.com/528/528389.jpg"><img src="https://images6.alphacoders.com/528/thumb-350-528389.jpg"></a>
+			<a href="https://images8.alphacoders.com/519/519284.jpg"><img src="https://images8.alphacoders.com/519/thumb-350-519284.jpg"></a>
+			<a href="https://images7.alphacoders.com/519/519281.jpg"><img src="https://images7.alphacoders.com/519/thumb-350-519281.jpg"></a>
+			<a href="https://images2.alphacoders.com/528/528390.jpg"><img src="https://images2.alphacoders.com/528/thumb-350-528390.jpg"></a>
+		</div>
+		<hr/>
+	</div>
+
+<script src="../../html/jquery/js/jquery-1.12.4.js" type="text/javascript"></script>
+<script src="../../html/lightbox/jquery.ui.lightbox.js" type="text/javascript"></script>
+<script src="../../html/bootstrap3/js/bootstrap.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+	$(function() {
+		$('#default a').lightbox();
+		$('#circle a').lightbox({loopNavigation: true});
+	});
+</script>
+</body>
+</html>
