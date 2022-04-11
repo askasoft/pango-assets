@@ -4,6 +4,9 @@
  *  Lightbox 2 by Lokesh Dhakar (http://www.huddletogether.com/projects/lightbox2/)
  *  jQuery LightBox by Leandro Vieira Pinho (http://leandrovieira.com/projects/jquery/lightbox/)
  */
+.lightbox-open {
+	overflow: hidden !important;
+}
 #lightbox-overlay {
 	position: fixed;
 	top: 0;
@@ -33,16 +36,6 @@
 #lightbox-image {
 	max-width: 100%;
 	max-height: 100%;
-}
-#lightbox-loading {
-	background: url('loading.gif') no-repeat;
-	display: block;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	height: 32px;
-	width: 32px;
-	margin: -16px 0 0 -16px;
 }
 #lightbox-nav {
 	position: absolute;
@@ -79,7 +72,6 @@
 	position: relative;
 	top: 30%;
 	opacity: 0.8;
-	filter: Alpha(Opacity=80);
 }
 #lightbox-nav.lightbox-fixed #lightbox-btn-prev.lightbox-has-prev #lightbox-txt-prev, 
 #lightbox-nav.lightbox-fixed #lightbox-btn-next.lightbox-has-next #lightbox-txt-next,
@@ -132,6 +124,21 @@
 	top: 0px;
 	right: 10px;
 }
-.lightbox-open {
-	overflow: hidden;
+#lightbox-loading {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 40px;
+	height: 40px;
+	margin: -20px auto auto -20px;
+	border: 4px #ddd solid;
+	border-top: 4px #2e93e6 solid;
+	border-radius: 50%;
+	animation: lightbox-loading-anime 0.8s infinite linear;
+}
+
+@keyframes lightbox-loading-anime {
+	100% {
+		transform: rotate(360deg);
+	}
 }

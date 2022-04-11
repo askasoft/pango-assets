@@ -39,7 +39,6 @@
 	
 	/**
 	 * $ is an alias to jQuery object
-	 *
 	 */
 	$.fn.lightbox = function(settings) {
 		// Settings to configure the jQuery lightbox plugin how you like
@@ -67,9 +66,6 @@
 		function _start(objClicked, $jos) {
 			$('body').addClass('lightbox-open');
 			
-			// Hime some elements to avoid conflict with overlay in IE. These elements appear above the overlay.
-			$('embed, object, select').css({ 'visibility' : 'hidden' });
-
 			// Call the function to create the markup structure; style some elements; assign events in some elements.
 			_set_interface();
 
@@ -101,25 +97,25 @@
 		function _set_interface() {
 			// Apply the HTML markup into body tag
 			$('body').append('<div id="lightbox-overlay"></div>'
-					+ '<div id="lightbox-lightbox">'
-						+ '<div id="lightbox-imagebox">'
-							+ '<img id="lightbox-image">'
-							+ '<div style="" id="lightbox-nav">'
-								+ '<a href="#" id="lightbox-btn-prev">'
-									+ '<span id="lightbox-txt-prev">' + settings.textBtnPrev + '</span>'
-								+ '</a>'
-								+ '<a href="#" id="lightbox-btn-next">'
-									+ '<span id="lightbox-txt-next">' + settings.textBtnNext + '</span>'
-								+ '</a>'
-							+ '</div>'
-							+ '<a href="#" id="lightbox-loading"></a>'
+				+ '<div id="lightbox-lightbox">'
+					+ '<div id="lightbox-imagebox">'
+						+ '<img id="lightbox-image">'
+						+ '<div style="" id="lightbox-nav">'
+							+ '<a href="#" id="lightbox-btn-prev">'
+								+ '<span id="lightbox-txt-prev">' + settings.textBtnPrev + '</span>'
+							+ '</a>'
+							+ '<a href="#" id="lightbox-btn-next">'
+								+ '<span id="lightbox-txt-next">' + settings.textBtnNext + '</span>'
+							+ '</a>'
 						+ '</div>'
-						+ '<div id="lightbox-statusbox">'
-							+ '<div id="lightbox-image-caption"></div>'
-							+ '<div id="lightbox-image-number"></div>'
-							+ '<a href="#" id="lightbox-btn-close">' + settings.textBtnClose + '</a>'
-						+ '</div>'
-					+ '</div>');
+						+ '<a href="#" id="lightbox-loading"></a>'
+					+ '</div>'
+					+ '<div id="lightbox-statusbox">'
+						+ '<div id="lightbox-image-caption"></div>'
+						+ '<div id="lightbox-image-number"></div>'
+						+ '<a href="#" id="lightbox-btn-close">' + settings.textBtnClose + '</a>'
+					+ '</div>'
+				+ '</div>');
 
 			// Style overlay and show it
 			$('#lightbox-overlay').css({
@@ -301,9 +297,6 @@
 
 			$('#lightbox-lightbox').remove();
 			$('#lightbox-overlay').fadeOut(function() { $('#lightbox-overlay').remove(); });
-
-			// Show some elements to avoid conflict with overlay in IE. These elements appear above the overlay.
-			$('embed, object, select').css({ 'visibility' : 'visible' });
 
 			$('body').removeClass('lightbox-open');
 			return false;
