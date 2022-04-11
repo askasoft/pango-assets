@@ -1,0 +1,69 @@
+<table id="popup_list" class="table table-striped">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>First Name</th>
+			<th>Last Name</th>
+			<th>First Name</th>
+			<th>Last Name</th>
+			<th>Username</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<th scope="row">1</th>
+			<td>Mark</td>
+			<td>Otto</td>
+			<td>Mark</td>
+			<td>Otto</td>
+			<td>@mdo</td>
+		</tr>
+		<tr>
+			<th scope="row">2</th>
+			<td>Jacob</td>
+			<td>Thornton</td>
+			<td>Jacob</td>
+			<td>Thornton</td>
+			<td>@fat</td>
+		</tr>
+		<tr>
+			<th scope="row">3</th>
+			<td>Larry</td>
+			<td>the Bird</td>
+			<td>Larry</td>
+			<td>the Bird</td>
+			<td>@twitter</td>
+		</tr>
+		<tr>
+			<th scope="row">4</th>
+			<td>Tom</td>
+			<td>Otto</td>
+			<td>Tom</td>
+			<td>Otto</td>
+			<td>@tom</td>
+		</tr>
+		<tr>
+			<th scope="row">5</th>
+			<td>Jerry</td>
+			<td>Thornton</td>
+			<td>Jerry</td>
+			<td>Thornton</td>
+			<td>@jerry</td>
+		</tr>
+		<tr>
+			<th scope="row">6</th>
+			<td>Hydra</td>
+			<td>the Bird</td>
+			<td>Hydra</td>
+			<td>the Bird</td>
+			<td>@hydra</td>
+		</tr>
+	</tbody>
+</table>
+
+<script type="text/javascript">
+	$('#popup_list tbody>tr').click(function() {
+		var id = $(this).closest('.ui-popup').attr('id');
+		$.popup(id).callback($(this).find('td:last').text());
+	});
+</script>
