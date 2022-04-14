@@ -64,11 +64,21 @@ fieldset.ui-collapsed {
 }
 
 .ui-loadmask {
-	display: table;
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
 	position: absolute;
-	padding: 20px;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	-webkit-transform: translate(-50%, -50%);
 	z-index: 20001;
 }
+
+.ui-loadmask-load {
+	padding: 20px;
+}
+
 .ui-loadmask-hasmsg {
 	border: solid 1px #ADD8E6;
 	background-color: #fff;
@@ -95,7 +105,8 @@ fieldset.ui-collapsed {
 	color: #222;
 	padding: 0 10px 0 20px;
 	margin: 0 0 0 50px;
-	white-space: pre;
+	text-align: left;
+	white-space: pre-wrap;
 	display: table-cell;
 	vertical-align: middle;
 }
@@ -104,11 +115,6 @@ fieldset.ui-collapsed {
 	position: relative !important;
 }
 
-.ui-loadmask-fixed {
-	position: fixed;
-	top: 40%;
-	left: 40%;
-}
 .ui-popup {
 	position: absolute;
 	z-index: 2100;

@@ -267,57 +267,6 @@
 })(jQuery);
 
 (function($) {
-	// Use of jQuery.browser is frowned upon.
-	// More details: http://api.jquery.com/jQuery.browser
-	// jQuery.uaMatch maintained for back-compat
-	$.uaMatch = function( ua ) {
-		ua = ua.toLowerCase();
-
-		var m = /(chrome)[ \/]([\w.]+)/.exec( ua ) ||
-			/(webkit)[ \/]([\w.]+)/.exec( ua ) ||
-			/(opera)(?:.*version|)[ \/]([\w.]+)/.exec( ua ) ||
-			/(msie) ([\w.]+)/.exec( ua ) ||
-			ua.indexOf("compatible") < 0 && /(mozilla)(?:.*? rv:([\w.]+)|)/.exec( ua ) ||
-			[];
-
-		return {
-			b: m[ 1 ] || "",
-			v: m[ 2 ] || "0"
-		};
-	};
-
-	var m = $.uaMatch( navigator.userAgent );
-	var b = { version: 0 };
-
-	if (m.b) {
-		b[m.b] = true;
-		b.version = m.v;
-	}
-
-	// Chrome is Webkit, but Webkit is also Safari.
-	if (b.chrome) {
-		b.webkit = true;
-	}
-	else if (b.webkit) {
-		b.safari = true;
-	}
-
-	$.browser = $.extend(b, {
-		width: function() {
-			return window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-		},
-		height: function() {
-			return window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-		},
-		ipad: /ipad/i.test(navigator.userAgent),
-		ipod: /ipod/i.test(navigator.userAgent),
-		iphone: /iphone/i.test(navigator.userAgent),
-		ios: /iphone|ipad|ipod/i.test(navigator.userAgent),
-		android: /android/i.test(navigator.userAgent),
-		majorVersion: parseInt(b.version, 10)
-	});
-})(jQuery);
-(function($) {
 	$.copyToClipboard = function(s) {
 		if (window.clipboardData) {
 			// ie
@@ -557,42 +506,6 @@ jQuery.jcookie = function(name, value, options) {
 	};
 })(jQuery);
 (function($) {
-	/**
-	 * Move the selected element(s) to the center position of parent element (default: body)
-	 */
-	$.fn.center = function(c) {
-		c = c || {};
-		return this.each(function() {
-			var $s = $(this);
-			var $t = c.target ? $(c.target) : $s.parent();
-
-			var tl = $t.scrollLeft(),
-				tt = $t.scrollTop(),
-				tw = $t.width(),
-				th = $t.height(),
-				ow = $s.outerWidth(),
-				oh = $s.outerHeight();
-			
-			try {
-				if (c.relative === false || (c.relative !== true && $t.css('position') != 'relative')) {
-					var r = $t.offset();
-					tl = r.left;
-					tt = r.top;
-				}
-			}
-			catch (e) {
-			}
-
-			var ot = Math.round(tt + (th - oh) / 2),
-				ol = Math.round(tl + (tw - ow) / 2);
-			$s.css({
-				top: ot + "px",
-				left: ol + "px"
-			});
-		});
-	};
-})(jQuery);
-(function($) {
 	function collapse($el) {
 		if (!$el.hasClass('ui-collapsed')) {
 			$el.addClass('ui-collapsed')
@@ -778,13 +691,6 @@ jQuery.jcookie = function(name, value, options) {
 			clearTimeout(t);
 			$el.removeData("_unmask_timeout");
 		}
-
-		//if this element has center timeout scheduled then remove it
-		t = $el.data("_maskc_timeout");
-		if (t) {
-			clearInterval(t);
-			$el.removeData("_maskc_timeout");
-		}
 	}
 
 	function maskElement($el, c) {
@@ -794,30 +700,22 @@ jQuery.jcookie = function(name, value, options) {
 			clearMaskTimeout($el);
 		}
 		
-		if ($el.css("position") == "static") {
-			$el.addClass("ui-loadmasked-relative");
-		}
-		$el.addClass("ui-loadmasked");
-
-		if (c.mask !== false) {
-			$el.append($('<div class="ui-loadmask-mask"></div>'));
-		}
-		
-		var $lm = $('<div class="ui-loadmask" style="visibility:hidden;"></div>');
+		var $lm = $('<div class="ui-loadmask">');
 		if (c.cssClass) {
 			$lm.addClass(c.cssClass);
 		}
+
+		var $ll = $('<div class="ui-loadmask-load">');
 		if (c.content) {
 			$lm.append($(c.content));
 		} else {
-			var $ll = $('<div class="ui-loadmask-load">'),
-				$li = $('<div class="ui-loadmask-icon">'),
+			var $li = $('<div class="ui-loadmask-icon">'),
 				$lt = $('<div class="ui-loadmask-text">');
 
 			$ll.append($li).append($lt);
 
 			if (c.html || c.text) {
-				$lm.addClass('ui-loadmask-hasmsg');
+				$ll.addClass('ui-loadmask-hasmsg');
 				if (c.html) {
 					$lt.html(c.html);
 				} else {
@@ -826,18 +724,16 @@ jQuery.jcookie = function(name, value, options) {
 			}
 			$lm.append($ll);
 		}
-		$el.append($lm);
 
-		if (c.fixed || typeof($.fn.center) != 'function') {
-			$lm.addClass('ui-loadmask-fixed');
-		} else {
-			$lm.center();
-			$el.data("_maskc_timeout", setInterval(function() {
-				$lm.center();
-			}, 250));
+		if ($el.css("position") == "static") {
+			$el.addClass("ui-loadmasked-relative");
 		}
-		$lm.css({'visibility': 'visible'});
+		if (c.mask !== false) {
+			$el.append($('<div class="ui-loadmask-mask"></div>'));
+		}
 		
+		$el.append($lm).addClass("ui-loadmasked");
+
 		if (c.timeout > 0) {
 			$el.data("_unmask_timeout", setTimeout(function() {
 				unmaskElement($el);

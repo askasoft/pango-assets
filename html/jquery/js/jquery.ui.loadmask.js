@@ -13,13 +13,6 @@
 			clearTimeout(t);
 			$el.removeData("_unmask_timeout");
 		}
-
-		//if this element has center timeout scheduled then remove it
-		t = $el.data("_maskc_timeout");
-		if (t) {
-			clearInterval(t);
-			$el.removeData("_maskc_timeout");
-		}
 	}
 
 	function maskElement($el, c) {
@@ -29,30 +22,22 @@
 			clearMaskTimeout($el);
 		}
 		
-		if ($el.css("position") == "static") {
-			$el.addClass("ui-loadmasked-relative");
-		}
-		$el.addClass("ui-loadmasked");
-
-		if (c.mask !== false) {
-			$el.append($('<div class="ui-loadmask-mask"></div>'));
-		}
-		
-		var $lm = $('<div class="ui-loadmask" style="visibility:hidden;"></div>');
+		var $lm = $('<div class="ui-loadmask">');
 		if (c.cssClass) {
 			$lm.addClass(c.cssClass);
 		}
+
+		var $ll = $('<div class="ui-loadmask-load">');
 		if (c.content) {
 			$lm.append($(c.content));
 		} else {
-			var $ll = $('<div class="ui-loadmask-load">'),
-				$li = $('<div class="ui-loadmask-icon">'),
+			var $li = $('<div class="ui-loadmask-icon">'),
 				$lt = $('<div class="ui-loadmask-text">');
 
 			$ll.append($li).append($lt);
 
 			if (c.html || c.text) {
-				$lm.addClass('ui-loadmask-hasmsg');
+				$ll.addClass('ui-loadmask-hasmsg');
 				if (c.html) {
 					$lt.html(c.html);
 				} else {
@@ -61,18 +46,16 @@
 			}
 			$lm.append($ll);
 		}
-		$el.append($lm);
 
-		if (c.fixed || typeof($.fn.center) != 'function') {
-			$lm.addClass('ui-loadmask-fixed');
-		} else {
-			$lm.center();
-			$el.data("_maskc_timeout", setInterval(function() {
-				$lm.center();
-			}, 250));
+		if ($el.css("position") == "static") {
+			$el.addClass("ui-loadmasked-relative");
 		}
-		$lm.css({'visibility': 'visible'});
+		if (c.mask !== false) {
+			$el.append($('<div class="ui-loadmask-mask"></div>'));
+		}
 		
+		$el.append($lm).addClass("ui-loadmasked");
+
 		if (c.timeout > 0) {
 			$el.data("_unmask_timeout", setTimeout(function() {
 				unmaskElement($el);

@@ -33,7 +33,6 @@
 	border: 0;
 }
 .custom .ui-loadmask-big .ui-loadmask-text {
-	min-height: 64px;
 	padding: 0 20px;
 }
 </style>
@@ -65,7 +64,6 @@
 </div>
 
 <script src="../../html/jquery/js/jquery-1.12.4.js" type="text/javascript"></script>
-<script src="../../html/jquery/js/jquery.ui.center.js" type="text/javascript"></script>
 <script src="../../html/jquery/js/jquery.ui.loadmask.js" type="text/javascript"></script>
 <script src="../../html/bootstrap3/js/bootstrap.js" type="text/javascript"></script>
 
@@ -84,7 +82,7 @@
 			$('#d').loadmask({ cssClass: 'ui-loadmask-big', text: 'Loading...\nLoading...'});
 		});
 		$('#loadmaskm3').click(function() {
-			$('#d').loadmask({ cssClass: 'ui-loadmask-big', text: 'Loading... Loading... Loading... Loading... Loading... Loading... Loading...'});
+			$('#d').loadmask({ cssClass: 'ui-loadmask-big', text: 'Loading...1 Loading...2 Loading...3 Loading...4 Loading...5 Loading...6 Loading...7 Loading...8'});
 		});
 		$('#unloadmask').click(function() {
 			$('#d').unloadmask();

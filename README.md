@@ -18,19 +18,17 @@ Features
 
    | Name                         | Description                         |
    |------------------------------|-------------------------------------|
-   | jquery.ajaf.js               | a ajax for file upload              |
-   | jquery.browser.js            | browser user-agent detector         |
+   | jquery.ajaf.js               | ajax for file upload                |
    | jquery.cookie.js             | cookie plugin                       |
    | jquery.disable.js            | $.disable function                  |
    | jquery.jscript.js            | dynamic load javascript             |
-   | [jquery.ui.center.js](./docs/jquery/jquery.ui.center.html)         | Move the selected element(s) to the center position of parent element (default: body)               |
    | jquery.ui.fieldset.js        | collapseable fieldset               |
-   | [jquery.ui.loadmask.js](./docs/jquery/jquery.ui.loadmask.html)     | loader mask                         |
-   | [jquery.ui.popup.js](./docs/jquery/jquery.ui.popup.html)           | a popup plugin   |
+   | [jquery.ui.loadmask.js](./docs/jquery/jquery.ui.loadmask.html)     | loader mask plugin |
+   | [jquery.ui.popup.js](./docs/jquery/jquery.ui.popup.html)           | popup plugin   |
    | jquery.ui.scrollIntoView.js  | $.scrollIntoView function           |
    | jquery.ui.selecttext.js      | $.selectText function               |
    | jquery.ui.textarea.js        | textarea auto expand and fire event on Ctrl+Enter   |
-   | [jquery.ui.toast.js](./docs/jquery/jquery.ui.toast.html)           | notification (toast) plugin         |
+   | [jquery.ui.toast.js](./docs/jquery/jquery.ui.toast.html)           | notification (toast) plugin |
 
  - jQuery Extra
 
