@@ -20,16 +20,11 @@
 	}
 	
 	function __ajaxError(xhr, status, err) {
-		if (xhr && xhr.responseJSON) {
+		if (xhr.responseJSON) {
 			return JSON.stringify(xhr.responseJSON, null, 2);
 		}
-	
-		msg = '';
-		if (err) {
-			msg += err + '\n';
-		}
 		
-		return msg || 'Server Error';
+		return xhr.responseText || '<h1>' + (err || status) + '</h1>';
 	}
 
 	function __align($p, trigger, position) {
@@ -237,7 +232,7 @@
 				$pc.css('visibility', 'hidden').html(html);
 			},
 			error: function(xhr, status, err) {
-				$pc.css('visibility', 'hidden').html(c, (c.ajaxError || __ajaxError)(xhr, status, err));
+				$pc.css('visibility', 'hidden').html((c.ajaxError || __ajaxError)(xhr, status, err));
 			},
 			complete: function(xhr, status) {
 				c.loaded = true;
