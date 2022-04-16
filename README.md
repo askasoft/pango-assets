@@ -29,6 +29,7 @@ Features
    | jquery.ui.selecttext.js      | $.selectText function               |
    | jquery.ui.textarea.js        | textarea auto expand and fire event on Ctrl+Enter   |
    | [jquery.ui.toast.js](./docs/jquery/jquery.ui.toast.html)           | notification (toast) plugin |
+   | [jquery.ui.nice-select.js](./docs/jquery/jquery.ui.nice-select.html)           | select plugin |
 
  - jQuery Extra
 
@@ -55,5 +56,6 @@ Pango Assets use the following software packages:
 | jQuery                  | [jQuery](https://jquery.org/license/)                         | [https://jquery.com/](https://jquery.com/) |
 | jquery-lightbox         |                                                               | [http://leandrovieira.com](http://leandrovieira.com) |
 | jquery-toast            | [MIT](https://opensource.org/licenses/MIT)                    | [https://github.com/kamranahmedse/jquery-toast-plugin](https://github.com/kamranahmedse/jquery-toast-plugin) |
+| jquery-nice-select      |  | [https://github.com/hernansartorio/jquery-nice-select](https://github.com/hernansartorio/jquery-nice-select) |
 | summernote              | [MIT](https://opensource.org/licenses/MIT)       | [https://summernote.org](https://summernote.org) |
 

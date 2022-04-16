@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<title>jQuery Nice Select</title>
+	<link href="../../html/bootstrap3/css/bootstrap.css" rel="stylesheet" type="text/css" />
+	<link href="../../html/font-awesome4/css/font-awesome.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="../../html/jquery/css/jquery.ui.nice-select.css">
+	<style>
+		/* Code blocks */
+		pre[class*="language-"] {
+			padding: 18px 24px;
+			margin: 0 0 24px;
+			overflow: auto;
+		}
+
+		:not(pre)>code[class*="language-"],
+		pre[class*="language-"] {
+			background: #f6f7f9;
+		}
+
+		/* Inline code */
+		:not(pre)>code[class*="language-"] {
+			padding: 0 2px 1px;
+		}
+
+		.token.comment,
+		.token.prolog,
+		.token.doctype,
+		.token.cdata {
+			color: #90a1b5;
+		}
+
+		.token.punctuation {
+			color: #999;
+		}
+
+		.namespace {
+			opacity: .7;
+		}
+
+		.token.property,
+		.token.tag,
+		.token.boolean,
+		.token.number,
+		.token.constant,
+		.token.symbol,
+		.token.deleted {
+			color: #EC4444;
+		}
+
+		.token.selector,
+		.token.attr-name,
+		.token.string,
+		.token.char,
+		.token.builtin,
+		.token.inserted {
+			color: #4ABF60;
+		}
+
+		.token.operator,
+		.token.entity,
+		.token.url,
+		.language-css .token.string,
+		.style .token.string {
+			color: #a67f59;
+			background: rgba(255, 255, 255, 0.5);
+		}
+
+		.token.atrule,
+		.token.attr-value,
+		.token.keyword {
+			color: #55a1fb;
+		}
+
+		.token.function {
+			color: #DD4A68;
+		}
+
+		.token.regex,
+		.token.important,
+		.token.variable {
+			color: #e90;
+		}
+
+		.token.important,
+		.token.bold {
+			font-weight: bold;
+		}
+
+		.token.italic {
+			font-style: italic;
+		}
+
+		.token.entity {
+			cursor: help;
+		}
+
+		body {
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+			color: #445870;
+			font-family: 'Work Sans', sans-serif;
+			font-size: 14px;
+			font-weight: normal;
+			letter-spacing: -0.25px;
+			margin: 0;
+			padding: 0 18px;
+		}
+
+		p {
+			line-height: 1.6;
+			margin: 0 0 1.6em;
+		}
+
+		h1 {
+			font-size: 36px;
+			font-weight: 300;
+			letter-spacing: -2px;
+			margin: 0 0 24px;
+		}
+
+		h2 {
+			font-size: 22px;
+			font-weight: 400;
+			margin: 0 0 12px;
+			padding-top: 48px;
+		}
+
+		h3 {
+			font-size: 18px;
+			font-weight: 400;
+			margin: 0 0 12px;
+			padding-top: 12px;
+		}
+
+		ul {
+			margin: 0;
+			padding-left: 16px;
+		}
+
+		a:not(.button) {
+			color: #55a1fb;
+			outline: none;
+			text-decoration: none;
+			-webkit-transition: all 0.2s ease-in-out;
+			transition: all 0.2s ease-in-out;
+			border-bottom: 1px solid transparent;
+		}
+
+		a:not(.button):hover,
+		a:not(.button):focus {
+			border-bottom: 1px solid #88bfff;
+		}
+
+		::-moz-selection {
+			background: #f3f4f7;
+		}
+
+		::selection {
+			background: #f3f4f7;
+		}
+
+		.container {
+			margin: 96px auto 60px;
+			max-width: 40em;
+		}
+
+		.box {
+			background-color: #f6f7f9;
+			border-radius: 2px;
+			margin-bottom: 30px;
+			padding: 24px 30px;
+		}
+
+		.box:before,
+		.box:after {
+			content: "";
+			display: table;
+		}
+
+		.box:after {
+			clear: both;
+		}
+
+		label {
+			color: #90a1b5;
+			font-size: 11px;
+			margin: 0 10px;
+			text-transform: uppercase;
+			vertical-align: middle;
+		}
+
+		label.right {
+			float: right;
+		}
+
+		.button {
+			-webkit-tap-highlight-color: transparent;
+			background-color: #55a1fb;
+			border-radius: 5px;
+			border: none;
+			box-sizing: border-box;
+			color: #fff;
+			cursor: pointer;
+			display: inline-block;
+			font-weight: 600;
+			height: 42px;
+			line-height: 42px;
+			outline: none;
+			padding: 0 24px;
+			text-align: center;
+			text-decoration: none;
+			-webkit-transition: all 0.2s ease-in-out;
+			transition: all 0.2s ease-in-out;
+			white-space: nowrap;
+			width: auto;
+		}
+
+		.button:hover,
+		.button:focus {
+			background-color: #4196fb;
+		}
+
+		.button:active,
+		.button.nice-select.open {
+			background-color: #2d8bfa;
+		}
+
+		.button.light {
+			background-color: #fff;
+			border: 1px solid #e0e7ee;
+			color: #55a1fb;
+			line-height: 40px;
+			margin-left: 24px;
+		}
+
+		.button.light:hover {
+			border-color: #d0dae5;
+		}
+
+		.button.light:active,
+		.button.light.nice-select.open,
+		.button.light:focus {
+			border-color: #88bfff;
+		}
+
+		@media screen and (max-width: 360px) {
+			.button {
+				width: 100%;
+			}
+
+			.button.light {
+				margin: 18px 0 0;
+			}
+		}
+
+		.header {
+			text-align: center;
+			margin-bottom: 60px;
+		}
+
+		@media screen and (min-width: 600px) {
+			.header {
+				padding: 0 18px;
+			}
+		}
+
+		.header p {
+			color: #90a1b5;
+			font-size: 18px;
+			margin-bottom: 36px;
+		}
+
+		.footer {
+			text-align: center;
+		}
+
+		.footer p {
+			margin-bottom: 90px;
+		}
+
+		.credit {
+			color: #90a1b5;
+			clear: both;
+			font-size: 12px;
+			margin-top: 90px;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<div class="header">
+			<h1>jQuery Nice Select</h1>
+
+			<p>A lightweight jQuery plugin that replaces native select elements with customizable dropdowns.</p>
+		</div>
+
+		<h2>Usage</h2>
+		<p><strong>1.</strong> Include jQuery and the plugin.</p>
+
+		<pre><code class="language-html">&lt;script src=&quot;path/to/jquery.js&quot;&gt;&lt;/script&gt; 
+&lt;script src=&quot;path/to/jquery.nice-select.js&quot;&gt;&lt;/script&gt;</code></pre>
+
+		<p><strong>2.</strong> Include the plugin styles, either the compiled CSS...</p>
+
+		<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;path/to/nice-select.css&quot;&gt;</code></pre>
+
+		<p>...or, ideally, import the SASS source (if you use SASS) in your main stylesheet for easier customization.
+		</p>
+
+		<pre><code class="language-scss">@import 'nice-select'; // Or 'nice-select-prefixed'. See 'Notes' section.</code></pre>
+
+		<p><strong>3.</strong> Finally, initialize the plugin.</p>
+
+		<pre><code class="language-js">$(document).ready(function() {
+  $('select').niceSelect();
+});</code></pre>
+
+		<p>All done. That will turn this:</p>
+
+		<div class="box">
+			<label>Label: </label>
+			<select class="ignore">
+				<option value="1">Some option</option>
+				<option value="2">Another option</option>
+				<option value="3" disabled>A disabled option</option>
+				<option value="4">Potato</option>
+			</select>
+		</div>
+
+		<p>...into this:</p>
+
+		<div class="box">
+			<label>Label: </label>
+			<select>
+				<option value="1">Some option</option>
+				<option value="2">Another option</option>
+				<option value="3" disabled>A disabled option</option>
+				<option value="4">Potato</option>
+			</select>
+		</div>
+
+		<p>There are no settings (a native select doesn't have settings), although there are a couple of special
+			features, documented below.</p>
+
+		<h2>Display text</h2>
+		<p>You can specify an alternate text for each option, which will be displayed on the dropdown when that option
+			is selected.</p>
+
+		<p>Add a <code class="language-html">data-display</code> attribute to the desired options. For example:</p>
+
+		<pre><code class="language-html">&lt;select&gt;
+  &lt;option data-display=&quot;Select&quot;&gt;Nothing&lt;/option&gt;
+  &lt;option value=&quot;1&quot;&gt;Some option&lt;/option&gt;
+  &lt;option value=&quot;2&quot;&gt;Another option&lt;/option&gt;
+  &lt;option value=&quot;3&quot; disabled&gt;A disabled option&lt;/option&gt;
+  &lt;option value=&quot;4&quot;&gt;Potato&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+
+		<div class="box">
+			<select>
+				<option data-display="Select">Nothing</option>
+				<option value="1">Some option</option>
+				<option value="2">Another option</option>
+				<option value="3" disabled>A disabled option</option>
+				<option value="4">Potato</option>
+			</select>
+		</div>
+
+		<h2>Custom classes</h2>
+
+		<p>Every class you assign to a select element will be copied to the generated dropdown. That way you can
+			customize different versions of it to your needs just by adding new CSS.</p>
+
+		<p>These are some examples included in the plugin stylesheet:</p>
+
+		<div class="box">
+			<label>Wide</label>
+			<select class="wide">
+				<option data-display="Select">Nothing</option>
+				<option value="1">Some option</option>
+				<option value="2">Another option</option>
+				<option value="3" disabled>A disabled option</option>
+				<option value="4">Potato</option>
+			</select>
+		</div>
+
+		<div class="box">
+			<label class="right">Right</label>
+			<select class="right">
+				<option data-display="Select">Nothing</option>
+				<option value="1">Some option</option>
+				<option value="2">Another option</option>
+				<option value="3" disabled>A disabled option</option>
+				<option value="4">Potato</option>
+			</select>
+		</div>
+
+		<div class="box">
+			<label>Small</label>
+			<select class="small">
+				<option data-display="Select">Nothing</option>
+				<option value="1">Some option</option>
+				<option value="2">Another option</option>
+				<option value="3" disabled>A disabled option</option>
+				<option value="4">Potato</option>
+			</select>
+		</div>
+
+		<h2>Methods</h2>
+
+		<h3>update</h3>
+
+		<p>Updates the custom dropdown to reflect any changes made to the original select element.</p>
+
+		<pre><code class="language-js">$('select').niceSelect('update');</code></pre>
+
+		<h3>destroy</h3>
+
+		<p>Removes the custom dropdown and unbinds all its events.</p>
+
+		<pre><code class="language-js">$('select').niceSelect('destroy');</code></pre>
+
+		<h2>Notes</h2>
+
+		<ul>
+			<li>
+				<p>Autoprefixer is used to add vendor prefixes to CSS rules for older browser support. A
+					<i>nice-select-prefixed.scss</i> file is also generated if you wish to include the SASS file in your
+					project and you're not using Autoprefixer.
+				</p>
+			</li>
+			<li>
+				<p>In some cases there can be a brief flash in which the native selects are displayed—between the time
+					the page is loaded and the scripts are run. This can be fixed by adding a CSS rule to hide them
+					beforehand:</p>
+
+				<pre><code class="language-scss">select {
+  display: none;
+}</code></pre>
+
+				<p>Note that the above rule will hide all native select elements. If you're only applying the plugin to
+					some select elements you should adapt the rule accordingly.</p>
+			</li>
+		</ul>
+
+	</div>
+
+	<script src="../../html/jquery/js/jquery-1.12.4.js"></script>
+	<script src="../../html/jquery/js/jquery.ui.nice-select.js"></script>
+
+	<script>
+		$(document).ready(function () {
+			$('select').each(function() {
+				var $s = $(this);
+				for (var i = 100; i < 200; i++) {
+					$s.append($('<option>').val(i).text('option ' + i));
+				}
+			});
+			$('select:not(.ignore)').niceSelect();
+		});    
+	</script>
+</body>
+
+</html>

@@ -48,6 +48,14 @@ build-js          --> Merge & minify javascript files
 
 	<!-- build -->
 	<target name="build-js" description="Merge &amp; minify javascript files">
+		<!-- corejs -->
+		<concat destfile="${dir.s}/corejs/corejs.js" binary="true">
+			<fileset dir="${dir.s}/corejs" includes="core.*.js" />
+		</concat>
+		<antcall target="minjs">
+			<param name="src" value="${dir.s}/corejs/corejs" />
+		</antcall>
+
 		<!-- jquery plugins -->
 		<concat destfile="${dir.jq}/js/jquery-plugins.js" binary="true">
 			<fileset dir="${dir.jq}/js" includes="jquery.*.js" />
@@ -56,7 +64,7 @@ build-js          --> Merge & minify javascript files
 			<param name="src" value="${dir.jq}/js/jquery-plugins" />
 		</antcall>
 
-		<!-- extras -->
+		<!-- lightbox -->
 		<antcall target="minjs">
 			<param name="src" value="${dir.s}/lightbox/jquery.ui.lightbox" />
 		</antcall>
@@ -76,7 +84,7 @@ build-js          --> Merge & minify javascript files
 			<param name="src" value="${dir.jq}/css/jquery-plugins" />
 		</antcall>
 
-		<!-- extras -->
+		<!-- lightbox -->
 		<antcall target="mincss">
 			<param name="src" value="${dir.s}/lightbox/jquery.ui.lightbox" />
 		</antcall>

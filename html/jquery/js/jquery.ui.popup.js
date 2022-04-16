@@ -43,7 +43,6 @@
 		}
 
 		var p = $t.offset(), $w = $(window);
-		console.log(p.left, p.top, tw, th, pw, ph);
 
 		switch (position) {
 		case 'top left':
