@@ -31,11 +31,11 @@
 		if ($.isArray(os.text)) {
 			var $ul = $('<ul class="ui-toast-ul">');
 			for (var i = 0; i < os.text.length; i++) {
-				$ul.append($('<li class="ui-toast-li" id="ui-toast-item-' + i + '">')[sm](os.text[i]));
+				$ul.append($('<li class="ui-toast-' + sm + '">')[sm](os.text[i]));
 			}
 			$t.append($ul);
 		} else {
-			$t.append($('<span>')[sm](os.text));
+			$t.append($('<div class="ui-toast-' + sm + '">')[sm](os.text));
 		}
 
 		if (os.bgColor !== false) {
@@ -120,9 +120,14 @@
 	}
 
 	function bindToast($t, os) {
-		$t.on('toast.afterShown', function() {
-			processLoader($t, os);
-		});
+		$t.unbind();
+
+		if (canAutoHide(os)) {
+			$t.on('toast.afterShown', function() {
+				showLoader($t, os);
+				bindHover($t, os);
+			});
+		}
 
 		$t.find('.ui-toast-close').on('click', function(e) {
 			e.preventDefault();
@@ -170,7 +175,6 @@
 				"role": "alert",
 				"aria-live": "polite"
 			});
-
 			$('body').append($c);
 
 		} else if (!sn || isNaN(parseInt(sn, 10))) {
@@ -195,37 +199,54 @@
 		return (os.hideAfter !== false) && !isNaN(parseInt(os.hideAfter, 10));
 	}
 
-	function processLoader($t, os) {
-		// Show the loader only, if auto-hide is on and loader is demanded
-		if (!canAutoHide(os) || os.loader === false) {
-			return false;
+	function showLoader($t, os) {
+		if (os.loader) {
+			// 400 is the default time that jquery uses for fade/slide
+			// Divide by 1000 for milliseconds to seconds conversion
+			var transition = 'width ' + (os.hideAfter - 400) / 1000 + 's ease-in';
+
+			$t.find('.ui-toast-loader').css({
+				'width': '100%',
+				'-webkit-transition': transition,
+				'transition': transition,
+				'background-color': os.loaderBg
+			});
 		}
-
-		var loader = $t.find('.ui-toast-loader');
-
-		// 400 is the default time that jquery uses for fade/slide
-		// Divide by 1000 for milliseconds to seconds conversion
-		var transitionTime = (os.hideAfter - 400) / 1000 + 's';
-		var loaderBg = os.loaderBg;
-
-		var style = loader.attr('style') || '';
-		style = style.substring(0, style.indexOf('-webkit-transition')); // Remove the last transition definition
-
-		style += '-webkit-transition: width ' + transitionTime + ' ease-in; \
-				  -o-transition: width ' + transitionTime + ' ease-in; \
-				  transition: width ' + transitionTime + ' ease-in; \
-				  background-color: ' + loaderBg + ';';
-
-		loader.attr('style', style).addClass('ui-toast-loaded');
 	}
 
-	function animate($t, os) {
-		transitionIn($t, os);
+	function hideLoader($t, os) {
+		if (os.loader) {
+			$t.find('.ui-toast-loader').css({
+				'width': '0%',
+				'-webkit-transition': 'none',
+				'transition': 'none'
+			});
+		}
+	}
 
-		if (canAutoHide(os)) {
-			setTimeout(function() {
-				transitionOut($t, os);
-			}, os.hideAfter);
+	function setHideTimer($t, os) {
+		$t.data('timer', setTimeout(function() {
+			$t.off('mouseenter mouseleave').removeData('timer');
+			transitionOut($t, os);
+		}, os.hideAfter));
+	}
+
+	function clearHideTimer($t) {
+		var tm = $t.data('timer');
+		if (tm) {
+			clearTimeout(tm);
+		}
+	}
+
+	function bindHover($t, os) {
+		if (os.stopHideOnHover) {
+			$t.hover(function() {
+				clearHideTimer($t);
+				hideLoader($t, os);
+			}, function() {
+				setHideTimer($t, os);
+				showLoader($t, os);
+			});
 		}
 	}
 
@@ -272,7 +293,11 @@
 		addToDom($t, os);
 		position(os);
 		bindToast($t, os);
-		animate($t, os);
+		transitionIn($t, os);
+
+		if (canAutoHide(os)) {
+			setHideTimer($t, os);
+		}
 
 		var api = {
 			reset: function(resetWhat) {
@@ -307,6 +332,7 @@
 		transition: 'fade',
 		closeable: true,
 		hideAfter: 5000,
+		stopHideOnHover: true,
 		stack: 5,
 		position: 'top-right',
 		bgColor: false,
