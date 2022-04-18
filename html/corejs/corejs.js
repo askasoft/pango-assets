@@ -984,44 +984,44 @@ if (typeof String.prototype.contains != "function") {
 	};
 }
 if (typeof String.prototype.trimLeft != "function") {
+	var re = /^\s+/;
 	String.prototype.trimLeft = function() {
-		var re = /^\s+/;
 		return this.replace(re, "");
 	};
 }
 if (typeof String.prototype.trimRight != "function") {
+	var re = /\s+$/;
 	String.prototype.trimRight = function() {
-		var re = /\s+$/;
 		return this.replace(re, "");
 	};
 }
 if (typeof String.prototype.trim != "function") {
+	var re = /^\s+|\s+$/g;
 	String.prototype.trim = function() {
-		var re = /^\s+|\s+$/g;
 		return this.replace(re, "");
 	};
 }
 if (typeof String.prototype.stripLeft != "function") {
+	var re = /^[\s\u3000]+/;
 	String.prototype.stripLeft = function() {
-		var re = /^[\s\u3000]+/;
 		return this.replace(re, "");
 	};
 }
 if (typeof String.prototype.stripRight != "function") {
+	var re = /[\s\u3000]+$/;
 	String.prototype.stripRight = function() {
-		var re = /[\s\u3000]+$/;
 		return this.replace(re, "");
 	};
 }
 if (typeof String.prototype.strip != "function") {
+	var re = /^[\s\u3000]+|[\s\u3000]+$/g;
 	String.prototype.strip = function() {
-		var re = /^[\s\u3000]+|[\s\u3000]+$/g;
 		return this.replace(re, "");
 	};
 }
 if (typeof String.prototype.left != "function") {
 	String.prototype.left = function(len) {
-		return this.substr(0, len);
+		return this.substring(0, len);
 	};
 }
 if (typeof String.prototype.mid != "function") {
@@ -1036,24 +1036,20 @@ if (typeof String.prototype.right != "function") {
 	};
 }
 if (typeof String.prototype.leftPad != "function") {
-	String.prototype.leftPad = function(ch, size) {
-		if (!ch) {
-			ch = " ";
-		}
+	String.prototype.leftPad = function(sz, ch) {
+		ch = ch || ' ';
 		var r = this;
-		while (r.length < size) {
+		while (r.length < sz) {
 			r = ch + r;
 		}
 		return r;
 	};
 }
 if (typeof String.prototype.rightPad != "function") {
-	String.prototype.rightPad = function(ch, size) {
-		if (!ch) {
-			ch = " ";
-		}
+	String.prototype.rightPad = function(sz, ch) {
+		ch = ch || ' ';
 		var r = this;
-		while (r.length < size) {
+		while (r.length < sz) {
 			r += chr;
 		}
 		return r;
@@ -1136,23 +1132,37 @@ if (typeof String.prototype.escapeRegExp != "function") {
 	};
 }
 if (typeof String.prototype.escapeHTML != "function") {
+	var ehm = {
+		'&': '&amp;',
+		"'": '&apos;',
+		'`': '&#x60;',
+		'"': '&quot;',
+		'<': '&lt;',
+		'>': '&gt;'
+	};
+
 	String.prototype.escapeHTML = function() {
-		return this.replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;");
+		return this.replace(/[&'`"<>]/g, function(c) {
+			return ehm[c];
+		});
 	};
 }
 if (typeof String.prototype.unescapeHTML != "function") {
+	// a simple version, complete version: https://stackoverflow.com/questions/994331/how-to-unescape-html-character-entities-in-java
+	var uhm = {
+		'&lt;'   : '<',
+		'&gt;'   : '>',
+		'&amp;'  : '&',
+		'&quot;' : '"',
+		'&apos;' : "'",
+		'&#x27;' : "'",
+		'&#x60;' : '`'
+	};
+
 	String.prototype.unescapeHTML = function() {
-		return this.replace(/&gt;/g, ">").replace(/&lt;/g, "<").replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&amp;/g, "&");
-	};
-}
-if (typeof String.prototype.escapePHTML != "function") {
-	String.prototype.escapePHTML = function() {
-		return this.escapeHTML().replace(/\r?\n/g, "<br/>");
-	};
-}
-if (typeof String.prototype.unescapePHTML != "function") {
-	String.prototype.unescapePHTML = function() {
-		return this.replace(/<br\/>/g, "\n").unescapeHTML();
+		return this.replace(/&(lt|gt|amp|quot|apos|#x27|#x60);/g, function(t) {
+			return uhm[t];
+		});
 	};
 }
 if (typeof String.prototype.prettifyXML != "function") {
@@ -1174,7 +1184,7 @@ if (typeof String.prototype.prettifyXML != "function") {
 				indent = 1;
 			}
 	
-			xml += ('').leftPad(' ', pad * 2) + s + '\r\n';
+			xml += ('').leftPad(pad * 2) + s + '\r\n';
 			pad += indent;
 		}
 	
@@ -1306,13 +1316,13 @@ if (typeof String.isNotEmpty != "function") {
 	};
 }
 if (typeof String.leftPad != "function") {
-	String.leftPad = function(s, ch, size) {
-		return s != null ? String(s).leftPad(ch, size) : "".leftPad(ch, size);
+	String.leftPad = function(s, sz, ch) {
+		return s != null ? String(s).leftPad(sz, ch) : "".leftPad(sz, ch);
 	};
 }
 if (typeof String.rightPad != "function") {
-	String.rightPad = function(s, ch, size) {
-		return s != null ? String(s).rightPad(ch, size) : "".rightPad(ch, size);
+	String.rightPad = function(s, sz, ch) {
+		return s != null ? String(s).rightPad(sz, ch) : "".rightPad(sz, ch);
 	};
 }
 if (typeof String.startsWith != "function") {
