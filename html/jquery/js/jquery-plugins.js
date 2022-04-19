@@ -1558,7 +1558,7 @@ jQuery.jcookie = function(name, value, options) {
 		$t.unbind();
 
 		if (canAutoHide(os)) {
-			$t.on('toast.afterShown', function() {
+			$t.on('shown.toast', function() {
 				showLoader($t, os);
 				bindHover($t, os);
 			});
@@ -1570,25 +1570,25 @@ jQuery.jcookie = function(name, value, options) {
 		});
 
 		if (typeof os.beforeShow == 'function') {
-			$t.on('toast.beforeShow', function() {
+			$t.on('show.toast', function() {
 				os.beforeShow($t);
 			});
 		}
 
 		if (typeof os.afterShown == 'function') {
-			$t.on('toast.afterShown', function() {
+			$t.on('shown.toast', function() {
 				os.afterShown($t);
 			});
 		}
 
 		if (typeof os.beforeHide == 'function') {
-			$t.on('toast.beforeHide', function() {
+			$t.on('hide.toast', function() {
 				os.beforeHide($t);
 			});
 		}
 
 		if (typeof os.afterHidden == 'function') {
-			$t.on('toast.afterHidden', function() {
+			$t.on('hidden.toast', function() {
 				os.afterHidden($t);
 			});
 		}
@@ -1697,8 +1697,8 @@ jQuery.jcookie = function(name, value, options) {
 			break;
 		}
 
-		$t.hide().trigger('toast.beforeShow')[tm](function() {
-			$t.trigger('toast.afterShown');
+		$t.hide().trigger('show.toast')[tm](function() {
+			$t.trigger('shown.toast');
 		});
 	}
 
@@ -1714,8 +1714,8 @@ jQuery.jcookie = function(name, value, options) {
 			break;
 		}
 
-		$t.trigger('toast.beforeHide')[tm](function() {
-			$t.trigger('toast.afterHidden');
+		$t.trigger('hide.toast')[tm](function() {
+			$t.trigger('hidden.toast');
 		});
 	}
 
