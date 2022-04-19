@@ -10,13 +10,13 @@
 			return;
 		}
 		
-		var $p = $('.ui-popup:visible'), c = $p.data('popup');
+		var $c = $('.ui-popup:visible>.ui-popup-content'), c = $c.data('popup');
 		if (c && c.trigger == el) {
 			return;
 		}
 
-		$('.ui-popup').hide();
-		$(document).unbind('click', __click);
+		_hide($c);
+		$(document).off('click.popup');
 	}
 	
 	function __ajaxError(xhr, status, err) {
@@ -171,165 +171,186 @@
 		});
 		$a.show();
 	}
-	
-	function _toggle(c, trigger) {
-		var $p = $("#" + c.id); 
-		if ($p.is(':hidden')) {
-			_show(c, trigger);
-			return;
-		}
 
-		if (c.trigger === trigger) {
-			_hide(c);
-			return;
-		}
-
-		_show(c, trigger);
+	function __mypop($c) {
+		return $c.parent('.ui-popup');
 	}
 
-	function _show(c, trigger) {
-		$('.ui-popup').hide();
+	function _toggle($c, trigger) {
+		trigger = trigger || window;
+		var $p = __mypop($c); 
+		if ($p.is(':hidden')) {
+			_show($c, trigger);
+			return;
+		}
 
-		var $p = $("#" + c.id).show();
+		var c = $c.data('popup');
+		if (c.trigger === trigger) {
+			_hide($c);
+			return;
+		}
+
+		_show($c, trigger);
+	}
+
+	function _show($c, trigger) {
+		_hide($('.ui-popup:visible>.ui-popup-content'));
+
+		var $p = __mypop($c).show(), c = $c.data('popup');
 
 		if (!c.loaded) {
 			c.showing = trigger || window;
 			__align($p, c.showing, c.position);
-			_load(c);
+			_load($c);
 			return;
 		}
 
+		$c.trigger('show.popup');
+
 		c.trigger = trigger || window;
 		__align($p, c.trigger, c.position);
-		$p.children(".ui-popup-content")
-			.hide().css('visibility', 'visible')
-			[c.transition || 'slideDown']();
-
-		if (c.trigger !== window && c.clickHide) {
-			$(document).click(__click);
-		}
+		$c.hide().css('visibility', 'visible')[c.transition || 'slideDown'](function() {
+			$c.trigger('shown.popup');
+			if (c.trigger !== window && c.clickHide) {
+				$(document).on('click.popup', __click);
+			}
+		});
 	}
 	
-	function _hide(c) {
-		var $p = $('#' + c.id);
+	function _hide($c) {
+		$c.trigger('hide.popup');
+		var $p = __mypop($c); 
 		if ($p.is(':visible')) {
 			$p.hide();
-			$(document).unbind('click', __click);
+			$(document).off('click.popup');
+			$c.trigger('hidden.popup');
 		}
 	}
 
-	function _load(c) {
-		var $p = $('#' + c.id), $pc = $p.children(".ui-popup-content");
+	function _load($c, c) {
+		$c.trigger('load.popup');
+		$c.html('<div class="ui-popup-loading"></div>');
 
-		$pc.html('<div class="ui-popup-loading"></div>');
+		c = $.extend($c.data('popup'), c);
 		$.ajax({
 			url: c.url, 
-			data: c.params,
-			dataType: 'html',
+			data: c.data,
+			dataType: c.dataType || 'html',
 			method: c.method || 'GET',
 			success: function(html) {
-				$pc.css('visibility', 'hidden').html(html);
+				$c.css('visibility', 'hidden').html(html);
 			},
 			error: function(xhr, status, err) {
-				$pc.css('visibility', 'hidden').html((c.ajaxError || __ajaxError)(xhr, status, err));
+				$c.css('visibility', 'hidden').html((c.ajaxError || __ajaxError)(xhr, status, err));
 			},
-			complete: function(xhr, status) {
+			complete: function() {
 				c.loaded = true;
+				$c.trigger('loaded.popup');
 				if (c.showing) {
-					if ($p.is(':visible')) {
-						_show(c, c.showing);
+					if (__mypop($c).is(':visible')) {
+						_show($c, c.showing);
 					}
-					c.trigger = c.showing;
 					delete c.showing;
 				}
 			}
 		});
 	}
 
-	function _update(c, o) {
+	function _update($c, o) {
 		if (o) {
-			$.extend(c, o, { id: c.id });
+			$.extend($c.data('popup'), o);
 		}
 	}
 
-	function _callback(c, args) {
+	function _callback($c) {
+		var c = $c.data('popup');
 		if (typeof(c.callback) == 'function') {
-			c.callback.apply(window, args);
+			c.callback.apply($c, [].slice.call(arguments, 1));
 		}
 	}
 
-	function __api(c) {
-		return {
-			callback: function() {
-				_callback(c, arguments);
-			},
-			update: function(o) {
-				_update(o);
-				return this;
-			},
-			load: function() {
-				_load(c);
-				return this;
-			},
-			toggle: function(trigger) {
-				_toggle(c, trigger || window);
-				return this;
-			},
-			show: function(trigger) {
-				_show(c, trigger);
-				return this;
-			},
-			hide: function() {
-				_hide(c);
-				return this;
-			}
-		};
+	function __options($c) {
+		var c = {};
+		var ks = [ 'url', 'method', 'data', 'dataType', 'position', 'transition', 'clickHide' ];
+		$.each(ks, function(i, k) {
+			c[k] = $c.attr('popup-' + k);
+		})
+		return c;
 	}
 
-	$.popup = function(c) {
-		c = c || {};
-		if (typeof c == 'string') {
-			c = { id: c };
-		}
-		if (!c.id) {
-			c.id = $('.ui-popup:visible').attr('id');
-		}
-		if (!c.id) {
+	function __init($c, c) {
+		var $p = __mypop($c);
+		if ($p.length) {
+			_update($c, c);
 			return;
 		}
+		
+		c = $.extend(__options($c), c);
 
-		var $p = $('#' + c.id);
-
-		if ($p.length > 0) {
-			var o = $p.data('popup');
-			c = $.extend(o, c, { id: o.id });
-			return __api(c); 
-		}
-
-		$p = $('<div class="ui-popup">').attr('id', c.id).css('display', 'none')
+		$p = $('<div class="ui-popup">').css({'display': 'none'})
 			.append($('<div class="ui-popup-arrow">'))
 			.append($('<i class="ui-popup-close">&times;</i>'))
-			.append($('<div class="ui-popup-content">'))
 			.appendTo('body');
 
 		if (c.cssClass) {
 			$p.addClass(c.cssClass);
 		}
 
-		$p.find('.ui-popup-close').click(function() { _hide(c); });
+		$p.find('.ui-popup-close').click(function() {
+			_hide($c);
+		});
 
-		$p.data('popup', c);
-		if (c.content) {
-			$(c.content).detach().appendTo($p.children(".ui-popup-content"));
+		$c.appendTo($p).data('popup', c).addClass('ui-popup-content').css({'display': 'block'});
+
+		if (c.url) {
+			c.loaded = false;
+			if (c.autoload) {
+				_load($c);
+			}
+		} else {
 			c.loaded = true;
-			delete c.content;
-			return __api(c);
 		}
+	}
 
-		if (c.autoload && c.url) {
-			_load(c);
-		}
-
-		return __api(c); 
+	var api = {
+		load: _load,
+		show: _show,
+		hide: _hide,
+		update: _update,
+		toggle: _toggle,
+		callback: _callback
 	};
+
+	$.fn.popup = function(c) {
+		var args = [].slice.call(arguments);
+		this.each(function() {
+			var $c = $(this);
+
+			if (typeof(c) == 'string') {
+				var p = $c.data('popup');
+				if (!p) {
+					__init($c); 
+				}
+				args[0] = $c;
+				api[c].apply($c, args);
+				return;
+			}
+
+			__init($c, c);
+		});
+		return this;
+	};
+
+	$.popup = function() {
+		var $c = $('.ui-popup:visible>.ui-popup-content');
+		$c.popup.apply($c, arguments);
+		return $c;
+	};
+
+	// POPUP DATA-API
+	// ==================
+	$(window).on('load', function () {
+		$('[data-spy="popup"]').popup();
+	});
+
 })(jQuery);

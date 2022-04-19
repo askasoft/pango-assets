@@ -63,7 +63,8 @@
 
 <script type="text/javascript">
 	$('#popup_list tbody>tr').click(function() {
-		var id = $(this).closest('.ui-popup').attr('id');
-		$.popup(id).callback($(this).find('td:last').text());
+		$(this).closest('.ui-popup-content')
+			.popup('hide')
+			.popup('callback', $(this).find('td:last').text());
 	});
 </script>
