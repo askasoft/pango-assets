@@ -134,16 +134,16 @@
 			var $dropdown = $(this);
 			var $focused_option = $($dropdown.find('.focus') || $dropdown.find('ui li.selected'));
 
-			// Space or Enter
-			if (event.keyCode == 32 || event.keyCode == 13) {
+			switch (event.keyCode) {
+			case 32: // Space
+			case 13: // Enter
 				if ($dropdown.hasClass('open')) {
 					$focused_option.trigger('click');
 				} else {
 					$dropdown.trigger('click');
 				}
 				return false;
-				// Down
-			} else if (event.keyCode == 40) {
+			case 40: // Down
 				if (!$dropdown.hasClass('open')) {
 					$dropdown.trigger('click');
 				} else {
@@ -154,8 +154,7 @@
 					}
 				}
 				return false;
-				// Up
-			} else if (event.keyCode == 38) {
+			case 38: // Up
 				if (!$dropdown.hasClass('open')) {
 					$dropdown.trigger('click');
 				} else {
@@ -166,13 +165,12 @@
 					}
 				}
 				return false;
-				// Esc
-			} else if (event.keyCode == 27) {
+			case 27: // Esc
 				if ($dropdown.hasClass('open')) {
 					$dropdown.trigger('click');
 				}
-				// Tab
-			} else if (event.keyCode == 9) {
+				break;
+			case 9: // Tab
 				if ($dropdown.hasClass('open')) {
 					return false;
 				}
