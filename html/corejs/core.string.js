@@ -57,7 +57,7 @@ if (typeof String.prototype.strip != "function") {
 }
 if (typeof String.prototype.left != "function") {
 	String.prototype.left = function(len) {
-		return this.substring(0, len);
+		return this.slice(0, len);
 	};
 }
 if (typeof String.prototype.mid != "function") {
@@ -101,16 +101,42 @@ if (typeof String.prototype.endsWith != "function") {
 		return this.startsWith(suffix, this.length - suffix.length);
 	};
 }
+
 if (typeof String.prototype.capitalize != "function") {
 	String.prototype.capitalize = function() {
-		return this.substr(0, 1).toUpperCase() + this.substr(1);
+		return this.charAt(0).toUpperCase() + this.slice(1);
 	};
 }
 if (typeof String.prototype.uncapitalize != "function") {
 	String.prototype.uncapitalize = function() {
-		return this.substr(0, 1).toLowerCase() + this.substr(1);
+		return this.charAt(0).toLowerCase() + this.slice(1);
 	};
 }
+
+
+if (typeof String.prototype.snakeCase != "function") {
+	String.prototype.snakeCase = function(c) {
+		c = c || '_';
+		var s = this.camelCase();
+		return s.replace(/[A-Z]/g, function(m) {
+			return c + m.charAt(0).toLowerCase();
+		});
+	};
+}
+if (typeof String.prototype.camelCase != "function") {
+	String.prototype.camelCase = function() {
+		s = this.charAt(0).toLowerCase() + this.slice(1);
+		return s.replace(/[-_](.)/g, function(m, g) {
+			return g.toUpperCase();
+		});
+	};
+}
+if (typeof String.prototype.pascalCase != "function") {
+	String.prototype.pascalCase = function(c) {
+		return this.camelCase().capitalize();
+	};
+}
+
 if (typeof String.prototype.format != "function") {
 	String.prototype.format = function() {
 		var args = arguments;
@@ -122,13 +148,13 @@ if (typeof String.prototype.format != "function") {
 if (typeof String.prototype.substrAfter != 'function') {
 	String.prototype.substrAfter = function(c) {
 		var s = this, i = s.indexOf(c);
-		return (i >= 0) ? s.substring(i + 1) : "";
+		return (i >= 0) ? s.slice(i + 1) : "";
 	};
 }
 if (typeof String.prototype.substrBefore != 'function') {
 	String.prototype.substrBefore = function(c) {
 		var s = this, i = s.indexOf(c);
-		return (i >= 0) ? s.substring(0, i) : s;
+		return (i >= 0) ? s.slice(0, i) : s;
 	};
 }
 if (typeof String.prototype.ellipsis != 'function') {
@@ -155,7 +181,7 @@ if (typeof String.prototype.ellipsiz != 'function') {
 				sz++;
 			}
 			if (sz > len) {
-				return this.substring(0, i) + '...';
+				return this.slice(0, i) + '...';
 			}
 		}
 		return this;
@@ -317,159 +343,14 @@ if (typeof String.prototype.decodeBase64 != "function") {
 			decOut += String.fromCharCode((bits & 0xff0000) >>16, (bits & 0xff00) >>8, bits & 0xff);
 		}
 		if (this.charCodeAt(i -2) == 61) {
-			return(decOut.substring(0, decOut.length -2));
+			return(decOut.slice(0, decOut.length - 2));
 		}
 		else if (this.charCodeAt(i -1) == 61) {
-			return(decOut.substring(0, decOut.length -1));
+			return(decOut.slice(0, decOut.length - 1));
 		}
 		else {
 			return(decOut);
 		}
-	};
-}
-
-//-----------------------------------
-//  Static functions
-//-----------------------------------
-if (typeof String.defaults != "function") {
-	String.defaults = function(s, d) {
-		return s == null ? d : s;
-	};
-}
-if (typeof String.hashCode != "function") {
-	String.hashCode = function(s) {
-		return s == null ? 0 : s.hashCode();
-	};
-}
-if (typeof String.isEmpty != "function") {
-	String.isEmpty = function(s) {
-		return s == null || s.length < 1;
-	};
-}
-if (typeof String.isNotEmpty != "function") {
-	String.isNotEmpty = function(s) {
-		return s != null && s.length > 0;
-	};
-}
-if (typeof String.leftPad != "function") {
-	String.leftPad = function(s, sz, ch) {
-		return s != null ? String(s).leftPad(sz, ch) : "".leftPad(sz, ch);
-	};
-}
-if (typeof String.rightPad != "function") {
-	String.rightPad = function(s, sz, ch) {
-		return s != null ? String(s).rightPad(sz, ch) : "".rightPad(sz, ch);
-	};
-}
-if (typeof String.startsWith != "function") {
-	String.startsWith = function(s, w) {
-		return s != null ? String(s).startsWith(w) : false;
-	};
-}
-if (typeof String.endsWith != "function") {
-	String.endsWith = function(s, w) {
-		return s != null ? String(s).endsWith(w) : false;
-	};
-}
-if (typeof String.substrAfter != "function") {
-	String.substrAfter = function(s, c) {
-		return s != null ? String(s).substrAfter(c) : "";
-	};
-}
-if (typeof String.substrBefore != "function") {
-	String.substrBefore = function(s, c) {
-		return s != null ? String(s).substrBefore(c) : "";
-	};
-}
-if (typeof String.ellipsis != "function") {
-	String.ellipsis = function(s, l) {
-		return s != null ? String(s).ellipsis(l) : "";
-	};
-}
-if (typeof String.ellipsiz != "function") {
-	String.ellipsiz = function(s, l) {
-		return s != null ? String(s).ellipsiz(l) : "";
-	};
-}
-if (typeof String.escapeHTML != "function") {
-	String.escapeHTML = function(s) {
-		return s != null ? String(s).escapeHTML() : "";
-	};
-}
-if (typeof String.unescapeHTML != "function") {
-	String.unescapeHTML = function(s) {
-		return s != null ? String(s).unescapeHTML() : "";
-	};
-}
-if (typeof String.escapePHTML != "function") {
-	String.escapePHTML = function(s) {
-		return s != null ? String(s).escapePHTML() : "";
-	};
-}
-if (typeof String.unescapePHTML != "function") {
-	String.unescapePHTML = function(s) {
-		return s != null ? String(s).unescapePHTML() : "";
-	};
-}
-if (typeof String.prettifyXML != "function") {
-	String.prettifyXML = function(s) {
-		return s != null ? String(s).prettifyXML() : "";
-	};
-}
-if (typeof String.encodeUTF8 != 'function') {
-	String.encodeUTF8 = function(s) {
-		return s != null ? String(s).encodeUTF8() : "";
-	};
-}
-if (typeof String.decodeUTF8 != 'function') {
-	String.decodeUTF8 = function(s) {
-		return s != null ? String(s).decodeUTF8() : "";
-	};
-}
-if (typeof String.encodeBase64 != 'function') {
-	String.encodeBase64 = function(s) {
-		return s != null ? String(s).encodeBase64() : "";
-	};
-}
-if (typeof String.decodeBase64 != 'function') {
-	String.decodeBase64 = function(s) {
-		return s != null ? String(s).decodeBase64() : "";
-	};
-}
-if (typeof String.escapeRegExp != 'function') {
-	String.escapeRegExp = function(s) {
-		return s != null ? String(s).escapeRegExp() : "";
-	};
-}
-if (typeof String.formatSize != "function") {
-	var KB = 1024,
-		MB = KB * KB,
-		GB = MB * KB,
-		TB = GB * KB,
-		PB = TB * KB;
-	
-	String.formatSize = function(n, p) {
-		p = Math.pow(10, p || 2);
-		var sz = "";
-		if (n >= PB) {
-			sz = Math.round(n * p / PB) / p + ' PB';
-		}
-		else if (n >= TB) {
-			sz = Math.round(n * p / TB) / p + ' TB';
-		}
-		else if (n >= GB) {
-			sz = Math.round(n * p / GB) / p + ' GB';
-		}
-		else if (n >= MB) {
-			sz = Math.round(n * p / MB) / p + ' MB';
-		}
-		else if (n >= KB) {
-			sz = Math.round(n * p / KB) / p + ' KB';
-		}
-		else if (n != '') {
-			sz = n + ' bytes';
-		}
-		return sz;
 	};
 }
 
