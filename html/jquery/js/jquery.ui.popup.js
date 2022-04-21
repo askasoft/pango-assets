@@ -1,4 +1,4 @@
-(function ($) {
+(function($) {
 	function __click(evt) {
 		var el = evt.target;
 		if (!el || el.tagName == "HTML") {
@@ -27,6 +27,103 @@
 		return xhr.responseText || '<h1>' + (err || status) + '</h1>';
 	}
 
+	var ArrowClasses = {
+		'top left': 'dn hr1 vb',
+		'top right': 'dn hl1 vb',
+		'top center': 'dn hc vb',
+		'bottom left': 'up hr1 vt',
+		'bottom right': 'up hl1 vt',
+		'bottom center': 'up hc vt',
+		'left bottom': 'rt hr vt1',
+		'left top': 'rt hr vb1',
+		'left middle': 'rt hr vm',
+		'right bottom': 'lt hl vt1',
+		'right top': 'lt hl vb1',
+		'right middle': 'lt hl vm'
+	};
+
+	function __position($p, $t, position) {
+		var tw = $t.outerWidth(), th = $t.outerHeight(), p = $t.offset();
+		var pw = $p.outerWidth(), ph = $p.outerHeight();
+
+		switch (position) {
+		case 'top left':
+			p.top -= (ph + 11);
+			p.left -= (pw - 50);
+			break;
+		case 'top right':
+			p.top -= (ph + 11);
+			p.left += (tw - 50);
+			break;
+		case 'top center':
+			p.top -= (ph + 11);
+			p.left += (tw - pw) / 2;
+			break;
+		case 'bottom left':
+			p.top += th + 11;
+			p.left -= (pw - 50);
+			break;
+		case 'bottom right':
+			p.top += th + 11;
+			p.left += (tw - 50);
+			break;
+		case 'bottom center':
+			p.top += th + 11;
+			p.left += (tw - pw) / 2;
+			break;
+		case 'left bottom':
+			p.left -= (pw + 11);
+			p.top -= 20;
+			break;
+		case 'left top':
+			p.left -= (pw + 11);
+			p.top = p.top - ph + th + 20;
+			break;
+		case 'left middle':
+			p.left -= (pw + 11);
+			p.top -= (ph / 2 - 20);
+			break;
+		case 'right bottom':
+			p.left += tw + 11;
+			p.top -= 20;
+			break;
+		case 'right top':
+			p.left += tw + 11;
+			p.top = p.top - ph + th + 20;
+			break;
+		case 'right middle':
+			p.left += tw + 11;
+			p.top -= (ph / 2 - 20);
+			break;
+		}
+
+		return p;
+	}
+
+	function __in_screen($p, p) {
+		var $w = $(window),
+			wt = $w.scrollTop(), wl = $w.scrollLeft(),
+			wb = wt + $w.height(), wr = wl + $w.width(),
+			pr = p.left + $p.outerWidth(), pb = p.top + $p.outerHeight();
+
+		return p.left >= wl && p.left <= wr
+			&& p.top >= wt && p.top <= wb
+			&& pr >= wl && pr <= wr
+			&& pb >= wt && pb <= wb;
+	}
+
+	function __positions($p, $t, ps) {
+		for (var i = 0; i < ps.length; i++) {
+			var p = __position($p, $t, ps[i]);
+			p.position = ps[i];
+			if (__in_screen($p, p)) {
+				return p;
+			}
+			ps[i] = p;
+		}
+		return ps[0];
+	}
+
 	function __align($p, trigger, position) {
 		var $a = $p.find('.ui-popup-arrow').hide();
 		if (position == 'center') {
@@ -39,135 +136,42 @@
 
 		$p.removeClass('ui-popup-center');
 
-		var $t = $(trigger), tw = $t.outerWidth(), th = $t.outerHeight(), p = $t.offset();
-		var $w = $(window), pw = $p.outerWidth(), ph = $p.outerHeight();
-
-		switch (position) {
-			case 'top left':
-				p.top -= (ph + 11); // arrow height
-				p.left -= (pw - 50);
-				$a.attr('class', 'ui-popup-arrow dn hr1 vb');
-				break;
-			case 'top right':
-				p.top -= (ph + 11); // arrow height
-				p.left += (tw - 50);
-				$a.attr('class', 'ui-popup-arrow dn hl1 vb');
-				break;
-			case 'top center':
-				p.top -= (ph + 11); // arrow height
-				p.left += (tw - pw) / 2;
-				$a.attr('class', 'ui-popup-arrow dn hc vb');
-				break;
+		var $t = $(trigger), ac = ArrowClasses[position];
+		if (ac) {
+			p = __position($p, $t, position);
+		} else {
+			switch (position) {
 			case 'top':
-				p.top -= (ph + 11); // arrow height
-				var x = p.left + (tw - pw) / 2;
-				if (x > $w.scrollLeft()) {
-					p.left = x;
-					$a.attr('class', 'ui-popup-arrow dn hc vb');
-				} else {
-					p.left += (tw - 50);
-					$a.attr('class', 'ui-popup-arrow dn hl1 vb');
-				}
-				break;
-			case 'bottom left':
-				p.top += th + 11; // arrow height
-				p.left -= (pw - 50);
-				$a.attr('class', 'ui-popup-arrow up hr1 vt');
-				break;
-			case 'bottom right':
-				p.top += th + 11; // arrow height
-				p.left += (tw - 50);
-				$a.attr('class', 'ui-popup-arrow up hl1 vt');
-				break;
-			case 'bottom center':
-				p.top += th + 11; // arrow height
-				p.left += (tw - pw) / 2;
-				$a.attr('class', 'ui-popup-arrow up hc vt');
+				p = __positions($p, $t, ['top center', 'top left', 'top right']);
 				break;
 			case 'bottom':
-				p.top += th + 11; // arrow height
-				var x = p.left + (tw - pw) / 2;
-				if (x > $w.scrollLeft()) {
-					p.left = x;
-					$a.attr('class', 'ui-popup-arrow up hc vt');
-				} else {
-					p.left += (tw - 50);
-					$a.attr('class', 'ui-popup-arrow up hl1 vt');
-				}
-				break;
-			case 'left down':
-				p.left -= (pw + 11); // arrow width
-				p.top -= 20;
-				$a.attr('class', 'ui-popup-arrow rt hr vt1');
-				break;
-			case 'left up':
-				p.left -= (pw + 11); // arrow width
-				p.top = p.top - ph + th + 20;
-				$a.attr('class', 'ui-popup-arrow rt hr vb1');
-				break;
-			case 'left middle':
-				p.left -= (pw + 11); // arrow width
-				p.top -= (ph / 2 - 20);
-				$a.attr('class', 'ui-popup-arrow rt hr vm');
+				p = __positions($p, $t, ['bottom center', 'bottom left', 'bottom right']);
 				break;
 			case 'left':
-				p.left -= (pw + 11); // arrow width
-				var y = p.top - (ph / 2 - 20);
-				if (y > $w.scrollTop()) {
-					p.top = y;
-					$a.attr('class', 'ui-popup-arrow rt hr vm');
-				} else {
-					p.top -= 20;
-					$a.attr('class', 'ui-popup-arrow rt hr vt1');
-				}
-				break;
-			case 'right down':
-				p.left += tw + 11; // arrow width
-				p.top -= 20;
-				$a.attr('class', 'ui-popup-arrow lt hl vt1');
-				break;
-			case 'right up':
-				p.left += tw + 11; // arrow width
-				p.top = p.top - ph + th + 20;
-				$a.attr('class', 'ui-popup-arrow lt hl vb1');
-				break;
-			case 'right middle':
-				p.left += tw + 11; // arrow width
-				p.top -= (ph / 2 - 20);
-				$a.attr('class', 'ui-popup-arrow lt hl vm');
+				p = __positions($p, $t, ['left middle', 'left bottom', 'left top']);
 				break;
 			case 'right':
-				p.left += tw + 11; // arrow width
-				var y = p.top - (ph / 2 - 20);
-				if (y > $w.scrollTop()) {
-					p.top = y;
-					$a.attr('class', 'ui-popup-arrow lt hl vm');
-				} else {
-					p.top -= 20;
-					$a.attr('class', 'ui-popup-arrow lt hl vt1');
-				}
+				p = __positions($p, $t, ['right middle', 'right bottom', 'right top']);
 				break;
 			case 'auto':
 			default:
-				var x = p.left + (pw / 2) - $w.scrollLeft(), y = p.top + (ph / 2) - $w.scrollTop();
-				if (y > $w.height() / 2 && p.top - ph - 11 >= 0) {
-					p.top -= (ph + 11); // arrow height
-					p.left += (tw - pw) / 2;
-					$a.attr('class', 'ui-popup-arrow dn hc vb');
-				} else {
-					p.top += th + 11; // arrow height
-					p.left += (tw - pw) / 2;
-					$a.attr('class', 'ui-popup-arrow up hc vt');
-				}
+				p = __positions($p, $t, [
+					'bottom center', 'bottom left', 'bottom right',
+					'right middle', 'right bottom', 'right top',
+					'top center', 'top left', 'top right',
+					'right middle', 'right bottom', 'right top'
+				]);
 				break;
+			}
+			ac = ArrowClasses[p.position];
 		}
 
 		$p.css({
 			position: 'absolute',
-			top: p.top + "px",
-			left: p.left + "px"
+			top: p.top,
+			left: p.left
 		});
-		$a.show();
+		$a.attr('class', 'ui-popup-arrow ' + ac).show();
 	}
 
 	function __mypop($c) {
@@ -207,7 +211,7 @@
 
 		c.trigger = trigger || window;
 		__align($p, c.trigger, c.position);
-		$c.hide().css('visibility', 'visible')[c.transition](function () {
+		$c.hide().css('visibility', 'visible')[c.transition](function() {
 			$c.trigger('shown.popup');
 			if (c.clickHide == true || c.clickHide == 'true') {
 				$(document).on('click.popup', __click);
@@ -235,13 +239,13 @@
 			data: c.data,
 			dataType: c.dataType,
 			method: c.method,
-			success: function (html) {
+			success: function(html) {
 				$c.css('visibility', 'hidden').html(html);
 			},
-			error: function (xhr, status, err) {
+			error: function(xhr, status, err) {
 				$c.css('visibility', 'hidden').html((c.ajaxError || __ajaxError)(xhr, status, err));
 			},
-			complete: function () {
+			complete: function() {
 				c.loaded = true;
 				$c.trigger('loaded.popup');
 				if (c.showing) {
@@ -277,7 +281,7 @@
 	function __options($c) {
 		var c = {};
 		var ks = ['url', 'method', 'data', 'data-type', 'position', 'transition', 'click-hide', 'callback'];
-		$.each(ks, function (i, k) {
+		$.each(ks, function(i, k) {
 			var o = $c.attr('popup-' + k);
 			if (o !== undefined && o !== null && o != '') {
 				k = __camelCase(k);
@@ -305,7 +309,7 @@
 			$p.addClass(c.cssClass);
 		}
 
-		$p.find('.ui-popup-close').click(function () {
+		$p.find('.ui-popup-close').click(function() {
 			_hide($c);
 		});
 
@@ -330,9 +334,9 @@
 		callback: _callback
 	};
 
-	$.fn.popup = function (c) {
+	$.fn.popup = function(c) {
 		var args = [].slice.call(arguments);
-		this.each(function () {
+		this.each(function() {
 			var $c = $(this);
 
 			if (typeof (c) == 'string') {
@@ -350,7 +354,7 @@
 		return this;
 	};
 
-	$.popup = function () {
+	$.popup = function() {
 		var $c = $('.ui-popup:visible>.ui-popup-content');
 		$c.popup.apply($c, arguments);
 		return $c;
@@ -366,9 +370,9 @@
 
 	// POPUP DATA-API
 	// ==================
-	$(window).on('load', function () {
+	$(window).on('load', function() {
 		$('[data-spy="popup"]').popup();
-		$('[popup-target]').click(function () {
+		$('[popup-target]').click(function() {
 			var $t = $(this), c = __options($t);
 			$($t.attr('popup-target')).popup(c).popup('toggle', this);
 		});
