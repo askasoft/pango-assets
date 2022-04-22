@@ -293,7 +293,7 @@ fieldset.ui-collapsed {
 .ui-popup {
 	position: absolute;
 	z-index: 2100;
-	padding: 4px;
+	padding: 10px;
 	min-width: 100px;
 	min-height: 100px;
 	background-color: #fff;
@@ -402,6 +402,14 @@ fieldset.ui-collapsed {
 	}
 }
 
+.ui-popup-error {
+	color: #a94442;
+	background-color: #f2dede;
+	border-color: #ebccd1;
+	border-radius: 4px;
+	padding: 15px;
+	white-space: pre-wrap;
+}
 /**
  * jQuery toast plugin created by Kamran Ahmed copyright MIT license 2014
  */

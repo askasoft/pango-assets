@@ -11,20 +11,30 @@
 		}
 
 		var $c = $('.ui-popup:visible>.ui-popup-content'), c = $c.data('popup');
-		if (c && c.trigger == el) {
-			return;
+		if (c && c.trigger && c.trigger !== window) {
+			// check event element is inside the trigger
+			while (el) {
+				if (c.trigger === el) {
+					return;
+				}
+				el = el.parentNode;
+			}
 		}
 
 		_hide($c);
 		$(document).off('click.popup');
 	}
 
-	function __ajaxError(xhr, status, err) {
-		if (xhr.responseJSON) {
-			return JSON.stringify(xhr.responseJSON, null, 2);
-		}
+	function __ajaxError($c, xhr, status, err) {
+		var html = xhr.responseJSON 
+			? JSON.stringify(xhr.responseJSON, null, 4)
+			: (xhr.responseText || err || status);
 
-		return xhr.responseText || '<h1>' + (err || status) + '</h1>';
+		$c.empty().append($('<div class="ui-popup-error">').html(html));
+	}
+
+	function __ajaxRender($c, data, status, xhr) {
+		$c.html(data);
 	}
 
 	var ArrowClasses = {
@@ -201,9 +211,12 @@
 		var $p = __mypop($c).show(), c = $c.data('popup');
 
 		if (!c.loaded) {
-			c.showing = trigger || window;
-			__align($p, c.showing, c.position);
-			_load($c);
+			if (c.showing) {
+				c.showing = trigger || c.showing;
+			} else {
+				c.showing = trigger || window;
+				_load($c, c);
+			}
 			return;
 		}
 
@@ -220,9 +233,9 @@
 	}
 
 	function _hide($c) {
-		$c.trigger('hide.popup');
 		var $p = __mypop($c);
 		if ($p.is(':visible')) {
+			$c.trigger('hide.popup');
 			$p.hide();
 			$(document).off('click.popup');
 			$c.trigger('hidden.popup');
@@ -230,26 +243,34 @@
 	}
 
 	function _load($c, c) {
-		$c.trigger('load.popup');
-		$c.html('<div class="ui-popup-loading"></div>');
+		var $p = __mypop($c);
 
 		c = $.extend($c.data('popup'), c);
+
+		$c.html('<div class="ui-popup-loading"></div>');
+		if (c.showing) {
+			__align($p, c.showing, c.position);
+		}
+		$c.trigger('load.popup');
+
 		$.ajax({
 			url: c.url,
 			data: c.data,
 			dataType: c.dataType,
 			method: c.method,
-			success: function(html) {
-				$c.css('visibility', 'hidden').html(html);
+			success: function(data, status, xhr) {
+				$c.css('visibility', 'hidden');
+				(c.ajaxRender || __ajaxRender)($c, data, status, xhr);
 			},
 			error: function(xhr, status, err) {
-				$c.css('visibility', 'hidden').html((c.ajaxError || __ajaxError)(xhr, status, err));
+				$c.css('visibility', 'hidden');
+				(c.ajaxError || __ajaxError)($c, xhr, status, err);
 			},
 			complete: function() {
 				c.loaded = true;
 				$c.trigger('loaded.popup');
 				if (c.showing) {
-					if (__mypop($c).is(':visible')) {
+					if ($p.is(':visible')) {
 						_show($c, c.showing);
 					}
 					delete c.showing;
@@ -266,7 +287,7 @@
 
 	function _callback($c) {
 		var c = $c.data('popup');
-		if (typeof (c.callback) == 'function') {
+		if (typeof(c.callback) == 'function') {
 			c.callback.apply(c.trigger, [].slice.call(arguments, 1));
 		}
 	}
@@ -279,13 +300,29 @@
 	}
 
 	function __options($c) {
+		var ks = [
+			'url',
+			'method',
+			'data',
+			'data-type',
+			'position',
+			'transition',
+			'click-hide',
+			'callback',
+			'ajaxRender',
+			'ajaxError'
+		];
+		var fs = ['callback', 'ajaxRender', 'ajaxError'];
+
 		var c = {};
-		var ks = ['url', 'method', 'data', 'data-type', 'position', 'transition', 'click-hide', 'callback'];
 		$.each(ks, function(i, k) {
-			var o = $c.attr('popup-' + k);
-			if (o !== undefined && o !== null && o != '') {
+			var s = $c.attr('popup-' + k);
+			if (s !== undefined && s !== null && s != '') {
 				k = __camelCase(k);
-				c[k] = k == 'callback' ? new Function(o) : o;
+				if ($.inArray(k, fs) >= 0) {
+					s = new Function(s);
+				}
+				c[k] = s;
 			}
 		})
 		return c;
@@ -339,7 +376,7 @@
 		this.each(function() {
 			var $c = $(this);
 
-			if (typeof (c) == 'string') {
+			if (typeof(c) == 'string') {
 				var p = $c.data('popup');
 				if (!p) {
 					__init($c);
