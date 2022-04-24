@@ -26,15 +26,21 @@
 	}
 
 	function __ajaxError($c, xhr, status, err) {
-		var html = xhr.responseJSON 
-			? JSON.stringify(xhr.responseJSON, null, 4)
-			: (xhr.responseText || err || status);
+		var $e = $('<div class="ui-popup-error">');
 
-		$c.empty().append($('<div class="ui-popup-error">').html(html));
+		if (xhr.responseJSON) {
+			$e.addClass('json').text(JSON.stringify(xhr.responseJSON, null, 4));
+		} else if (xhr.responseText) {
+			$e.html(xhr.responseText);
+		} else {
+			$e.text(err || status || 'Server error!');
+		}
+		
+		$c.empty().append($e);
 	}
 
 	function __ajaxRender($c, data, status, xhr) {
-		$c.html(data);
+		$c.html(xhr.responseText);
 	}
 
 	var ArrowClasses = {
@@ -205,6 +211,16 @@
 		_show($c, trigger);
 	}
 
+	function _hide($c) {
+		var $p = __mypop($c);
+		if ($p.is(':visible')) {
+			$c.trigger('hide.popup');
+			$p.hide();
+			$(document).off('click.popup');
+			$c.trigger('hidden.popup');
+		}
+	}
+
 	function _show($c, trigger) {
 		_hide($('.ui-popup:visible>.ui-popup-content'));
 
@@ -220,6 +236,10 @@
 			return;
 		}
 
+		__show($p, $c, c, trigger);
+	}
+
+	function __show($p, $c, c, trigger) {
 		$c.trigger('show.popup');
 
 		c.trigger = trigger || window;
@@ -230,16 +250,6 @@
 				$(document).on('click.popup', __click);
 			}
 		});
-	}
-
-	function _hide($c) {
-		var $p = __mypop($c);
-		if ($p.is(':visible')) {
-			$c.trigger('hide.popup');
-			$p.hide();
-			$(document).off('click.popup');
-			$c.trigger('hidden.popup');
-		}
 	}
 
 	function _load($c, c) {
@@ -259,7 +269,8 @@
 			dataType: c.dataType,
 			method: c.method,
 			success: function(data, status, xhr) {
-				$c.css('visibility', 'hidden');
+				c.loaded = true;
+				$c.css('visibility', 'hidden').trigger('loaded.popup');
 				(c.ajaxRender || __ajaxRender)($c, data, status, xhr);
 			},
 			error: function(xhr, status, err) {
@@ -267,11 +278,9 @@
 				(c.ajaxError || __ajaxError)($c, xhr, status, err);
 			},
 			complete: function() {
-				c.loaded = true;
-				$c.trigger('loaded.popup');
 				if (c.showing) {
 					if ($p.is(':visible')) {
-						_show($c, c.showing);
+						__show($p, $c, c, c.showing);
 					}
 					delete c.showing;
 				}
