@@ -992,11 +992,11 @@ jQuery.jcookie = function(name, value, options) {
 		}
 
 		var $e = $(el);
-		if ($e.hasClass('ui-popup') || $e.closest('.ui-popup').length) {
+		if ($e.closest('.ui-popup-wrap').length) {
 			return;
 		}
 
-		var $c = $('.ui-popup:visible>.ui-popup-content'), c = $c.data('popup');
+		var $c = __active(), c = $c.data('popup');
 		if (c && c.trigger && c.trigger !== window) {
 			// check event element is inside the trigger
 			while (el) {
@@ -1176,13 +1176,19 @@ jQuery.jcookie = function(name, value, options) {
 		$a.attr('class', 'ui-popup-arrow ' + ac).show();
 	}
 
-	function __mypop($c) {
-		return $c.parent('.ui-popup');
+	function __masker() {
+		return $('.ui-popup-mask');
+	}
+	function __active() {
+		return $('.ui-popup-wrap:visible>.ui-popup');
+	}
+	function __wrapper($c) {
+		return $c.parent('.ui-popup-wrap');
 	}
 
 	function _toggle($c, trigger) {
 		trigger = trigger || window;
-		var $p = __mypop($c);
+		var $p = __wrapper($c);
 		if ($p.is(':hidden')) {
 			_show($c, trigger);
 			return;
@@ -1198,19 +1204,27 @@ jQuery.jcookie = function(name, value, options) {
 	}
 
 	function _hide($c) {
-		var $p = __mypop($c);
+		var $p = __wrapper($c);
 		if ($p.is(':visible')) {
 			$c.trigger('hide.popup');
 			$p.hide();
 			$(document).off('click.popup');
 			$c.trigger('hidden.popup');
 		}
+		__masker().hide();
 	}
 
 	function _show($c, trigger) {
-		_hide($('.ui-popup:visible>.ui-popup-content'));
+		_hide(__active());
 
-		var $p = __mypop($c).show(), c = $c.data('popup');
+		var $p = __wrapper($c), c = $c.data('popup');
+
+		if (c.mask == true || c.mask == 'true') {
+			__masker().show();
+		}
+		$p.find('.ui-popup-close')[(c.closer == true || c.closer == 'true') ? 'show' : 'hide']();
+
+		$p.show();
 
 		if (!c.loaded) {
 			if (c.showing) {
@@ -1230,7 +1244,9 @@ jQuery.jcookie = function(name, value, options) {
 
 		c.trigger = trigger || window;
 		__align($p, c.trigger, c.position);
+		$p.focus();
 		$c.hide().css('visibility', 'visible')[c.transition](function() {
+			//$c.find(':input').eq(0).focus();
 			$c.trigger('shown.popup');
 			if (c.clickHide == true || c.clickHide == 'true') {
 				$(document).on('click.popup', __click);
@@ -1239,13 +1255,14 @@ jQuery.jcookie = function(name, value, options) {
 	}
 
 	function _load($c, c) {
-		var $p = __mypop($c);
+		var $p = __wrapper($c);
 
 		c = $.extend($c.data('popup'), c);
 
 		$c.html('<div class="ui-popup-loading"></div>');
 		if (c.showing) {
 			__align($p, c.showing, c.position);
+			$p.focus();
 		}
 		$c.trigger('load.popup');
 
@@ -1258,6 +1275,9 @@ jQuery.jcookie = function(name, value, options) {
 				c.loaded = true;
 				$c.css('visibility', 'hidden').trigger('loaded.popup');
 				(c.ajaxRender || __ajaxRender)($c, data, status, xhr);
+				$c.find('[popup-dismiss="true"]').click(function() {
+					_hide($c);
+				});
 			},
 			error: function(xhr, status, err) {
 				$c.css('visibility', 'hidden');
@@ -1302,10 +1322,12 @@ jQuery.jcookie = function(name, value, options) {
 			'data-type',
 			'position',
 			'transition',
+			'mask',
+			'closer',
 			'click-hide',
 			'callback',
-			'ajaxRender',
-			'ajaxError'
+			'ajax-render',
+			'ajax-error'
 		];
 		var fs = ['callback', 'ajaxRender', 'ajaxError'];
 
@@ -1324,7 +1346,11 @@ jQuery.jcookie = function(name, value, options) {
 	}
 
 	function __init($c, c) {
-		var $p = __mypop($c);
+		if (__masker().length == 0) {
+			$('<div class="ui-popup-mask">').appendTo('body');
+		}
+
+		var $p = __wrapper($c);
 		if ($p.length) {
 			_update($c, c);
 			return;
@@ -1332,20 +1358,18 @@ jQuery.jcookie = function(name, value, options) {
 
 		c = $.extend({}, $.popup.defaults, __options($c), c);
 
-		$p = $('<div class="ui-popup">').css({ 'display': 'none' })
+		$p = $('<div class="ui-popup-wrap" tabindex="0">')
 			.append($('<div class="ui-popup-arrow">'))
-			.append($('<i class="ui-popup-close">&times;</i>'))
+			.append($('<i class="ui-popup-close">&times;</i>').click(function() {
+				_hide($c);
+			}))
 			.appendTo('body');
 
 		if (c.cssClass) {
 			$p.addClass(c.cssClass);
 		}
 
-		$p.find('.ui-popup-close').click(function() {
-			_hide($c);
-		});
-
-		$c.appendTo($p).data('popup', c).addClass('ui-popup-content').css({ 'display': 'block' });
+		$c.appendTo($p).data('popup', c).addClass('ui-popup').show();
 
 		if (c.url) {
 			c.loaded = false;
@@ -1354,6 +1378,9 @@ jQuery.jcookie = function(name, value, options) {
 			}
 		} else {
 			c.loaded = true;
+			$c.find('[popup-dismiss="true"]').click(function() {
+				_hide($c);
+			});
 		}
 	}
 
@@ -1387,7 +1414,7 @@ jQuery.jcookie = function(name, value, options) {
 	};
 
 	$.popup = function() {
-		var $c = $('.ui-popup:visible>.ui-popup-content');
+		var $c = __active();
 		$c.popup.apply($c, arguments);
 		return $c;
 	};

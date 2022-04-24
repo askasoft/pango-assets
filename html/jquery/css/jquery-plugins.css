@@ -290,17 +290,32 @@ fieldset.ui-collapsed {
 .no-csspointerevents .nice-select.open>ul {
 	display: block;
 }
-.ui-popup {
-	position: absolute;
+.ui-popup-mask {
+    background-color: #000;
+	opacity: 0.5;
+	display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
 	z-index: 2100;
-	padding: 10px;
-	min-width: 100px;
-	min-height: 100px;
+}
+.ui-popup-wrap {
 	background-color: #fff;
 	border: 1px solid #ccc;
 	border-radius: 5px;
 	-webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
 	box-shadow: 0 5px 10px rgba(0,0,0,.2);
+	display: none;
+	position: absolute;
+	padding: 10px;
+	min-width: 100px;
+	min-height: 100px;
+	z-index: 2101;
+}
+.ui-popup {
+	display: none;
 }
 .ui-popup-center {
 	top: 50%;

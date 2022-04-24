@@ -61,9 +61,14 @@
 	</tbody>
 </table>
 
+<div class="text-center">
+	<button type="button" class="btn btn-default"><i class="fa fa-check"></i> OK</button>
+	<button type="button" class="btn btn-default" popup-dismiss="true"><i class="fa fa-times"></i> Close</button>
+</div>
+
 <script type="text/javascript">
 	$('#popup_list tbody>tr').click(function() {
-		$(this).closest('.ui-popup-content')
+		$(this).closest('.ui-popup')
 			.popup('hide')
 			.popup('callback', $(this).find('td:last').text());
 	});
