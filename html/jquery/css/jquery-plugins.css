@@ -290,39 +290,46 @@ fieldset.ui-collapsed {
 .no-csspointerevents .nice-select.open>ul {
 	display: block;
 }
-.ui-popup-mask {
-    background-color: #000;
-	opacity: 0.5;
-	display: none;
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-	z-index: 2100;
-}
-.ui-popup-wrap {
-	background-color: #fff;
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	-webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
-	box-shadow: 0 5px 10px rgba(0,0,0,.2);
-	display: none;
-	position: absolute;
-	padding: 10px;
-	min-width: 100px;
-	min-height: 100px;
-	z-index: 2101;
-}
 .ui-popup {
 	display: none;
 }
+
+.ui-popup-mask {
+	background-color: #000;
+	opacity: 0.5;
+	display: none;
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 2100;
+}
+
+.ui-popup-wrap {
+	display: none;
+	position: absolute;
+	z-index: 2101;
+}
+	
+.ui-popup-frame {
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	-webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+	box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+	padding: 10px;
+	min-width: 100px;
+	min-height: 100px;
+}
+
 .ui-popup-center {
 	top: 50%;
 	left: 50%;
 	margin-right: -50%;
 	transform: translate(-50%, -50%);
 }
+
 .ui-popup-arrow {
 	position: absolute;
 	background-color: #fff;
@@ -331,51 +338,65 @@ fieldset.ui-collapsed {
 	-webkit-transform: rotate(45deg);
 	transform: rotate(45deg);
 }
+
 .ui-popup-arrow.up {
 	border-top: 1px solid #ccc;
 	border-left: 1px solid #ccc;
 }
+
 .ui-popup-arrow.dn {
 	border-right: 1px solid #ccc;
 	border-bottom: 1px solid #ccc;
 }
+
 .ui-popup-arrow.lt {
 	border-left: 1px solid #ccc;
 	border-bottom: 1px solid #ccc;
 }
+
 .ui-popup-arrow.rt {
 	border-top: 1px solid #ccc;
 	border-right: 1px solid #ccc;
 }
+
 .ui-popup-arrow.hl {
 	left: -8px;
 }
+
 .ui-popup-arrow.hl1 {
 	left: 30px;
 }
+
 .ui-popup-arrow.hr1 {
 	right: 30px;
 }
+
 .ui-popup-arrow.hr {
 	right: -8px;
 }
+
 .ui-popup-arrow.hc {
 	left: 50%;
 	margin-left: -10px;
 }
+
 .ui-popup-arrow.vt {
 	top: -8px;
 }
+
 .ui-popup-arrow.vt1 {
 	top: 30px;
 }
+
 .ui-popup-arrow.vm {
 	top: 50%;
 	margin-top: -10px;
 }
+
 .ui-popup-arrow.vb1 {
 	bottom: 30px;
 }
+
 .ui-popup-arrow.vb {
 	bottom: -8px;
 }
@@ -424,10 +445,10 @@ fieldset.ui-collapsed {
 	border-radius: 4px;
 	padding: 15px;
 }
+
 .ui-popup-error.json {
 	white-space: pre-wrap;
-}
-/**
+}/**
  * jQuery toast plugin created by Kamran Ahmed copyright MIT license 2014
  */
 .ui-toast-wrap {

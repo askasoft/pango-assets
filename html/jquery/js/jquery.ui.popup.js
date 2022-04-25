@@ -22,7 +22,12 @@
 		}
 
 		_hide($c);
-		$(document).off('click.popup');
+	}
+
+	function __keydown(evt) {
+		if (evt.keyCode == 27) {
+			_hide(__active());
+		}
 	}
 
 	function __ajaxError($c, xhr, status, err) {
@@ -141,11 +146,17 @@
 	}
 
 	function __align($p, trigger, position) {
+		$p.css({
+			display: 'block',
+			visibility: 'hidden'
+		});
+
 		var $a = $p.find('.ui-popup-arrow').hide();
 		if (position == 'center') {
 			$p.addClass('ui-popup-center').css({
 				top: '50%',
-				left: '50%'
+				left: '50%',
+				visibility: 'visible'
 			});
 			return;
 		}
@@ -183,9 +194,9 @@
 		}
 
 		$p.css({
-			position: 'absolute',
 			top: p.top,
-			left: p.left
+			left: p.left,
+			visibility: 'visible'
 		});
 		$a.attr('class', 'ui-popup-arrow ' + ac).show();
 	}
@@ -194,10 +205,10 @@
 		return $('.ui-popup-mask');
 	}
 	function __active() {
-		return $('.ui-popup-wrap:visible>.ui-popup');
+		return $('.ui-popup-wrap:visible>.ui-popup-frame>.ui-popup');
 	}
 	function __wrapper($c) {
-		return $c.parent('.ui-popup-wrap');
+		return $c.parent().parent('.ui-popup-wrap');
 	}
 
 	function _toggle($c, trigger) {
@@ -222,10 +233,14 @@
 		if ($p.is(':visible')) {
 			$c.trigger('hide.popup');
 			$p.hide();
-			$(document).off('click.popup');
+			$(document).off('.popup');
 			$c.trigger('hidden.popup');
 		}
 		__masker().hide();
+	}
+
+	function __is_true(b) {
+		return b == true || b == 'true';
 	}
 
 	function _show($c, trigger) {
@@ -233,39 +248,42 @@
 
 		var $p = __wrapper($c), c = $c.data('popup');
 
-		if (c.mask == true || c.mask == 'true') {
+		if (__is_true(c.mask)) {
 			__masker().show();
 		}
-		$p.find('.ui-popup-close')[(c.closer == true || c.closer == 'true') ? 'show' : 'hide']();
+		$p.find('.ui-popup-close')[__is_true(c.closer) ? 'show' : 'hide']();
 
-		$p.show();
-
-		if (!c.loaded) {
-			if (c.showing) {
-				c.showing = trigger || c.showing;
-			} else {
-				c.showing = trigger || window;
-				_load($c, c);
-			}
+		if (c.loaded) {
+			__show($p, $c, c, trigger);
 			return;
 		}
 
-		__show($p, $c, c, trigger);
+		if (c.showing) {
+			// prevent duplicate ajax load, just switch trigger
+			c.showing = trigger || c.showing;
+		} else {
+			c.showing = trigger || window;
+			_load($c, c);
+		}
 	}
 
 	function __show($p, $c, c, trigger) {
 		$c.trigger('show.popup');
 
 		c.trigger = trigger || window;
+
 		__align($p, c.trigger, c.position);
-		$p.focus();
-		$c.hide().css('visibility', 'visible')[c.transition](function() {
+
+		$p.children('.ui-popup-frame').hide()[c.transition](function() {
 			//$c.find(':input').eq(0).focus();
 			$c.trigger('shown.popup');
-			if (c.clickHide == true || c.clickHide == 'true') {
+			if (__is_true(c.mouse)) {
 				$(document).on('click.popup', __click);
 			}
-		});
+			if (__is_true(c.keyboard)) {
+				$(document).on('keydown.popup', __keydown);
+			}
+		}).focus();
 	}
 
 	function _load($c, c) {
@@ -273,13 +291,16 @@
 
 		c = $.extend($c.data('popup'), c);
 
-		$c.html('<div class="ui-popup-loading"></div>');
-		if (c.showing) {
+		if (__is_true(c.loader)) {
+			$c.html('<div class="ui-popup-loading"></div>');
 			__align($p, c.showing, c.position);
-			$p.focus();
 		}
-		$c.trigger('load.popup');
 
+		__load($c, c);
+	}
+
+	function __load($c, c) {
+		$c.trigger('load.popup');
 		$.ajax({
 			url: c.url,
 			data: c.data,
@@ -287,21 +308,18 @@
 			method: c.method,
 			success: function(data, status, xhr) {
 				c.loaded = true;
-				$c.css('visibility', 'hidden').trigger('loaded.popup');
+				$c.trigger('loaded.popup');
 				(c.ajaxRender || __ajaxRender)($c, data, status, xhr);
 				$c.find('[popup-dismiss="true"]').click(function() {
 					_hide($c);
 				});
 			},
 			error: function(xhr, status, err) {
-				$c.css('visibility', 'hidden');
 				(c.ajaxError || __ajaxError)($c, xhr, status, err);
 			},
 			complete: function() {
 				if (c.showing) {
-					if ($p.is(':visible')) {
-						__show($p, $c, c, c.showing);
-					}
+					__show(__wrapper($c), $c, c, c.showing);
 					delete c.showing;
 				}
 			}
@@ -334,11 +352,14 @@
 			'method',
 			'data',
 			'data-type',
+			'autoload',
 			'position',
 			'transition',
 			'mask',
+			'loader',
 			'closer',
-			'click-hide',
+			'mouse',
+			'keyboard',
 			'callback',
 			'ajax-render',
 			'ajax-error'
@@ -372,23 +393,24 @@
 
 		c = $.extend({}, $.popup.defaults, __options($c), c);
 
-		$p = $('<div class="ui-popup-wrap" tabindex="0">')
+		var $f = $('<div class="ui-popup-frame" tabindex="0">')
 			.append($('<div class="ui-popup-arrow">'))
 			.append($('<i class="ui-popup-close">&times;</i>').click(function() {
 				_hide($c);
-			}))
-			.appendTo('body');
+			}));
+
+		$p = $('<div class="ui-popup-wrap">').append($f).appendTo('body');
 
 		if (c.cssClass) {
 			$p.addClass(c.cssClass);
 		}
 
-		$c.appendTo($p).data('popup', c).addClass('ui-popup').show();
+		$c.appendTo($f).data('popup', c).addClass('ui-popup').show();
 
 		if (c.url) {
 			c.loaded = false;
 			if (c.autoload) {
-				_load($c);
+				__load($c);
 			}
 		} else {
 			c.loaded = true;
@@ -438,7 +460,8 @@
 		method: 'GET',
 		position: 'auto',
 		transition: 'slideDown',
-		clickHide: true
+		mouse: true,
+		keyboard: true
 	};
 
 	// POPUP DATA-API
