@@ -98,11 +98,11 @@
 			break;
 		case 'left top':
 			p.left -= (pw + 11);
-			p.top = p.top - ph + th + 20;
+			p.top += th - ph + 20;
 			break;
 		case 'left middle':
 			p.left -= (pw + 11);
-			p.top -= (ph / 2 - 20);
+			p.top -= (ph - th) / 2;
 			break;
 		case 'right bottom':
 			p.left += tw + 11;
@@ -110,11 +110,11 @@
 			break;
 		case 'right top':
 			p.left += tw + 11;
-			p.top = p.top - ph + th + 20;
+			p.top += th - ph + 20;
 			break;
 		case 'right middle':
 			p.left += tw + 11;
-			p.top -= (ph / 2 - 20);
+			p.top -= (ph - th) / 2;
 			break;
 		}
 
