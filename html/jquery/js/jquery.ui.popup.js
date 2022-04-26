@@ -145,52 +145,58 @@
 		return ps[0];
 	}
 
+	function __center($p, $w) {
+		var p = {
+			left: ($w.outerWidth() - $p.outerWidth()) / 2,
+			top: ($w.outerHeight() - $p.outerHeight()) / 2
+		};
+
+		p.left = (p.left < 10 ? 10 : p.left);
+		p.top = (p.top < 10 ? 10 : p.top);
+		return p;
+	}
+
 	function __align($p, trigger, position) {
 		$p.css({
 			display: 'block',
 			visibility: 'hidden'
 		});
 
-		var $a = $p.find('.ui-popup-arrow').hide();
+		var p, ac, $a = $p.find('.ui-popup-arrow').hide();
 		if (position == 'center') {
-			$p.addClass('ui-popup-center').css({
-				top: '50%',
-				left: '50%',
-				visibility: 'visible'
-			});
-			return;
-		}
-
-		$p.removeClass('ui-popup-center');
-
-		var $t = $(trigger), ac = ArrowClasses[position];
-		if (ac) {
-			p = __position($p, $t, position);
+			p = __center($p, $(window));
 		} else {
-			switch (position) {
-			case 'top':
-				p = __positions($p, $t, ['top center', 'top left', 'top right']);
-				break;
-			case 'bottom':
-				p = __positions($p, $t, ['bottom center', 'bottom left', 'bottom right']);
-				break;
-			case 'left':
-				p = __positions($p, $t, ['left middle', 'left bottom', 'left top']);
-				break;
-			case 'right':
-				p = __positions($p, $t, ['right middle', 'right bottom', 'right top']);
-				break;
-			case 'auto':
-			default:
-				p = __positions($p, $t, [
-					'bottom center', 'bottom left', 'bottom right',
-					'right middle', 'right bottom', 'right top',
-					'top center', 'top left', 'top right',
-					'right middle', 'right bottom', 'right top'
-				]);
-				break;
+			var $t = $(trigger);
+
+			ac = ArrowClasses[position];
+			if (ac) {
+				p = __position($p, $t, position);
+			} else {
+				switch (position) {
+				case 'top':
+					p = __positions($p, $t, ['top center', 'top left', 'top right']);
+					break;
+				case 'bottom':
+					p = __positions($p, $t, ['bottom center', 'bottom left', 'bottom right']);
+					break;
+				case 'left':
+					p = __positions($p, $t, ['left middle', 'left bottom', 'left top']);
+					break;
+				case 'right':
+					p = __positions($p, $t, ['right middle', 'right bottom', 'right top']);
+					break;
+				case 'auto':
+				default:
+					p = __positions($p, $t, [
+						'bottom center', 'bottom left', 'bottom right',
+						'right middle', 'right bottom', 'right top',
+						'top center', 'top left', 'top right',
+						'right middle', 'right bottom', 'right top'
+					]);
+					break;
+				}
+				ac = ArrowClasses[p.position];
 			}
-			ac = ArrowClasses[p.position];
 		}
 
 		$p.css({
@@ -198,7 +204,9 @@
 			left: p.left,
 			visibility: 'visible'
 		});
-		$a.attr('class', 'ui-popup-arrow ' + ac).show();
+		if (ac) {
+			$a.attr('class', 'ui-popup-arrow ' + ac).show();
+		}
 	}
 
 	function __masker() {
