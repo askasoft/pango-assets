@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	</meta>
+	<link href="../../html/bootstrap3/css/bootstrap.css" rel="stylesheet" type="text/css" />
+	<link href="../../html/fontawesome4/css/font-awesome.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+	<div style="padding: 20px">
+		<h1 style="text-align: center; margin: 20px 0px;">jQuery ScrollIntoView Plugin</h1>
+		<hr>
+
+		<div class="text-center">
+			<button class="btn btn-primary" id="stb">Scroll To Bottom</button>
+			<button class="btn btn-primary" id="stc1">Scroll To Center</button>
+		</div>
+		<hr>
+
+		<br><br><br><br><br><br><br><br><br><br>
+		<br><br><br><br><br><br><br><br><br><br>
+		<br><br><br><br><br><br><br><br><br><br>
+		<div class="text-center">
+			<button class="btn btn-primary" id="bc">Center</button>
+			<br>
+			<span id="status"></span>
+		</div>
+		<br><br><br><br><br><br><br><br><br><br>
+		<br><br><br><br><br><br><br><br><br><br>
+		<br><br><br><br><br><br><br><br><br><br>
+
+		<hr>
+		<div class="text-center">
+			<button class="btn btn-primary" id="stt">Scroll To Top</button>
+			<button class="btn btn-primary" id="stc2">Scroll To Center</button>
+		</div>
+		<hr>
+		<br>
+	</div>
+
+	<script src="../../html/jquery/js/jquery-1.12.4.js" type="text/javascript"></script>
+	<script src="../../html/jquery/js/jquery.ui.scrollIntoView.js" type="text/javascript"></script>
+	<script src="../../html/bootstrap3/js/bootstrap.js" type="text/javascript"></script>
+
+	<script type="text/javascript">
+		$(function() {
+			function done() {
+				$('#status').text("Complate " + new Date());
+			}
+			$('#stb').click(function() {
+				$('#stt').scrollIntoView(done);
+			});
+
+			$('#stt').click(function() {
+				$('#stb').scrollIntoView(done);
+			});
+
+			$('#stc1, #stc2').click(function() {
+				$('#bc').scrollIntoView(done);
+			});
+		});
+	</script>
+</body>
+
+</html>
