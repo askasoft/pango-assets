@@ -1066,8 +1066,8 @@ jQuery.jcookie = function(name, value, options) {
 
 	function __center($p, $w) {
 		var p = {
-			left: ($w.outerWidth() - $p.outerWidth()) / 2,
-			top: ($w.outerHeight() - $p.outerHeight()) / 2
+			left: $w.scrollLeft() + ($w.outerWidth() - $p.outerWidth()) / 2,
+			top: $w.scrollTop() + ($w.outerHeight() - $p.outerHeight()) / 2
 		};
 
 		p.left = (p.left < 10 ? 10 : p.left);
@@ -1180,18 +1180,13 @@ jQuery.jcookie = function(name, value, options) {
 		}
 		$p.find('.ui-popup-close')[__is_true(c.closer) ? 'show' : 'hide']();
 
-		if (c.loaded) {
+		if (c.loaded || !c.url) {
 			__show($p, $c, c, trigger);
 			return;
 		}
 
-		if (c.showing) {
-			// prevent duplicate ajax load, just switch trigger
-			c.showing = trigger || c.showing;
-		} else {
-			c.showing = trigger || window;
-			_load($c, c);
-		}
+		c.showing = trigger || window;
+		_load($c, c);
 	}
 
 	function __show($p, $c, c, trigger) {
@@ -1227,6 +1222,7 @@ jQuery.jcookie = function(name, value, options) {
 	}
 
 	function __load($c, c) {
+		var seq = ++c.sequence;
 		$c.trigger('load.popup');
 		$.ajax({
 			url: c.url,
@@ -1234,18 +1230,22 @@ jQuery.jcookie = function(name, value, options) {
 			dataType: c.dataType,
 			method: c.method,
 			success: function(data, status, xhr) {
-				c.loaded = true;
-				$c.trigger('loaded.popup');
-				(c.ajaxRender || __ajaxRender)($c, data, status, xhr);
-				$c.find('[popup-dismiss="true"]').click(function() {
-					_hide($c);
-				});
+				if (seq == c.sequence) {
+					c.loaded = true;
+					$c.trigger('loaded.popup');
+					(c.ajaxRender || __ajaxRender)($c, data, status, xhr);
+					$c.find('[popup-dismiss="true"]').click(function() {
+						_hide($c);
+					});
+				}
 			},
 			error: function(xhr, status, err) {
-				(c.ajaxError || __ajaxError)($c, xhr, status, err);
+				if (seq == c.sequence) {
+					(c.ajaxError || __ajaxError)($c, xhr, status, err);
+				}
 			},
 			complete: function() {
-				if (c.showing) {
+				if (seq == c.sequence && c.showing) {
 					__show(__wrapper($c), $c, c, c.showing);
 					delete c.showing;
 				}
@@ -1318,7 +1318,7 @@ jQuery.jcookie = function(name, value, options) {
 			return;
 		}
 
-		c = $.extend({}, $.popup.defaults, __options($c), c);
+		c = $.extend({ sequence: 0 }, $.popup.defaults, __options($c), c);
 
 		var $f = $('<div class="ui-popup-frame" tabindex="0">')
 			.append($('<div class="ui-popup-arrow">'))
@@ -1337,7 +1337,7 @@ jQuery.jcookie = function(name, value, options) {
 		if (c.url) {
 			c.loaded = false;
 			if (c.autoload) {
-				__load($c);
+				__load($c, c);
 			}
 		} else {
 			c.loaded = true;
