@@ -471,7 +471,14 @@
 			$('[my-target]').click(function() {
 				var $t = $(this);
 				var c = $.extend({
-					loaded: !$('#always_reload').is(':checked')
+					loaded: !$('#always_reload').is(':checked'),
+					ajaxRender: function($c, data, status, xhr) {
+						var st = new Date().getTime();
+						while (new Date().getTime() - st < 1000 * 3) {
+							// sleep 5s
+						}
+						$c.html(xhr.responseText);
+					}
 				}, __options($t));
 				$($t.attr('my-target')).popup(c).popup('toggle', this);
 			});

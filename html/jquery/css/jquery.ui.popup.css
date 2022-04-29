@@ -19,7 +19,7 @@
 	position: absolute;
 	z-index: 2101;
 }
-	
+
 .ui-popup-frame {
 	background-color: #fff;
 	border: 1px solid #ccc;
@@ -29,6 +29,13 @@
 	padding: 10px;
 	min-width: 100px;
 	min-height: 100px;
+}
+
+.ui-popup-wrap.loading .ui-popup-frame {
+	background-color: transparent;
+	border-color: transparent;
+	-webkit-box-shadow: none;
+	box-shadow: none;
 }
 
 .ui-popup-arrow {
@@ -102,7 +109,7 @@
 	bottom: -8px;
 }
 
-.ui-popup-close {
+.ui-popup-closer {
 	z-index: 2101;
 	position: absolute;
 	display: block;
@@ -120,7 +127,7 @@
 	text-align: center;
 }
 
-.ui-popup-loading {
+.ui-popup-loader {
 	position: absolute;
 	top: 50%;
 	left: 50%;

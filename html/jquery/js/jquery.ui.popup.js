@@ -259,7 +259,6 @@
 		if (__is_true(c.mask)) {
 			__masker().show();
 		}
-		$p.find('.ui-popup-close')[__is_true(c.closer) ? 'show' : 'hide']();
 
 		if (c.loaded || !c.url) {
 			__show($p, $c, c, trigger);
@@ -272,6 +271,8 @@
 
 	function __show($p, $c, c, trigger) {
 		$c.trigger('show.popup');
+
+		$p.find('.ui-popup-closer')[__is_true(c.closer) ? 'show' : 'hide']();
 
 		c.trigger = trigger || window;
 
@@ -295,16 +296,20 @@
 		c = $.extend($c.data('popup'), c);
 
 		if (__is_true(c.loader)) {
-			$c.html('<div class="ui-popup-loading"></div>');
+			$c.html('<div class="ui-popup-loader"></div>');
 			__align($p, c.showing, c.position);
 		}
 
-		__load($c, c);
+		__load($p, $c, c);
 	}
 
-	function __load($c, c) {
+	function __load($p, $c, c) {
 		var seq = ++c.sequence;
+
+		$p.addClass('loading').find('.ui-popup-closer, .ui-popup-arrow').hide();
+
 		$c.trigger('load.popup');
+
 		$.ajax({
 			url: c.url,
 			data: c.data,
@@ -326,8 +331,9 @@
 				}
 			},
 			complete: function() {
+				$p.removeClass('loading');
 				if (seq == c.sequence && c.showing) {
-					__show(__wrapper($c), $c, c, c.showing);
+					__show($p, $c, c, c.showing);
 					delete c.showing;
 				}
 			}
@@ -403,7 +409,7 @@
 
 		var $f = $('<div class="ui-popup-frame" tabindex="0">')
 			.append($('<div class="ui-popup-arrow">'))
-			.append($('<i class="ui-popup-close">&times;</i>').click(function() {
+			.append($('<i class="ui-popup-closer">&times;</i>').click(function() {
 				_hide($c);
 			}));
 
@@ -418,7 +424,7 @@
 		if (c.url) {
 			c.loaded = false;
 			if (c.autoload) {
-				__load($c, c);
+				__load($p, $c, c);
 			}
 		} else {
 			c.loaded = true;
