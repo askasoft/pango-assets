@@ -5,11 +5,11 @@
 	display: block;
 	position: fixed;
 	min-width: 250px;
-	pointer-events: none !important;
+	pointer-events: none;
 	margin: 0;
 	padding: 0;
 	letter-spacing: normal;
-	z-index: 2300 !important;
+	z-index: 2300;
 }
 
 .ui-toast-single {
@@ -21,7 +21,7 @@
 	font-family: arial, sans-serif;
 	line-height: 17px;
 	position: relative;
-	pointer-events: all !important;
+	pointer-events: all;
 	background-color: #444444;
 	color: white;
 	opacity: .9;
@@ -67,7 +67,7 @@
 	padding: 0px;
 }
 .ui-toast-single>ul.ui-toast-ul>li {
-	list-style-type: disc !important;
+	list-style-type: disc;
 	line-height: 17px;
 	background: none;
 	margin: 0;
@@ -113,8 +113,7 @@
 	color: #eee;
 	text-decoration: none;
 	font-weight: bold;
-	border-bottom: 1px solid white;
-	padding-bottom: 3px;
+	border-bottom: 1px solid #fff;
 	font-size: 12px;
 }
 

@@ -30,9 +30,11 @@
 
 		if ($.isArray(os.text)) {
 			var $ul = $('<ul class="ui-toast-ul">');
-			for (var i = 0; i < os.text.length; i++) {
-				$ul.append($('<li class="ui-toast-' + sm + '">')[sm](os.text[i]));
-			}
+			$.each(os.text, function(i, t) {
+				if (t) {
+					$ul.append($('<li class="ui-toast-' + sm + '">')[sm](t));
+				}
+			});
 			$t.append($ul);
 		} else {
 			$t.append($('<div class="ui-toast-' + sm + '">')[sm](os.text));
@@ -75,7 +77,7 @@
 			$.extend(op, sp);
 		} else {
 			switch (sp) {
-			case 'mid-center':
+			case 'mid center':
 				op.left = ($(window).outerWidth() / 2) - $c.outerWidth() / 2;
 				op.top = ($(window).outerHeight() / 2) - $c.outerHeight() / 2;
 				break;
@@ -84,15 +86,15 @@
 				op.left = 20;
 				op.right = 20;
 				break;
-			case 'bottom-center':
+			case 'bottom center':
 				op.left = ($(window).outerWidth() / 2) - $c.outerWidth() / 2;
 				op.bottom = 20;
 				break;
-			case 'bottom-left':
+			case 'bottom left':
 				op.bottom = 20;
 				op.left = 20;
 				break;
-			case 'bottom-right':
+			case 'bottom right':
 				op.bottom = 20;
 				op.right = 20;
 				break;	
@@ -101,15 +103,15 @@
 				op.left = 20;
 				op.right = 20;
 				break;
-			case 'top-center':
+			case 'top center':
 				op.left = ($(window).outerWidth() / 2) - $c.outerWidth() / 2;
 				op.top = 20;
 				break;
-			case 'top-left':
+			case 'top left':
 				op.top = 20;
 				op.left = 20;
 				break;
-			case 'top-right':
+			case 'top right':
 			default:
 				op.top = 20;
 				op.right = 20;
@@ -334,7 +336,7 @@
 		hideAfter: 5000,
 		stopHideOnHover: true,
 		stack: 5,
-		position: 'top-right',
+		position: 'top right',
 		bgColor: false,
 		textColor: false,
 		textAlign: 'left',

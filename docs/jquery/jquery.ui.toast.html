@@ -397,13 +397,13 @@
 		<p><span class="code">position</span> property can be used to specify the position. There are following
 			predefined positions which you can use:</p>
 		<ul>
-			<li><span class="code">bottom-left</span> value to show the toast at bottom left position</li>
-			<li><span class="code">bottom-right</span> value to show the toast at bottom right position</li>
-			<li><span class="code">bottom-center</span> value to..</li>
-			<li><span class="code">top-right</span> value to..</li>
-			<li><span class="code">top-left</span> value to..</li>
-			<li><span class="code">top-center</span> value to..</li>
-			<li><span class="code">mid-center</span> value to..</li>
+			<li><span class="code">bottom left</span> value to show the toast at bottom left position</li>
+			<li><span class="code">bottom right</span> value to show the toast at bottom right position</li>
+			<li><span class="code">bottom center</span> value to..</li>
+			<li><span class="code">top right</span> value to..</li>
+			<li><span class="code">top left</span> value to..</li>
+			<li><span class="code">top center</span> value to..</li>
+			<li><span class="code">mid center</span> value to..</li>
 			<li><span class="code">{ top: '-', bottom: '-', left: '-', right: '-' }</span> javascript object with
 				positioning properties as you set in CSS</li>
 		</ul>
@@ -413,7 +413,7 @@
 			<pre><code><span class='hidden'>$.toast().reset('all');</span>$.toast({
     heading: 'Positioning',
     text: 'Specify the custom position object or use one of the predefined ones',
-    position: 'bottom-left',
+    position: 'bottom left',
     stack: false
 })</code></pre>
 		</div>
@@ -423,7 +423,7 @@
 			<pre><code><span class='hidden'>$.toast().reset('all');</span>$.toast({
     heading: 'Positioning',
     text: 'Specify the custom position object or use one of the predefined ones',
-    position: 'bottom-right',
+    position: 'bottom right',
     stack: false
 })</code></pre>
 		</div>
@@ -433,7 +433,7 @@
 			<pre><code><span class='hidden'>$.toast().reset('all');</span>$.toast({
     heading: 'Positioning',
     text: 'Use the predefined ones, or specify a custom object',
-    position: 'bottom-center',
+    position: 'bottom center',
     stack: false
 })</code></pre>
 		</div>
@@ -443,7 +443,7 @@
 			<pre><code><span class='hidden'>$.toast().reset('all');</span>$.toast({
     heading: 'Positioning',
     text: 'Use the predefined ones, or specify a custom object',
-    position: 'top-left',
+    position: 'top left',
     stack: false
 })</code></pre>
 		</div>
@@ -453,7 +453,7 @@
 			<pre><code><span class='hidden'>$.toast().reset('all');</span>$.toast({
     heading: 'Positioning',
     text: 'Use the predefined ones, or specify a custom position object.',
-    position: 'top-right',
+    position: 'top right',
     stack: false
 })</code></pre>
 		</div>
@@ -463,7 +463,7 @@
 			<pre><code><span class='hidden'>$.toast().reset('all');</span>$.toast({
     heading: 'Positioning',
     text: 'Use the predefined ones, or specify a custom position object.',
-    position: 'top-center',
+    position: 'top center',
     stack: false
 })</code></pre>
 		</div>
@@ -473,7 +473,7 @@
 			<pre><code><span class='hidden'>$.toast().reset('all');</span>$.toast({
     heading: 'Positioning',
     text: 'Use the predefined ones, or specify a custom position object.',
-    position: 'mid-center',
+    position: 'mid center',
     stack: false
 })</code></pre>
 		</div>
@@ -746,15 +746,15 @@ $.toast().reset('all');
 				<label for="toast-position">Toast Position</label>
 				<select name="toast-position" id="toast-position" class="toast-position">
 					<option value="bottom">Bottom</option>
-					<option value="bottom-center">Bottom Center</option>
-					<option value="bottom-left">Bottom Left</option>
-					<option value="bottom-right" selected>Bottom Right</option>
+					<option value="bottom center">Bottom Center</option>
+					<option value="bottom left">Bottom Left</option>
+					<option value="bottom right" selected>Bottom Right</option>
 					<option value="top">Top</option>
-					<option value="top-center">Top Center</option>
-					<option value="top-left">Top Left</option>
-					<option value="top-right">Top Right</option>
-					<option value="mid-center">Mid Center</option>
-					<option value="custom-position">Custom</option>
+					<option value="top center">Top Center</option>
+					<option value="top left">Top Left</option>
+					<option value="top right">Top Right</option>
+					<option value="mid center">Mid Center</option>
+					<option value="custom position">Custom</option>
 				</select>
 			</p>
 
@@ -852,7 +852,7 @@ $.toast().reset('all');
     <span class="toast-closeable-line"><span class="k">closeable</span>: <spna class="kt toast-closeable">true</spna>, <span class="c">// Boolean value <span class="kt">true</span> or <span class="kt">false</span></span></span>
     <span class="toast-hideAfter-line"><span class="k">hideAfter</span>: <span class="n toast-hideAfter">3000</span>, <span class="c">// <span class="kt">false</span> to make it sticky or number representing the miliseconds as time after which toast needs to be hidden</span></span>
     <span class="toast-stackLength-line"><span class="k">stack</span>: <span class="n toast-stackLength">5</span>, <span class="c">// <span class="kt">false</span> if there should be only one toast at a time or a number representing the maximum number of toasts to be shown at a time</span></span>
-    <span class="toast-position-string-line"><span class="k">position</span>: '<span class="s toast-position">bottom-left</span>', <span class="c">// bottom-left or bottom-right or bottom-center or top-left or top-right or top-center or mid-center or an object representing the left, right, top, bottom values</span></span>
+    <span class="toast-position-string-line"><span class="k">position</span>: '<span class="s toast-position">bottom left</span>', <span class="c">// bottom-left or bottom-right or bottom-center or top-left or top-right or top-center or mid-center or an object representing the left, right, top, bottom values</span></span>
     <span class="toast-position-string-obj"><span class="k">position</span>: <span class="s toast-position">{ <span class="k">left</span> : <span class="n toast-position-left">20</span>, <span class="k">right</span> : <span class="n toast-position-right">20</span>, <span class="k">top</span> : <span class="n toast-position-top">20</span>, <span class="k">bottom</span> : <span class="n toast-position-bottom">20</span> }</span>, <span class="c">// bottom-left or bottom-right or bottom-center or top-left or top-right or top-center or mid-center or an object representing the left, right, top, bottom values</span></span>
     <span class="toast-bgColor-line" style="display: none;"><span class="k">bgColor</span>: '<span class="s toast-bgColor">#444</span>', <span class="c"> // Background color of the toast</span></span>
     <span class="toast-textColor-line" style="display: none;"><span class="k">textColor</span>: '<span class="s toast-textColor">#eee</span>', <span class="c"> // Text color of the toast</span></span>
@@ -975,7 +975,7 @@ $.toast().reset('all');
 								$('.toast-stackLength-line .toast-stackLength').text($('#stack-length').val() ? $('#stack-length').val() : 5);
 							}
 
-							if (toastPosition && (toastPosition !== 'custom-position')) {
+							if (toastPosition && (toastPosition !== 'custom position')) {
 								$('.toast-position-string-line').show();
 								$('.custom-toast-position').hide();
 								$('.toast-position-string-line .toast-position').text(toastPosition);
@@ -984,7 +984,7 @@ $.toast().reset('all');
 								$('.toast-position-string-line .toast-position').text('');
 							}
 
-							if (toastPosition && (toastPosition === 'custom-position')) {
+							if (toastPosition && (toastPosition === 'custom position')) {
 								$('.custom-toast-position').show();
 								$('.toast-position-string-obj').show();
 								var left = $('#left-position').val() ? $('#left-position').val() : 'auto';
