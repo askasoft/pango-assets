@@ -185,7 +185,7 @@
 				case 'right':
 					p = __positions($p, $t, ['right middle', 'right bottom', 'right top']);
 					break;
-				case 'auto':
+				//case 'auto':
 				default:
 					p = __positions($p, $t, [
 						'bottom center', 'bottom left', 'bottom right',
@@ -248,7 +248,7 @@
 	}
 
 	function __is_true(b) {
-		return b == true || b == 'true';
+		return b === true || b == 'true';
 	}
 
 	function _show($c, trigger) {

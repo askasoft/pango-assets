@@ -111,7 +111,7 @@
 				op.top = 20;
 				op.left = 20;
 				break;
-			case 'top right':
+			//case 'top right':
 			default:
 				op.top = 20;
 				op.right = 20;
