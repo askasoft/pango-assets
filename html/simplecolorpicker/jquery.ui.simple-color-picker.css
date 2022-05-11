@@ -1,0 +1,23 @@
+div.simple-color-picker {
+	border: 1px solid #000;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	padding: 0px;
+	background-color: #fff;
+}
+
+div.simple-color-picker ul {
+	list-style: none;
+	padding: 0px;
+	margin: 0px;
+}
+
+div.simple-color-picker ul li {
+	display: block;
+	width: 15px;
+	height: 15px;
+	margin: 1px;
+	float: left;
+	cursor: pointer;
+}
