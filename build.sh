@@ -23,12 +23,6 @@ cd $BASEDIR/html/jquery/css/
 cat jquery.*.css > jquery-plugins.css 
 mincss jquery-plugins
 
-cd $BASEDIR/html/lightbox/
-mincss jquery.ui.lightbox
-
-cd $BASEDIR/html/simplecolorpicker/
-mincss jquery.ui.simple-color-picker
-
 
 cd $BASEDIR/html/corejs/
 cat core.*.js > corejs.js
@@ -41,11 +35,6 @@ cd $BASEDIR/html/jquery/js/
 cat jquery.*.js > jquery-plugins.js 
 minjs jquery-plugins
 
-cd $BASEDIR/html/lightbox/
-minjs jquery.ui.lightbox
-
-cd $BASEDIR/html/simplecolorpicker
-minjs jquery.ui.simple-color-picker
 
 echo --------------------------------------
 echo DONE.

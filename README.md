@@ -19,23 +19,21 @@ Features
    | Name                         | Description                         |
    |------------------------------|-------------------------------------|
    | jquery.ajaf.js               | ajax for file upload                |
+   | jquery.clipboard.js          | $.copyToClipboard function          |
    | jquery.cookie.js             | cookie plugin                       |
    | jquery.disable.js            | $.disable function                  |
    | jquery.jscript.js            | dynamic load javascript             |
-   | jquery.ui.fieldset.js        | collapseable fieldset               |
+   | jquery.ui.focusme.js         | focus element on window load        |
    | [jquery.ui.loadmask.js](./docs/jquery/jquery.ui.loadmask.html)     | loader mask plugin |
    | [jquery.ui.popup.js](./docs/jquery/jquery.ui.popup.html)           | popup plugin   |
    | jquery.ui.scrollIntoView.js  | $.scrollIntoView function           |
    | jquery.ui.selecttext.js      | $.selectText function               |
    | jquery.ui.textarea.js        | textarea auto expand and fire event on Ctrl+Enter   |
-   | [jquery.ui.toast.js](./docs/jquery/jquery.ui.toast.html)           | notification (toast) plugin |
    | [jquery.ui.nice-select.js](./docs/jquery/jquery.ui.nice-select.html)           | select plugin |
-
- - jQuery Extra
-
-   | Name                     | Description                              |
-   |--------------------------|------------------------------------------|
    | [jquery.ui.lightbox.js](./docs/jquery/jquery.ui.lightbox.html)    | LightBox Plugin  |
+   | [jquery.ui.simple-color-picker.js](./docs/jquery/jquery.ui.simple-color-picker.html)           | simple color picker plugin |
+   | [jquery.ui.toast.js](./docs/jquery/jquery.ui.toast.html)           | notification (toast) plugin |
+
 
  - [summernote](./docs/summernote.html)
 
@@ -57,5 +55,6 @@ Pango Assets use the following software packages:
 | jquery-lightbox         |                                                               | [http://leandrovieira.com](http://leandrovieira.com) |
 | jquery-toast            | [MIT](https://opensource.org/licenses/MIT)                    | [https://github.com/kamranahmedse/jquery-toast-plugin](https://github.com/kamranahmedse/jquery-toast-plugin) |
 | jquery-nice-select      |  | [https://github.com/hernansartorio/jquery-nice-select](https://github.com/hernansartorio/jquery-nice-select) |
+| jquery-simple-color-picker | [MIT](https://opensource.org/licenses/MIT) | [https://github.com/rachel-carvalho/simple-color-picker](https://github.com/rachel-carvalho/simple-color-picker) |
 | summernote              | [MIT](https://opensource.org/licenses/MIT)       | [https://summernote.org](https://summernote.org) |
 

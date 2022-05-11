@@ -11,12 +11,6 @@ cd /d %BASEDIR%\html\jquery\css\
 copy /b jquery.*.css jquery-plugins.css 
 call :mincss jquery-plugins
 
-cd /d %BASEDIR%\html\lightbox\
-call :mincss jquery.ui.lightbox
-
-cd /d %BASEDIR%\html\simplecolorpicker
-call :mincss jquery.ui.simple-color-picker
-
 
 cd /d %BASEDIR%\html\corejs\
 copy /b core.*.js corejs.js
@@ -29,17 +23,13 @@ cd /d %BASEDIR%\html\jquery\js\
 copy /b jquery.*.js jquery-plugins.js 
 call :minjs jquery-plugins
 
-cd /d %BASEDIR%\html\lightbox\
-call :minjs jquery.ui.lightbox
-
-cd /d %BASEDIR%\html\simplecolorpicker\
-call :minjs jquery.ui.simple-color-picker
 
 echo --------------------------------------
 echo DONE.
 
 cd /d %BASEDIR%
 exit /b
+
 
 :minjs
 echo --------------------------------------
