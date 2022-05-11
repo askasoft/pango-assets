@@ -251,10 +251,13 @@
 			return;
 		}
 
-		var $t = $('<textarea>').css({ 'width' : '0px', 'height': '0px' }).text(s);
-		$('body').append($t);
+		var $t = $('<textarea>')
+			.css({ width: 0, height: 0 })
+			.text(s)
+			.appendTo('body');
 
 		$t.get(0).select();
+
 		document.execCommand('copy');
 
 		$t.remove();
@@ -1793,27 +1796,24 @@ jQuery.jcookie = function(name, value, options) {
 	}
 
 	function initBox($txt, opts) {
-		var prefix = $txt.attr('id').replace(/-/g, '') + '_';
+		var $box = $('<div>', {
+			'id': ($txt.attr('id') || new Date().getTime()) + '_color_picker',
+			'class': 'simple-color-picker'
+		}).hide().appendTo('body');
 
-		var $ul = $('<ul>');
+		var $ul;
 		for (var i = 0; i < opts.colors.length; i++) {
-			var item = opts.colors[i];
+			if (i % opts.colorsPerLine == 0) {
+				$ul = $('<ul>');
+				$box.append($ul);
+			}
 
-			var breakLine = (i % opts.colorsPerLine == 0) ? 'clear: both; ' : '';
-
+			var c = opts.colors[i];
 			$ul.append($('<li>', {
-				'style': breakLine + 'background-color: ' + item,
-				'title': item
+				'style': 'background-color: ' + c,
+				'title': c
 			}));
 		}
-
-		var $box = $('<div>', {
-			'id': prefix + 'color_picker',
-			'class': 'simple-color-picker'
-		})
-		.append($ul)
-		.append($('<div style="clear: both;"></div>'))
-		.hide().appendTo('body');
 
 		$txt.data('simpleColorPicker', $box);
 		return $box;

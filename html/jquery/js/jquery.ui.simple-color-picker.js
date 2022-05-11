@@ -42,27 +42,24 @@
 	}
 
 	function initBox($txt, opts) {
-		var prefix = $txt.attr('id').replace(/-/g, '') + '_';
+		var $box = $('<div>', {
+			'id': ($txt.attr('id') || new Date().getTime()) + '_color_picker',
+			'class': 'simple-color-picker'
+		}).hide().appendTo('body');
 
-		var $ul = $('<ul>');
+		var $ul;
 		for (var i = 0; i < opts.colors.length; i++) {
-			var item = opts.colors[i];
+			if (i % opts.colorsPerLine == 0) {
+				$ul = $('<ul>');
+				$box.append($ul);
+			}
 
-			var breakLine = (i % opts.colorsPerLine == 0) ? 'clear: both; ' : '';
-
+			var c = opts.colors[i];
 			$ul.append($('<li>', {
-				'style': breakLine + 'background-color: ' + item,
-				'title': item
+				'style': 'background-color: ' + c,
+				'title': c
 			}));
 		}
-
-		var $box = $('<div>', {
-			'id': prefix + 'color_picker',
-			'class': 'simple-color-picker'
-		})
-		.append($ul)
-		.append($('<div style="clear: both;"></div>'))
-		.hide().appendTo('body');
 
 		$txt.data('simpleColorPicker', $box);
 		return $box;

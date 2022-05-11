@@ -586,17 +586,18 @@
 }
 
 div.simple-color-picker ul {
+	height: 17px;
 	list-style: none;
-	padding: 0px;
 	margin: 0px;
+	padding: 0px;
+	white-space: nowrap;
 }
 
 div.simple-color-picker ul li {
-	display: block;
+	display: inline-block;
 	width: 15px;
 	height: 15px;
 	margin: 1px;
-	float: left;
 	cursor: pointer;
 }
 /**
