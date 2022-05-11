@@ -1,7 +1,7 @@
 // jQuery Nice Select - v1.1.0
 // https://github.com/hernansartorio/jquery-nice-select
 // Made by Hernán Sartorio
-// Modifyed by Frank Wang
+// Modified by Frank Wang
 
 (function($) {
 	$.fn.niceSelect = function(method) {
@@ -187,4 +187,9 @@
 		return this;
 	};
 
+	// niceSelect DATA-API
+	// ==================
+	$(window).on('load', function() {
+		$('[data-spy="niceSelect"]').niceSelect();
+	});
 }(jQuery));
