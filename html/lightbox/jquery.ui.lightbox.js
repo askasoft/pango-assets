@@ -27,9 +27,8 @@
 		containerBorderSize:	10,			// (integer) If you adjust the padding in the CSS for the container, #lightbox-imagebox, you will need to update this value
 		containerResizeSpeed:	400,		// (integer) Specify the resize duration of container image. These number are miliseconds. 400 is default.
 
-		// Configuration related to texts in caption. For example: Image 2 of 8. You can alter either "Image" and "of" texts.
-		txtImage:				'Image',	// (string) Specify text "Image"
-		txtOf:					'of',		// (string) Specify text "of"
+		// Configuration related to texts in caption. For example: 'Image # / $' -> 'Image 2 of 8'.
+		textPager:				'# / $',	// (string) #: Image No.  $: Total Images
 
 		// Configuration related to keyboard navigation
 		keyToClose:				'c',		// (string) (c = close) Letter to close the jQuery lightbox interface. Beyond this letter, the letter X and the SCAPE key is used to.
@@ -232,7 +231,15 @@
 		function _show_image_data() {
 			if (settings.images.length > 0) {
 				$('#lightbox-image-caption').html(settings.images[settings.active][1]);
-				$('#lightbox-image-number').html(settings.txtImage + ' ' + ( settings.active + 1 ) + ' ' + settings.txtOf + ' ' + settings.images.length);
+
+				var tpm = {
+					'#': settings.active + 1,
+					"$": settings.images.length
+				};
+			
+				$('#lightbox-image-number').html(settings.textPager.replace(/[\#\$]/g, function(c) {
+					return tpm[c];
+				}));
 			}
 			$('#lightbox-statusbox').slideDown('fast');
 		}

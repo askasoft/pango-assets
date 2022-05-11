@@ -113,8 +113,12 @@
 #lightbox-image-caption {
 	font-weight: bold;
 	padding: 0 20px 0 0;
+	text-align: center;
 }
 #lightbox-image-number {
+	position: absolute;
+	top: 0px;
+	left: 10px;
 }
 #lightbox-btn-close {
 	font-size: 14px;
