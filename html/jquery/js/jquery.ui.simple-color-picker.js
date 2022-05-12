@@ -16,16 +16,20 @@
 				, '#660000', '#783f04', '#7f6000', '#274e13', '#0c343d', '#073763', '#20124d', '#4C1130'],
 			showEffect: 'show',
 			hideEffect: 'hide',
-			onChangeColor: false,
-			includeMargins: false
+			onChangeColor: false
 		}
 	};
 
 	function positionAndShowBox($txt, $box, opts) {
-		var pos = $txt.offset();
-		var left = pos.left + $txt.outerWidth(opts.includeMargins) - $box.outerWidth(opts.includeMargins);
-		if (left < pos.left) left = pos.left;
-		$box.css({ left: left, top: (pos.top + $txt.outerHeight(opts.includeMargins)) });
+		var pos = $txt.offset(), tw = $txt.outerWidth(), bw = $box.outerWidth();
+
+		var left = tw > bw ? pos.left : pos.left - (bw - tw);
+
+		$box.css({
+			left: left < 0 ? 0 : left,
+			top: pos.top + $txt.outerHeight()
+		});
+
 		showBox($box, opts);
 	}
 
@@ -75,23 +79,31 @@
 					if ($box) {
 						$box.remove();
 					}
-					$(this).off('.simple-color-picker').removeData('simpleColorPicker');
-				});
+				})
+				.off('.simple-color-picker')
+				.removeData('simpleColorPicker');
+
 				if ($('.simple-color-picker').length == 0) {
 					$(document).off('.simple-color-picker');
 				}
 				break;
 			default:
-				console.log('Method "' + method + '" does not exist.')
+				console.log('Method "' + options + '" does not exist.')
 				break;
 			}
 			return this;
 		}
 
-		var opts = $.extend({}, $.simpleColorPicker.defaults, options);
-
 		return this.each(function() {
 			var $txt = $(this);
+
+			var opts = $.extend({}, $.simpleColorPicker.defaults, options);
+			if (!opts.onChangeColor) {
+				var occ = $txt.attr('onChangeColor');
+				if (occ) {
+					opts.onChangeColor = new Function(occ);
+				}
+			}
 
 			var $box = initBox($txt, opts);
 
@@ -112,15 +124,22 @@
 
 			$txt.on('click.simple-color-picker', function(evt) {
 				evt.stopPropagation();
-				if (!$txt.is('input')) {
-					// element is not an input so probably a link or div which requires the color box to be shown
-					positionAndShowBox($txt, $box, opts);
-				}
+				positionAndShowBox($txt, $box, opts);
 			});
 
-			$txt.on('focus.simple-color-picker', function() {
+			$txt.on('focus.simple-color-picker', function(evt) {
 				positionAndShowBox($txt, $box, opts);
+			});
+
+			$txt.on('blur.simple-color-picker', function(evt) {
+				hideBox($box, opts);
 			});
 		});
 	};
+
+	// COLOR-PICKER DATA-API
+	// ==================
+	$(window).on('load', function() {
+		$('[data-spy="simpleColorPicker"]').simpleColorPicker();
+	});
 }(jQuery));
