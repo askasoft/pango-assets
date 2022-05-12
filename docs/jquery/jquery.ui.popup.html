@@ -114,14 +114,14 @@
 		</div>
 
 		<hr>
+		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+		<div class="text-center">
+			<button class="btn btn-primary" my-target="#popup_demo1" popup-callback="demo_callback(this, arguments[0])" popup-position="center">Popup Center 1</button>
+			<button class="btn btn-primary" popup-target="#popup_demo2" popup-callback="demo_callback(this, arguments[0])" popup-position="center">Popup Center 2</button>
+		</div>
 	</div>
 
-	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-	<div class="text-center">
-		<button class="btn btn-primary" my-target="#popup_demo1" popup-callback="demo_callback(this, arguments[0])" popup-position="center">Popup Center 1</button>
-		<button class="btn btn-primary" popup-target="#popup_demo2" popup-callback="demo_callback(this, arguments[0])" popup-position="center">Popup Center 2</button>
-	</div>
 
 	<div id="popup_error" class="ui-popup" data-spy="popup" popup-url="./jquery.ui.popup.error.html"></div>
 	<div id="popup_demo1" class="ui-popup" data-spy="popup" popup-url="./jquery.ui.popup.table.html" popup-autoload="true"></div>
@@ -468,7 +468,9 @@
 					.popup('callback', $(this).find('td:last').text());
 			});
 
-			$('[my-target]').click(function() {
+			$('[my-target]').click(function(evt) {
+				evt.stopPropagation();
+
 				var $t = $(this);
 				var c = $.extend({
 					loaded: !$('#always_reload').is(':checked'),

@@ -1,27 +1,6 @@
 (function($) {
-	function __click(evt) {
-		var el = evt.target;
-		if (!el || el.tagName == "HTML") {
-			return;
-		}
-
-		var $e = $(el);
-		if ($e.closest('.ui-popup-wrap').length) {
-			return;
-		}
-
-		var $c = __active(), c = $c.data('popup');
-		if (c && c.trigger && c.trigger !== window) {
-			// check event element is inside the trigger
-			while (el) {
-				if (c.trigger === el) {
-					return;
-				}
-				el = el.parentNode;
-			}
-		}
-
-		_hide($c);
+	function __click() {
+		_hide(__active());
 	}
 
 	function __keydown(evt) {
@@ -413,7 +392,9 @@
 				_hide($c);
 			}));
 
-		$p = $('<div class="ui-popup-wrap">').append($f).appendTo('body');
+		$p = $('<div class="ui-popup-wrap">').append($f).appendTo('body').click(function(evt) {
+			evt.stopPropagation();
+		});
 
 		if (c.cssClass) {
 			$p.addClass(c.cssClass);
@@ -482,7 +463,8 @@
 	// ==================
 	$(window).on('load', function() {
 		$('[data-spy="popup"]').popup();
-		$('[popup-target]').click(function() {
+		$('[popup-target]').click(function(evt) {
+			evt.stopPropagation();
 			var $t = $(this), c = __options($t);
 			$($t.attr('popup-target')).popup(c).popup('toggle', this);
 		});
