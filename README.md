@@ -29,9 +29,10 @@ Features
    | jquery.ui.scrollIntoView.js  | $.scrollIntoView function           |
    | jquery.ui.selecttext.js      | $.selectText function               |
    | jquery.ui.textarea.js        | textarea auto expand and fire event on Ctrl+Enter   |
-   | [jquery.ui.nice-select.js](./docs/jquery/jquery.ui.nice-select.html)           | select plugin |
-   | [jquery.ui.lightbox.js](./docs/jquery/jquery.ui.lightbox.html)    | LightBox Plugin  |
+   | [jquery.ui.nice-select.js](./docs/jquery/jquery.ui.nice-select.html) | nice select plugin |
+   | [jquery.ui.lightbox.js](./docs/jquery/jquery.ui.lightbox.html)     | LightBox Plugin  |
    | [jquery.ui.simple-color-picker.js](./docs/jquery/jquery.ui.simple-color-picker.html)           | simple color picker plugin |
+   | [jquery.ui.treeview.js](./docs/jquery/jquery.ui.treeview.html)     | simple treeview plugin |
    | [jquery.ui.toast.js](./docs/jquery/jquery.ui.toast.html)           | notification (toast) plugin |
 
 
