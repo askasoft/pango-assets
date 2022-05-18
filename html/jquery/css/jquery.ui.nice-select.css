@@ -131,7 +131,7 @@
 .nice-select.open>ul {
 	opacity: 1;
 	height: auto;
-	max-height: 300px;
+	max-height: 365px;
 	overflow: auto;
 	pointer-events: auto;
 	-webkit-transform: scale(1) translateY(0);
@@ -164,6 +164,36 @@
 .nice-select.small>ul>li {
 	line-height: 34px;
 	min-height: 34px;
+}
+
+.nice-select.col2>ul {
+	width: 600px;
+	display: flex;
+	flex-wrap: wrap;
+}
+.nice-select.col2.open>ul {
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+.nice-select.col2>ul>li {
+	display: block;
+	flex: 0 0 50%;
+	white-space: nowrap;
+}
+
+.nice-select.col3>ul {
+	width: 750px;
+	display: flex;
+	flex-wrap: wrap;
+}
+.nice-select.col3.open>ul {
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+.nice-select.col3>ul>li {
+	display: block;
+	flex: 0 0 33%;
+	white-space: nowrap;
 }
 
 
