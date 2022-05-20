@@ -468,7 +468,7 @@
 	// ==================
 	$(window).on('load', function() {
 		$('[data-spy="popup"]').popup();
-		$('[popup-target]').click(function(evt) {
+		$('body').on('click.popup', '[popup-target]', function(evt) {
 			evt.stopPropagation();
 			var $t = $(this), c = _options($t);
 			$($t.attr('popup-target')).popup(c).popup('toggle', this);
