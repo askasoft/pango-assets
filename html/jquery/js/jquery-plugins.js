@@ -1028,44 +1028,183 @@ jQuery.jcookie = function(name, value, options) {
 // Modified by Frank Wang
 
 (function($) {
+	function __document_click(evt) {
+		if ($(evt.target).closest('.ui-nice-select').length === 0) {
+			$('.ui-nice-select').removeClass('open');
+		}
+	}
+
+	function __dropdown_keydown(evt) {
+		var $dropdown = $(this);
+		var $focused_option = $($dropdown.find('.focus') || $dropdown.find('ui li.selected'));
+
+		switch (evt.keyCode) {
+		case 32: // Space
+		case 13: // Enter
+			if ($dropdown.hasClass('open')) {
+				$focused_option.trigger('click');
+			} else {
+				$dropdown.trigger('click');
+			}
+			return false;
+		case 40: // Down
+			if (!$dropdown.hasClass('open')) {
+				$dropdown.trigger('click');
+			} else {
+				var $next = $focused_option.nextAll('li:not(.disabled)').first();
+				if ($next.length > 0) {
+					$dropdown.find('.focus').removeClass('focus');
+					$next.addClass('focus');
+				}
+			}
+			return false;
+		case 38: // Up
+			if (!$dropdown.hasClass('open')) {
+				$dropdown.trigger('click');
+			} else {
+				var $prev = $focused_option.prevAll('li:not(.disabled)').first();
+				if ($prev.length > 0) {
+					$dropdown.find('.focus').removeClass('focus');
+					$prev.addClass('focus');
+				}
+			}
+			return false;
+		case 27: // Esc
+			if ($dropdown.hasClass('open')) {
+				$dropdown.trigger('click');
+			}
+			break;
+		case 9: // Tab
+			if ($dropdown.hasClass('open')) {
+				return false;
+			}
+		}
+	}
+
+	function __dropdown_click(evt) {
+		evt.stopPropagation();
+		
+		var $dropdown = $(this);
+
+		$('.ui-nice-select').not($dropdown).removeClass('open');
+		$dropdown.toggleClass('open');
+
+		if ($dropdown.hasClass('open')) {
+			$dropdown.find('li');
+			$dropdown.find('.focus').removeClass('focus');
+			$dropdown.find('.selected').addClass('focus');
+
+			// Close when clicking outside
+			$(document).on('click.nice_select', __document_click);
+		} else {
+			$dropdown.focus();
+
+			// Unbind existing events in case that the plugin has been initialized before
+			$(document).off('.nice_select');
+		}
+	}
+	
+	function __dropdown_option_click() {
+		var $option = $(this);
+		var $dropdown = $option.closest('.ui-nice-select');
+
+		$dropdown.find('.selected').removeClass('selected');
+		$option.addClass('selected');
+
+		var text = $option.data('display') || $option.text();
+		$dropdown.find('.current').text(text);
+
+		$dropdown.prev('select').val($option.data('value')).trigger('change');
+	}
+
+	function update() {
+		this.each(function() {
+			var $select = $(this);
+			var $dropdown = $select.next('.ui-nice-select');
+
+			if ($dropdown.length) {
+				$dropdown.remove();
+				create_nice_select($select);
+
+				if ($dropdown.hasClass('open')) {
+					$select.next().trigger('click');
+				}
+			}
+		});
+	}
+
+	function destroy() {
+		this.each(function() {
+			var $select = $(this);
+			var $dropdown = $select.next('.ui-nice-select');
+
+			if ($dropdown.length) {
+				$dropdown.remove();
+				$select.css('display', '');
+			}
+		});
+		if ($('.ui-nice-select').length == 0) {
+			$(document).off('.nice_select');
+		}
+	}
+
+	function no_css_pointer_events() {
+		// Detect CSS pointer-events support, for IE <= 10. From Modernizr.
+		var style = document.createElement('a').style;
+		style.cssText = 'pointer-events:auto';
+		if (style.pointerEvents !== 'auto') {
+			$('html').addClass('ui-nice-select-no-csspointerevents');
+		}
+	}
+
+	function create_nice_select($select) {
+		$select.after($('<div></div>')
+			.addClass('ui-nice-select')
+			.addClass($select.attr('class') || '')
+			.addClass($select.attr('disabled') ? 'disabled' : '')
+			.attr('tabindex', $select.attr('disabled') ? null : '0')
+			.html('<span class="current"></span><ul></ul>')
+		);
+
+		var $dropdown = $select.next();
+		var $options = $select.find('option');
+		var $selected = $select.find('option:selected');
+
+		$dropdown.find('.current').html($selected.data('display') || $selected.text());
+
+		$options.each(function() {
+			var $option = $(this);
+			var display = $option.data('display');
+
+			$dropdown.find('ul').append($('<li></li>')
+				.attr('data-value', $option.val())
+				.attr('data-display', (display || null))
+				.addClass(
+					($option.is(':selected') ? ' selected' : '') +
+					($option.is(':disabled') ? ' disabled' : ''))
+				.html($option.text())
+			);
+		});
+
+		// Open, close
+		$dropdown.click(__dropdown_click);
+
+		// Keyboard events
+		$dropdown.keydown(__dropdown_keydown);
+
+		// Option click
+		$dropdown.on('click', 'li:not(.disabled)', __dropdown_option_click);
+	}
+
+	var api = {
+		'update': update,
+		'destroy': destroy
+	};
+
 	$.fn.niceSelect = function(method) {
 		// Methods
 		if (typeof method == 'string') {
-			switch (method) {
-			case 'update':
-				this.each(function() {
-					var $select = $(this);
-					var $dropdown = $(this).next('.nice-select');
-					var open = $dropdown.hasClass('open');
-
-					if ($dropdown.length) {
-						$dropdown.remove();
-						create_nice_select($select);
-
-						if (open) {
-							$select.next().trigger('click');
-						}
-					}
-				});
-				break;
-			case 'destroy':
-				this.each(function() {
-					var $select = $(this);
-					var $dropdown = $(this).next('.nice-select');
-
-					if ($dropdown.length) {
-						$dropdown.remove();
-						$select.css('display', '');
-					}
-				});
-				if ($('.nice-select').length == 0) {
-					$(document).off('.nice_select');
-				}
-				break;
-			default:
-				console.log('Method "' + method + '" does not exist.')
-				break;
-			}
+			api[method].apply(this);
 			return this;
 		}
 
@@ -1076,137 +1215,10 @@ jQuery.jcookie = function(name, value, options) {
 		this.each(function() {
 			var $select = $(this);
 
-			if (!$select.next().hasClass('nice-select')) {
+			if (!$select.next().hasClass('ui-nice-select')) {
 				create_nice_select($select);
 			}
 		});
-
-		function create_nice_select($select) {
-			$select.after($('<div></div>')
-				.addClass('nice-select')
-				.addClass($select.attr('class') || '')
-				.addClass($select.attr('disabled') ? 'disabled' : '')
-				.attr('tabindex', $select.attr('disabled') ? null : '0')
-				.html('<span class="current"></span><ul></ul>')
-			);
-
-			var $dropdown = $select.next();
-			var $options = $select.find('option');
-			var $selected = $select.find('option:selected');
-
-			$dropdown.find('.current').html($selected.data('display') || $selected.text());
-
-			$options.each(function(i) {
-				var $option = $(this);
-				var display = $option.data('display');
-
-				$dropdown.find('ul').append($('<li></li>')
-					.attr('data-value', $option.val())
-					.attr('data-display', (display || null))
-					.addClass(
-						($option.is(':selected') ? ' selected' : '') +
-						($option.is(':disabled') ? ' disabled' : ''))
-					.html($option.text())
-				);
-			});
-		}
-
-		/* Event listeners */
-
-		// Unbind existing events in case that the plugin has been initialized before
-		$(document).off('.nice_select');
-
-		// Open/close
-		$(document).on('click.nice_select', '.nice-select', function(event) {
-			var $dropdown = $(this);
-
-			$('.nice-select').not($dropdown).removeClass('open');
-			$dropdown.toggleClass('open');
-
-			if ($dropdown.hasClass('open')) {
-				$dropdown.find('li');
-				$dropdown.find('.focus').removeClass('focus');
-				$dropdown.find('.selected').addClass('focus');
-			} else {
-				$dropdown.focus();
-			}
-		});
-
-		// Close when clicking outside
-		$(document).on('click.nice_select', function(event) {
-			if ($(event.target).closest('.nice-select').length === 0) {
-				$('.nice-select').removeClass('open');
-			}
-		});
-
-		// Option click
-		$(document).on('click.nice_select', '.nice-select li:not(.disabled)', function(event) {
-			var $option = $(this);
-			var $dropdown = $option.closest('.nice-select');
-
-			$dropdown.find('.selected').removeClass('selected');
-			$option.addClass('selected');
-
-			var text = $option.data('display') || $option.text();
-			$dropdown.find('.current').text(text);
-
-			$dropdown.prev('select').val($option.data('value')).trigger('change');
-		});
-
-		// Keyboard events
-		$(document).on('keydown.nice_select', '.nice-select', function(event) {
-			var $dropdown = $(this);
-			var $focused_option = $($dropdown.find('.focus') || $dropdown.find('ui li.selected'));
-
-			switch (event.keyCode) {
-			case 32: // Space
-			case 13: // Enter
-				if ($dropdown.hasClass('open')) {
-					$focused_option.trigger('click');
-				} else {
-					$dropdown.trigger('click');
-				}
-				return false;
-			case 40: // Down
-				if (!$dropdown.hasClass('open')) {
-					$dropdown.trigger('click');
-				} else {
-					var $next = $focused_option.nextAll('li:not(.disabled)').first();
-					if ($next.length > 0) {
-						$dropdown.find('.focus').removeClass('focus');
-						$next.addClass('focus');
-					}
-				}
-				return false;
-			case 38: // Up
-				if (!$dropdown.hasClass('open')) {
-					$dropdown.trigger('click');
-				} else {
-					var $prev = $focused_option.prevAll('li:not(.disabled)').first();
-					if ($prev.length > 0) {
-						$dropdown.find('.focus').removeClass('focus');
-						$prev.addClass('focus');
-					}
-				}
-				return false;
-			case 27: // Esc
-				if ($dropdown.hasClass('open')) {
-					$dropdown.trigger('click');
-				}
-				break;
-			case 9: // Tab
-				if ($dropdown.hasClass('open')) {
-					return false;
-				}
-			}
-		});
-
-		// Detect CSS pointer-events support, for IE <= 10. From Modernizr.
-		var style = document.createElement('a').style;
-		style.cssText = 'pointer-events:auto';
-		if (style.pointerEvents !== 'auto') {
-			$('html').addClass('no-csspointerevents');
-		}
 
 		return this;
 	};
@@ -1214,36 +1226,13 @@ jQuery.jcookie = function(name, value, options) {
 	// niceSelect DATA-API
 	// ==================
 	$(window).on('load', function() {
+		no_css_pointer_events();
 		$('[data-spy="niceSelect"]').niceSelect();
 	});
 }(jQuery));
 (function($) {
-	function __click() {
-		_hide(__active());
-	}
-
-	function __keydown(evt) {
-		if (evt.keyCode == 27) {
-			_hide(__active());
-		}
-	}
-
-	function __ajaxError($c, xhr, status, err) {
-		var $e = $('<div class="ui-popup-error">');
-
-		if (xhr.responseJSON) {
-			$e.addClass('json').text(JSON.stringify(xhr.responseJSON, null, 4));
-		} else if (xhr.responseText) {
-			$e.html(xhr.responseText);
-		} else {
-			$e.text(err || status || 'Server error!');
-		}
-		
-		$c.empty().append($e);
-	}
-
-	function __ajaxRender($c, data, status, xhr) {
-		$c.html(xhr.responseText);
+	function _is_true(b) {
+		return b === true || b == 'true';
 	}
 
 	var ArrowClasses = {
@@ -1261,7 +1250,7 @@ jQuery.jcookie = function(name, value, options) {
 		'right middle': 'lt hl vm'
 	};
 
-	function __position($p, $t, position) {
+	function _position($p, $t, position) {
 		var tw = $t.outerWidth(), th = $t.outerHeight(), p = $t.offset();
 		var pw = $p.outerWidth(), ph = $p.outerHeight();
 
@@ -1319,7 +1308,7 @@ jQuery.jcookie = function(name, value, options) {
 		return p;
 	}
 
-	function __in_screen($p, p) {
+	function _in_screen($p, p) {
 		var $w = $(window),
 			wt = $w.scrollTop(), wl = $w.scrollLeft(),
 			wb = wt + $w.height(), wr = wl + $w.width(),
@@ -1331,11 +1320,11 @@ jQuery.jcookie = function(name, value, options) {
 			&& pb >= wt && pb <= wb;
 	}
 
-	function __positions($p, $t, ps) {
+	function _positions($p, $t, ps) {
 		for (var i = 0; i < ps.length; i++) {
-			var p = __position($p, $t, ps[i]);
+			var p = _position($p, $t, ps[i]);
 			p.position = ps[i];
-			if (__in_screen($p, p)) {
+			if (_in_screen($p, p)) {
 				return p;
 			}
 			ps[i] = p;
@@ -1343,7 +1332,7 @@ jQuery.jcookie = function(name, value, options) {
 		return ps[0];
 	}
 
-	function __center($p, $w) {
+	function _center($p, $w) {
 		var p = {
 			left: $w.scrollLeft() + ($w.outerWidth() - $p.outerWidth()) / 2,
 			top: $w.scrollTop() + ($w.outerHeight() - $p.outerHeight()) / 2
@@ -1354,7 +1343,7 @@ jQuery.jcookie = function(name, value, options) {
 		return p;
 	}
 
-	function __align($p, trigger, position) {
+	function _align($p, trigger, position) {
 		$p.css({
 			display: 'block',
 			visibility: 'hidden'
@@ -1362,30 +1351,30 @@ jQuery.jcookie = function(name, value, options) {
 
 		var p, ac, $a = $p.find('.ui-popup-arrow').hide();
 		if (position == 'center') {
-			p = __center($p, $(window));
+			p = _center($p, $(window));
 		} else {
 			var $t = $(trigger);
 
 			ac = ArrowClasses[position];
 			if (ac) {
-				p = __position($p, $t, position);
+				p = _position($p, $t, position);
 			} else {
 				switch (position) {
 				case 'top':
-					p = __positions($p, $t, ['top center', 'top left', 'top right']);
+					p = _positions($p, $t, ['top center', 'top left', 'top right']);
 					break;
 				case 'bottom':
-					p = __positions($p, $t, ['bottom center', 'bottom left', 'bottom right']);
+					p = _positions($p, $t, ['bottom center', 'bottom left', 'bottom right']);
 					break;
 				case 'left':
-					p = __positions($p, $t, ['left middle', 'left bottom', 'left top']);
+					p = _positions($p, $t, ['left middle', 'left bottom', 'left top']);
 					break;
 				case 'right':
-					p = __positions($p, $t, ['right middle', 'right bottom', 'right top']);
+					p = _positions($p, $t, ['right middle', 'right bottom', 'right top']);
 					break;
 				//case 'auto':
 				default:
-					p = __positions($p, $t, [
+					p = _positions($p, $t, [
 						'bottom center', 'bottom left', 'bottom right',
 						'right middle', 'right bottom', 'right top',
 						'top center', 'top left', 'top right',
@@ -1407,101 +1396,107 @@ jQuery.jcookie = function(name, value, options) {
 		}
 	}
 
-	function __masker() {
+	function _masker() {
 		return $('.ui-popup-mask');
 	}
-	function __active() {
+	function _active() {
 		return $('.ui-popup-wrap:visible>.ui-popup-frame>.ui-popup');
 	}
-	function __wrapper($c) {
+	function _wrapper($c) {
 		return $c.parent().parent('.ui-popup-wrap');
 	}
 
-	function _toggle($c, trigger) {
+	function toggle($c, trigger) {
 		trigger = trigger || window;
-		var $p = __wrapper($c);
+		var $p = _wrapper($c);
 		if ($p.is(':hidden')) {
-			_show($c, trigger);
+			show($c, trigger);
 			return;
 		}
 
 		var c = $c.data('popup');
 		if (c.trigger === trigger) {
-			_hide($c);
+			hide($c);
 			return;
 		}
 
-		_show($c, trigger);
+		show($c, trigger);
 	}
 
-	function _hide($c) {
-		var $p = __wrapper($c);
+	function hide($c) {
+		var $p = _wrapper($c);
 		if ($p.is(':visible')) {
 			$c.trigger('hide.popup');
 			$p.hide();
 			$(document).off('.popup');
 			$c.trigger('hidden.popup');
 		}
-		__masker().hide();
+		_masker().hide();
 	}
 
-	function __is_true(b) {
-		return b === true || b == 'true';
-	}
+	function show($c, trigger) {
+		hide(_active());
 
-	function _show($c, trigger) {
-		_hide(__active());
+		var $p = _wrapper($c), c = $c.data('popup');
 
-		var $p = __wrapper($c), c = $c.data('popup');
-
-		if (__is_true(c.mask)) {
-			__masker().show();
+		if (_is_true(c.mask)) {
+			_masker().show();
 		}
 
 		if (c.loaded || !c.url) {
-			__show($p, $c, c, trigger);
+			_show($p, $c, c, trigger);
 			return;
 		}
 
 		c.showing = trigger || window;
-		_load($c, c);
+		load($c, c);
 	}
 
-	function __show($p, $c, c, trigger) {
+	function _show($p, $c, c, trigger) {
 		$c.trigger('show.popup');
 
-		$p.find('.ui-popup-closer')[__is_true(c.closer) ? 'show' : 'hide']();
+		$p.find('.ui-popup-closer')[_is_true(c.closer) ? 'show' : 'hide']();
 
 		c.trigger = trigger || window;
 
-		__align($p, c.trigger, c.position);
+		_align($p, c.trigger, c.position);
 
 		$p.children('.ui-popup-frame').hide()[c.transition](function() {
 			//$c.find(':input').eq(0).focus();
 			$c.trigger('shown.popup');
-			if (__is_true(c.mouse)) {
-				$(document).on('click.popup', __click);
+			if (_is_true(c.mouse)) {
+				$(document).on('click.popup', __doc_click);
 			}
-			if (__is_true(c.keyboard)) {
-				$(document).on('keydown.popup', __keydown);
+			if (_is_true(c.keyboard)) {
+				$(document).on('keydown.popup', __doc_keydown);
 			}
 		}).focus();
 	}
 
-	function _load($c, c) {
-		var $p = __wrapper($c);
+	function __doc_click() {
+		hide(_active());
+	}
+
+	function __doc_keydown(evt) {
+		if (evt.keyCode == 27) {
+			hide(_active());
+		}
+	}
+
+	function load($c, c) {
+		var $p = _wrapper($c);
 
 		c = $.extend($c.data('popup'), c);
 
-		if (__is_true(c.loader)) {
+		if (_is_true(c.loader)) {
 			$c.html('<div class="ui-popup-loader"></div>');
-			__align($p, c.showing, c.position);
+			_align($p, c.showing, c.position);
 		}
 
-		__load($p, $c, c);
+		_load($p, $c, c);
 	}
 
-	function __load($p, $c, c) {
+	function _load($p, $c, c) {
 		var seq = ++c.sequence;
 
 		$p.addClass('loading').find('.ui-popup-closer, .ui-popup-arrow').hide();
@@ -1517,48 +1512,70 @@ jQuery.jcookie = function(name, value, options) {
 				if (seq == c.sequence) {
 					c.loaded = true;
 					$c.trigger('loaded.popup');
-					(c.ajaxRender || __ajaxRender)($c, data, status, xhr);
+					(c.ajaxRender || _ajaxRender)($c, data, status, xhr);
 					$c.find('[popup-dismiss="true"]').click(function() {
-						_hide($c);
+						hide($c);
 					});
 				}
 			},
 			error: function(xhr, status, err) {
 				if (seq == c.sequence) {
-					(c.ajaxError || __ajaxError)($c, xhr, status, err);
+					(c.ajaxError || _ajaxError)($c, xhr, status, err);
 				}
 			},
 			complete: function() {
 				$p.removeClass('loading');
 				if (seq == c.sequence && c.showing) {
-					__show($p, $c, c, c.showing);
+					_show($p, $c, c, c.showing);
 					delete c.showing;
 				}
 			}
 		});
 	}
 
-	function _update($c, o) {
+	function _ajaxError($c, xhr, status, err) {
+		var $e = $('<div class="ui-popup-error">');
+
+		if (xhr.responseJSON) {
+			$e.addClass('json').text(JSON.stringify(xhr.responseJSON, null, 4));
+		} else if (xhr.responseText) {
+			$e.html(xhr.responseText);
+		} else {
+			$e.text(err || status || 'Server error!');
+		}
+		
+		$c.empty().append($e);
+	}
+
+	function _ajaxRender($c, data, status, xhr) {
+		$c.html(xhr.responseText);
+	}
+
+	function update($c, o) {
 		if (o) {
 			$.extend($c.data('popup'), o);
 		}
 	}
 
-	function _callback($c) {
+	function destroy($c) {
+		_wrapper($c).remove();
+	}
+
+	function callback($c) {
 		var c = $c.data('popup');
 		if (typeof(c.callback) == 'function') {
 			c.callback.apply(c.trigger, [].slice.call(arguments, 1));
 		}
 	}
 
-	function __camelCase(s) {
+	function _camelCase(s) {
 		s = s.charAt(0).toLowerCase() + s.slice(1);
 		return s.replace(/[-_](.)/g, function(m, g) {
 			return g.toUpperCase();
 		});
 	}
 
-	function __options($c) {
+	function _options($c) {
 		var ks = [
 			'url',
 			'method',
@@ -1582,7 +1599,7 @@ jQuery.jcookie = function(name, value, options) {
 		$.each(ks, function(i, k) {
 			var s = $c.attr('popup-' + k);
 			if (s !== undefined && s !== null && s != '') {
-				k = __camelCase(k);
+				k = _camelCase(k);
 				if ($.inArray(k, fs) >= 0) {
 					s = new Function(s);
 				}
@@ -1592,23 +1609,23 @@ jQuery.jcookie = function(name, value, options) {
 		return c;
 	}
 
-	function __init($c, c) {
-		if (__masker().length == 0) {
+	function _init($c, c) {
+		if (_masker().length == 0) {
 			$('<div class="ui-popup-mask">').appendTo('body');
 		}
 
-		var $p = __wrapper($c);
+		var $p = _wrapper($c);
 		if ($p.length) {
-			_update($c, c);
+			update($c, c);
 			return;
 		}
 
-		c = $.extend({ sequence: 0 }, $.popup.defaults, __options($c), c);
+		c = $.extend({ sequence: 0 }, $.popup.defaults, _options($c), c);
 
 		var $f = $('<div class="ui-popup-frame" tabindex="0">')
 			.append($('<div class="ui-popup-arrow">'))
 			.append($('<i class="ui-popup-closer">&times;</i>').click(function() {
-				_hide($c);
+				hide($c);
 			}));
 
 		$p = $('<div class="ui-popup-wrap">').append($f).appendTo('body').click(function(evt) {
@@ -1624,23 +1641,24 @@ jQuery.jcookie = function(name, value, options) {
 		if (c.url) {
 			c.loaded = false;
 			if (c.autoload) {
-				__load($p, $c, c);
+				_load($p, $c, c);
 			}
 		} else {
 			c.loaded = true;
 			$c.find('[popup-dismiss="true"]').click(function() {
-				_hide($c);
+				hide($c);
 			});
 		}
 	}
 
 	var api = {
-		load: _load,
-		show: _show,
-		hide: _hide,
-		update: _update,
-		toggle: _toggle,
-		callback: _callback
+		load: load,
+		show: show,
+		hide: hide,
+		toggle: toggle,
+		update: update,
+		destroy: destroy,
+		callback: callback
 	};
 
 	$.fn.popup = function(c) {
@@ -1651,20 +1669,20 @@ jQuery.jcookie = function(name, value, options) {
 			if (typeof(c) == 'string') {
 				var p = $c.data('popup');
 				if (!p) {
-					__init($c);
+					_init($c);
 				}
 				args[0] = $c;
 				api[c].apply($c, args);
 				return;
 			}
 
-			__init($c, c);
+			_init($c, c);
 		});
 		return this;
 	};
 
 	$.popup = function() {
-		var $c = __active();
+		var $c = _active();
 		$c.popup.apply($c, arguments);
 		return $c;
 	};
@@ -1684,7 +1702,7 @@ jQuery.jcookie = function(name, value, options) {
 		$('[data-spy="popup"]').popup();
 		$('[popup-target]').click(function(evt) {
 			evt.stopPropagation();
-			var $t = $(this), c = __options($t);
+			var $t = $(this), c = _options($t);
 			$($t.attr('popup-target')).popup(c).popup('toggle', this);
 		});
 	});
@@ -1756,7 +1774,7 @@ jQuery.jcookie = function(name, value, options) {
 		}
 	};
 
-	function positionAndShowBox($txt, $box, opts) {
+	function positionAndShowBox($txt, $box) {
 		var pos = $txt.offset(), tw = $txt.outerWidth(), bw = $box.outerWidth();
 
 		var left = tw > bw ? pos.left : pos.left - (bw - tw);
@@ -1766,25 +1784,27 @@ jQuery.jcookie = function(name, value, options) {
 			top: pos.top + $txt.outerHeight()
 		});
 
-		showBox($box, opts);
+		showBox($box);
 	}
 
-	function showBox($box, opts) {
+	function showBox($box) {
+		var opts = $box.data('opts');
 		$box[opts.showEffect]();
-		$(document).on('click.simple-color-picker', function() {
-			hideBox($box, opts);
+		$(document).on('click.simple_color_picker', function() {
+			hideBox($box);
 		});
 	}
 
-	function hideBox($box, opts) {
+	function hideBox($box) {
+		var opts = $box.data('opts');
 		$box[opts.hideEffect]();
-		$(document).off('.simple-color-picker');
+		$(document).off('.simple_color_picker');
 	}
 
 	function initBox($txt, opts) {
 		var $box = $('<div>', {
 			'id': ($txt.attr('id') || new Date().getTime()) + '_color_picker',
-			'class': 'simple-color-picker'
+			'class': 'ui-simple-color-picker'
 		}).hide().appendTo('body');
 
 		var $ul;
@@ -1801,32 +1821,28 @@ jQuery.jcookie = function(name, value, options) {
 			}));
 		}
 
+		$box.data('opts', opts);
 		$txt.data('simpleColorPicker', $box);
 		return $box;
 	}
 
+	var api = {
+		destroy: function() {
+			this.each(function() {
+				var $box = $(this).data('simpleColorPicker');
+				if ($box) {
+					$box.remove();
+				}
+			})
+			.off('.simple_color_picker')
+			.removeData('simpleColorPicker');
+		}
+	};
+
 	$.fn.simpleColorPicker = function(options) {
 		// Methods
 		if (typeof options == 'string') {
-			switch (options) {
-			case 'destroy':
-				this.each(function() {
-					var $box = $(this).data('simpleColorPicker');
-					if ($box) {
-						$box.remove();
-					}
-				})
-				.off('.simple-color-picker')
-				.removeData('simpleColorPicker');
-
-				if ($('.simple-color-picker').length == 0) {
-					$(document).off('.simple-color-picker');
-				}
-				break;
-			default:
-				console.log('Method "' + options + '" does not exist.')
-				break;
-			}
+			api[options].apply(this);
 			return this;
 		}
 
@@ -1846,30 +1862,27 @@ jQuery.jcookie = function(name, value, options) {
 			$box.find('li').click(function() {
 				if ($txt.is('input')) {
 					$txt.val($(this).attr('title'));
-					$txt.blur();
 				}
 				if ($.isFunction(opts.onChangeColor)) {
 					opts.onChangeColor.call($txt, $(this).attr('title'));
 				}
-				hideBox($box, opts);
+				hideBox($box);
 			});
 
 			$box.click(function(evt) {
 				evt.stopPropagation();
 			});
 
-			$txt.on('click.simple-color-picker', function(evt) {
+			$txt.on('click.simple_color_picker', function(evt) {
 				evt.stopPropagation();
-				positionAndShowBox($txt, $box, opts);
+				positionAndShowBox($txt, $box);
 			});
 
-			$txt.on('focus.simple-color-picker', function(evt) {
-				positionAndShowBox($txt, $box, opts);
-			});
-
-			$txt.on('blur.simple-color-picker', function(evt) {
-				hideBox($box, opts);
-			});
+			if ($txt.is('input')) {
+				$txt.on('focus.simple_color_picker', function() {
+					positionAndShowBox($txt, $box);
+				});
+			}
 		});
 	};
 
@@ -2326,26 +2339,17 @@ jQuery.jcookie = function(name, value, options) {
 		$t.find('li').removeClass('node').children('.item').off('.treeview');
 	}
 
+	var api = {
+		'collapse': collapse,
+		'expand': expand,
+		'toggle': toggle,
+		'destroy': unbind
+	};
+
 	$.fn.treeview = function(method, target) {
 		// Methods
 		if (typeof method == 'string') {
-			switch (method) {
-			case 'collapse':
-				collapse(this, target);
-				break;
-			case 'expand':
-				expand(this, target);
-				break;
-			case 'toggle':
-				toggle(this, target);
-				break;
-			case 'destroy':
-				unbind(this);
-				break;
-			default:
-				console.log('Method "' + method + '" does not exist.')
-				break;
-			}
+			api[method].call(this, target);
 			return this;
 		}
 

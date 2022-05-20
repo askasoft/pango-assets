@@ -243,7 +243,7 @@
 	position: relative !important;
 }
 
-.nice-select {
+.ui-nice-select {
 	-webkit-tap-highlight-color: transparent;
 	background-color: #fff;
 	border-radius: 5px;
@@ -271,17 +271,17 @@
 	width: auto;
 }
 
-.nice-select:hover {
+.ui-nice-select:hover {
 	border-color: #dbdbdb;
 }
 
-.nice-select:active,
-.nice-select.open,
-.nice-select:focus {
+.ui-nice-select:active,
+.ui-nice-select.open,
+.ui-nice-select:focus {
 	border-color: #999;
 }
 
-.nice-select:after {
+.ui-nice-select:after {
 	border-bottom: 2px solid #999;
 	border-right: 2px solid #999;
 	content: '';
@@ -303,16 +303,16 @@
 	width: 5px;
 }
 
-.nice-select.disabled {
+.ui-nice-select.disabled {
 	border-color: #ededed;
 	color: #999;
 	pointer-events: none;
 }
-.nice-select.disabled:after {
+.ui-nice-select.disabled:after {
 	border-color: #cccccc;
 }
 
-.nice-select>ul {
+.ui-nice-select>ul {
 	background-color: #fff;
 	border-radius: 5px;
 	box-shadow: 0 0 0 1px rgba(68, 68, 68, 0.11);
@@ -338,7 +338,7 @@
 	z-index: 9;
 }
 
-.nice-select>ul>li {
+.ui-nice-select>ul>li {
 	cursor: pointer;
 	font-weight: 400;
 	line-height: 40px;
@@ -351,29 +351,29 @@
 	-webkit-transition: all 0.2s;
 	transition: all 0.2s;
 }
-.nice-select>ul>li:hover,
-.nice-select>ul>li.focus,
-.nice-select>ul>li.selected.focus {
+.ui-nice-select>ul>li:hover,
+.ui-nice-select>ul>li.focus,
+.ui-nice-select>ul>li.selected.focus {
 	background-color: #f6f6f6;
 }
-.nice-select>ul>li.selected {
+.ui-nice-select>ul>li.selected {
 	font-weight: bold;
 }
-.nice-select>ul>li.disabled {
+.ui-nice-select>ul>li.disabled {
 	background-color: transparent;
 	color: #999;
 	cursor: default;
 }
-.nice-select>ul:hover>li:not(:hover) {
+.ui-nice-select>ul:hover>li:not(:hover) {
 	background-color: transparent !important;
 }
 
-.nice-select.open:after {
+.ui-nice-select.open:after {
 	-webkit-transform: rotate(-135deg);
 	-ms-transform: rotate(-135deg);
 	transform: rotate(-135deg);
 }
-.nice-select.open>ul {
+.ui-nice-select.open>ul {
 	opacity: 1;
 	height: auto;
 	max-height: 365px;
@@ -384,68 +384,67 @@
 	transform: scale(1) translateY(0);
 }
 
-.nice-select.wide {
+.ui-nice-select.wide {
 	width: 100%;
 }
-.nice-select.wide>ul {
+.ui-nice-select.wide>ul {
 	left: 0 !important;
 	right: 0 !important;
 }
 
-.nice-select.right>ul {
+.ui-nice-select.right>ul {
 	left: auto;
 	right: 0;
 }
 
-.nice-select.small {
+.ui-nice-select.small {
 	font-size: 12px;
 	height: 36px;
 	line-height: 34px;
 }
-.nice-select.small:after {
+.ui-nice-select.small:after {
 	height: 4px;
 	width: 4px;
 }
-.nice-select.small>ul>li {
+.ui-nice-select.small>ul>li {
 	line-height: 34px;
 	min-height: 34px;
 }
 
-.nice-select.col2>ul {
+.ui-nice-select.col2>ul {
 	width: 600px;
 	display: flex;
 	flex-wrap: wrap;
 }
-.nice-select.col2.open>ul {
+.ui-nice-select.col2.open>ul {
 	overflow-x: hidden;
 	overflow-y: auto;
 }
-.nice-select.col2>ul>li {
+.ui-nice-select.col2>ul>li {
 	display: block;
 	flex: 0 0 50%;
 	white-space: nowrap;
 }
 
-.nice-select.col3>ul {
+.ui-nice-select.col3>ul {
 	width: 750px;
 	display: flex;
 	flex-wrap: wrap;
 }
-.nice-select.col3.open>ul {
+.ui-nice-select.col3.open>ul {
 	overflow-x: hidden;
 	overflow-y: auto;
 }
-.nice-select.col3>ul>li {
+.ui-nice-select.col3>ul>li {
 	display: block;
 	flex: 0 0 33%;
 	white-space: nowrap;
 }
 
-
-.no-csspointerevents .nice-select>ul {
+.ui-nice-select-no-csspointerevents .ui-nice-select>ul {
 	display: none;
 }
-.no-csspointerevents .nice-select.open>ul {
+.ui-nice-select-no-csspointerevents .ui-nice-select.open>ul {
 	display: block;
 }
 .ui-popup {
@@ -606,7 +605,7 @@
 
 .ui-popup-error.json {
 	white-space: pre-wrap;
-}div.simple-color-picker {
+}div.ui-simple-color-picker {
 	border: 1px solid #000;
 	position: absolute;
 	left: 0px;
@@ -615,7 +614,7 @@
 	background-color: #fff;
 }
 
-div.simple-color-picker ul {
+div.ui-simple-color-picker ul {
 	height: 17px;
 	list-style: none;
 	margin: 0px;
@@ -623,7 +622,7 @@ div.simple-color-picker ul {
 	white-space: nowrap;
 }
 
-div.simple-color-picker ul li {
+div.ui-simple-color-picker ul li {
 	display: inline-block;
 	width: 15px;
 	height: 15px;
