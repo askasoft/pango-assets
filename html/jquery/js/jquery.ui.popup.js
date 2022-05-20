@@ -1,30 +1,6 @@
 (function($) {
-	function __click() {
-		_hide(__active());
-	}
-
-	function __keydown(evt) {
-		if (evt.keyCode == 27) {
-			_hide(__active());
-		}
-	}
-
-	function __ajaxError($c, xhr, status, err) {
-		var $e = $('<div class="ui-popup-error">');
-
-		if (xhr.responseJSON) {
-			$e.addClass('json').text(JSON.stringify(xhr.responseJSON, null, 4));
-		} else if (xhr.responseText) {
-			$e.html(xhr.responseText);
-		} else {
-			$e.text(err || status || 'Server error!');
-		}
-		
-		$c.empty().append($e);
-	}
-
-	function __ajaxRender($c, data, status, xhr) {
-		$c.html(xhr.responseText);
+	function _is_true(b) {
+		return b === true || b == 'true';
 	}
 
 	var ArrowClasses = {
@@ -42,7 +18,7 @@
 		'right middle': 'lt hl vm'
 	};
 
-	function __position($p, $t, position) {
+	function _position($p, $t, position) {
 		var tw = $t.outerWidth(), th = $t.outerHeight(), p = $t.offset();
 		var pw = $p.outerWidth(), ph = $p.outerHeight();
 
@@ -100,7 +76,7 @@
 		return p;
 	}
 
-	function __in_screen($p, p) {
+	function _in_screen($p, p) {
 		var $w = $(window),
 			wt = $w.scrollTop(), wl = $w.scrollLeft(),
 			wb = wt + $w.height(), wr = wl + $w.width(),
@@ -112,11 +88,11 @@
 			&& pb >= wt && pb <= wb;
 	}
 
-	function __positions($p, $t, ps) {
+	function _positions($p, $t, ps) {
 		for (var i = 0; i < ps.length; i++) {
-			var p = __position($p, $t, ps[i]);
+			var p = _position($p, $t, ps[i]);
 			p.position = ps[i];
-			if (__in_screen($p, p)) {
+			if (_in_screen($p, p)) {
 				return p;
 			}
 			ps[i] = p;
@@ -124,7 +100,7 @@
 		return ps[0];
 	}
 
-	function __center($p, $w) {
+	function _center($p, $w) {
 		var p = {
 			left: $w.scrollLeft() + ($w.outerWidth() - $p.outerWidth()) / 2,
 			top: $w.scrollTop() + ($w.outerHeight() - $p.outerHeight()) / 2
@@ -135,7 +111,7 @@
 		return p;
 	}
 
-	function __align($p, trigger, position) {
+	function _align($p, trigger, position) {
 		$p.css({
 			display: 'block',
 			visibility: 'hidden'
@@ -143,30 +119,30 @@
 
 		var p, ac, $a = $p.find('.ui-popup-arrow').hide();
 		if (position == 'center') {
-			p = __center($p, $(window));
+			p = _center($p, $(window));
 		} else {
 			var $t = $(trigger);
 
 			ac = ArrowClasses[position];
 			if (ac) {
-				p = __position($p, $t, position);
+				p = _position($p, $t, position);
 			} else {
 				switch (position) {
 				case 'top':
-					p = __positions($p, $t, ['top center', 'top left', 'top right']);
+					p = _positions($p, $t, ['top center', 'top left', 'top right']);
 					break;
 				case 'bottom':
-					p = __positions($p, $t, ['bottom center', 'bottom left', 'bottom right']);
+					p = _positions($p, $t, ['bottom center', 'bottom left', 'bottom right']);
 					break;
 				case 'left':
-					p = __positions($p, $t, ['left middle', 'left bottom', 'left top']);
+					p = _positions($p, $t, ['left middle', 'left bottom', 'left top']);
 					break;
 				case 'right':
-					p = __positions($p, $t, ['right middle', 'right bottom', 'right top']);
+					p = _positions($p, $t, ['right middle', 'right bottom', 'right top']);
 					break;
 				//case 'auto':
 				default:
-					p = __positions($p, $t, [
+					p = _positions($p, $t, [
 						'bottom center', 'bottom left', 'bottom right',
 						'right middle', 'right bottom', 'right top',
 						'top center', 'top left', 'top right',
@@ -188,101 +164,107 @@
 		}
 	}
 
-	function __masker() {
+	function _masker() {
 		return $('.ui-popup-mask');
 	}
-	function __active() {
+	function _active() {
 		return $('.ui-popup-wrap:visible>.ui-popup-frame>.ui-popup');
 	}
-	function __wrapper($c) {
+	function _wrapper($c) {
 		return $c.parent().parent('.ui-popup-wrap');
 	}
 
-	function _toggle($c, trigger) {
+	function toggle($c, trigger) {
 		trigger = trigger || window;
-		var $p = __wrapper($c);
+		var $p = _wrapper($c);
 		if ($p.is(':hidden')) {
-			_show($c, trigger);
+			show($c, trigger);
 			return;
 		}
 
 		var c = $c.data('popup');
 		if (c.trigger === trigger) {
-			_hide($c);
+			hide($c);
 			return;
 		}
 
-		_show($c, trigger);
+		show($c, trigger);
 	}
 
-	function _hide($c) {
-		var $p = __wrapper($c);
+	function hide($c) {
+		var $p = _wrapper($c);
 		if ($p.is(':visible')) {
 			$c.trigger('hide.popup');
 			$p.hide();
 			$(document).off('.popup');
 			$c.trigger('hidden.popup');
 		}
-		__masker().hide();
+		_masker().hide();
 	}
 
-	function __is_true(b) {
-		return b === true || b == 'true';
-	}
+	function show($c, trigger) {
+		hide(_active());
 
-	function _show($c, trigger) {
-		_hide(__active());
+		var $p = _wrapper($c), c = $c.data('popup');
 
-		var $p = __wrapper($c), c = $c.data('popup');
-
-		if (__is_true(c.mask)) {
-			__masker().show();
+		if (_is_true(c.mask)) {
+			_masker().show();
 		}
 
 		if (c.loaded || !c.url) {
-			__show($p, $c, c, trigger);
+			_show($p, $c, c, trigger);
 			return;
 		}
 
 		c.showing = trigger || window;
-		_load($c, c);
+		load($c, c);
 	}
 
-	function __show($p, $c, c, trigger) {
+	function _show($p, $c, c, trigger) {
 		$c.trigger('show.popup');
 
-		$p.find('.ui-popup-closer')[__is_true(c.closer) ? 'show' : 'hide']();
+		$p.find('.ui-popup-closer')[_is_true(c.closer) ? 'show' : 'hide']();
 
 		c.trigger = trigger || window;
 
-		__align($p, c.trigger, c.position);
+		_align($p, c.trigger, c.position);
 
 		$p.children('.ui-popup-frame').hide()[c.transition](function() {
 			//$c.find(':input').eq(0).focus();
 			$c.trigger('shown.popup');
-			if (__is_true(c.mouse)) {
-				$(document).on('click.popup', __click);
+			if (_is_true(c.mouse)) {
+				$(document).on('click.popup', __doc_click);
 			}
-			if (__is_true(c.keyboard)) {
-				$(document).on('keydown.popup', __keydown);
+			if (_is_true(c.keyboard)) {
+				$(document).on('keydown.popup', __doc_keydown);
 			}
 		}).focus();
 	}
 
-	function _load($c, c) {
-		var $p = __wrapper($c);
+	function __doc_click() {
+		hide(_active());
+	}
+
+	function __doc_keydown(evt) {
+		if (evt.keyCode == 27) {
+			hide(_active());
+		}
+	}
+
+	function load($c, c) {
+		var $p = _wrapper($c);
 
 		c = $.extend($c.data('popup'), c);
 
-		if (__is_true(c.loader)) {
+		if (_is_true(c.loader)) {
 			$c.html('<div class="ui-popup-loader"></div>');
-			__align($p, c.showing, c.position);
+			_align($p, c.showing, c.position);
 		}
 
-		__load($p, $c, c);
+		_load($p, $c, c);
 	}
 
-	function __load($p, $c, c) {
+	function _load($p, $c, c) {
 		var seq = ++c.sequence;
 
 		$p.addClass('loading').find('.ui-popup-closer, .ui-popup-arrow').hide();
@@ -298,48 +280,70 @@
 				if (seq == c.sequence) {
 					c.loaded = true;
 					$c.trigger('loaded.popup');
-					(c.ajaxRender || __ajaxRender)($c, data, status, xhr);
+					(c.ajaxRender || _ajaxRender)($c, data, status, xhr);
 					$c.find('[popup-dismiss="true"]').click(function() {
-						_hide($c);
+						hide($c);
 					});
 				}
 			},
 			error: function(xhr, status, err) {
 				if (seq == c.sequence) {
-					(c.ajaxError || __ajaxError)($c, xhr, status, err);
+					(c.ajaxError || _ajaxError)($c, xhr, status, err);
 				}
 			},
 			complete: function() {
 				$p.removeClass('loading');
 				if (seq == c.sequence && c.showing) {
-					__show($p, $c, c, c.showing);
+					_show($p, $c, c, c.showing);
 					delete c.showing;
 				}
 			}
 		});
 	}
 
-	function _update($c, o) {
+	function _ajaxError($c, xhr, status, err) {
+		var $e = $('<div class="ui-popup-error">');
+
+		if (xhr.responseJSON) {
+			$e.addClass('json').text(JSON.stringify(xhr.responseJSON, null, 4));
+		} else if (xhr.responseText) {
+			$e.html(xhr.responseText);
+		} else {
+			$e.text(err || status || 'Server error!');
+		}
+		
+		$c.empty().append($e);
+	}
+
+	function _ajaxRender($c, data, status, xhr) {
+		$c.html(xhr.responseText);
+	}
+
+	function update($c, o) {
 		if (o) {
 			$.extend($c.data('popup'), o);
 		}
 	}
 
-	function _callback($c) {
+	function destroy($c) {
+		_wrapper($c).remove();
+	}
+
+	function callback($c) {
 		var c = $c.data('popup');
 		if (typeof(c.callback) == 'function') {
 			c.callback.apply(c.trigger, [].slice.call(arguments, 1));
 		}
 	}
 
-	function __camelCase(s) {
+	function _camelCase(s) {
 		s = s.charAt(0).toLowerCase() + s.slice(1);
 		return s.replace(/[-_](.)/g, function(m, g) {
 			return g.toUpperCase();
 		});
 	}
 
-	function __options($c) {
+	function _options($c) {
 		var ks = [
 			'url',
 			'method',
@@ -363,7 +367,7 @@
 		$.each(ks, function(i, k) {
 			var s = $c.attr('popup-' + k);
 			if (s !== undefined && s !== null && s != '') {
-				k = __camelCase(k);
+				k = _camelCase(k);
 				if ($.inArray(k, fs) >= 0) {
 					s = new Function(s);
 				}
@@ -373,23 +377,23 @@
 		return c;
 	}
 
-	function __init($c, c) {
-		if (__masker().length == 0) {
+	function _init($c, c) {
+		if (_masker().length == 0) {
 			$('<div class="ui-popup-mask">').appendTo('body');
 		}
 
-		var $p = __wrapper($c);
+		var $p = _wrapper($c);
 		if ($p.length) {
-			_update($c, c);
+			update($c, c);
 			return;
 		}
 
-		c = $.extend({ sequence: 0 }, $.popup.defaults, __options($c), c);
+		c = $.extend({ sequence: 0 }, $.popup.defaults, _options($c), c);
 
 		var $f = $('<div class="ui-popup-frame" tabindex="0">')
 			.append($('<div class="ui-popup-arrow">'))
 			.append($('<i class="ui-popup-closer">&times;</i>').click(function() {
-				_hide($c);
+				hide($c);
 			}));
 
 		$p = $('<div class="ui-popup-wrap">').append($f).appendTo('body').click(function(evt) {
@@ -405,23 +409,24 @@
 		if (c.url) {
 			c.loaded = false;
 			if (c.autoload) {
-				__load($p, $c, c);
+				_load($p, $c, c);
 			}
 		} else {
 			c.loaded = true;
 			$c.find('[popup-dismiss="true"]').click(function() {
-				_hide($c);
+				hide($c);
 			});
 		}
 	}
 
 	var api = {
-		load: _load,
-		show: _show,
-		hide: _hide,
-		update: _update,
-		toggle: _toggle,
-		callback: _callback
+		load: load,
+		show: show,
+		hide: hide,
+		toggle: toggle,
+		update: update,
+		destroy: destroy,
+		callback: callback
 	};
 
 	$.fn.popup = function(c) {
@@ -432,20 +437,20 @@
 			if (typeof(c) == 'string') {
 				var p = $c.data('popup');
 				if (!p) {
-					__init($c);
+					_init($c);
 				}
 				args[0] = $c;
 				api[c].apply($c, args);
 				return;
 			}
 
-			__init($c, c);
+			_init($c, c);
 		});
 		return this;
 	};
 
 	$.popup = function() {
-		var $c = __active();
+		var $c = _active();
 		$c.popup.apply($c, arguments);
 		return $c;
 	};
@@ -465,7 +470,7 @@
 		$('[data-spy="popup"]').popup();
 		$('[popup-target]').click(function(evt) {
 			evt.stopPropagation();
-			var $t = $(this), c = __options($t);
+			var $t = $(this), c = _options($t);
 			$($t.attr('popup-target')).popup(c).popup('toggle', this);
 		});
 	});
