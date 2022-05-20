@@ -20,7 +20,7 @@
 		}
 	};
 
-	function positionAndShowBox($txt, $box, opts) {
+	function positionAndShowBox($txt, $box) {
 		var pos = $txt.offset(), tw = $txt.outerWidth(), bw = $box.outerWidth();
 
 		var left = tw > bw ? pos.left : pos.left - (bw - tw);
@@ -30,25 +30,27 @@
 			top: pos.top + $txt.outerHeight()
 		});
 
-		showBox($box, opts);
+		showBox($box);
 	}
 
-	function showBox($box, opts) {
+	function showBox($box) {
+		var opts = $box.data('opts');
 		$box[opts.showEffect]();
-		$(document).on('click.simple-color-picker', function() {
-			hideBox($box, opts);
+		$(document).on('click.simple_color_picker', function() {
+			hideBox($box);
 		});
 	}
 
-	function hideBox($box, opts) {
+	function hideBox($box) {
+		var opts = $box.data('opts');
 		$box[opts.hideEffect]();
-		$(document).off('.simple-color-picker');
+		$(document).off('.simple_color_picker');
 	}
 
 	function initBox($txt, opts) {
 		var $box = $('<div>', {
 			'id': ($txt.attr('id') || new Date().getTime()) + '_color_picker',
-			'class': 'simple-color-picker'
+			'class': 'ui-simple-color-picker'
 		}).hide().appendTo('body');
 
 		var $ul;
@@ -65,32 +67,28 @@
 			}));
 		}
 
+		$box.data('opts', opts);
 		$txt.data('simpleColorPicker', $box);
 		return $box;
 	}
 
+	var api = {
+		destroy: function() {
+			this.each(function() {
+				var $box = $(this).data('simpleColorPicker');
+				if ($box) {
+					$box.remove();
+				}
+			})
+			.off('.simple_color_picker')
+			.removeData('simpleColorPicker');
+		}
+	};
+
 	$.fn.simpleColorPicker = function(options) {
 		// Methods
 		if (typeof options == 'string') {
-			switch (options) {
-			case 'destroy':
-				this.each(function() {
-					var $box = $(this).data('simpleColorPicker');
-					if ($box) {
-						$box.remove();
-					}
-				})
-				.off('.simple-color-picker')
-				.removeData('simpleColorPicker');
-
-				if ($('.simple-color-picker').length == 0) {
-					$(document).off('.simple-color-picker');
-				}
-				break;
-			default:
-				console.log('Method "' + options + '" does not exist.')
-				break;
-			}
+			api[options].apply(this);
 			return this;
 		}
 
@@ -110,30 +108,27 @@
 			$box.find('li').click(function() {
 				if ($txt.is('input')) {
 					$txt.val($(this).attr('title'));
-					$txt.blur();
 				}
 				if ($.isFunction(opts.onChangeColor)) {
 					opts.onChangeColor.call($txt, $(this).attr('title'));
 				}
-				hideBox($box, opts);
+				hideBox($box);
 			});
 
 			$box.click(function(evt) {
 				evt.stopPropagation();
 			});
 
-			$txt.on('click.simple-color-picker', function(evt) {
+			$txt.on('click.simple_color_picker', function(evt) {
 				evt.stopPropagation();
-				positionAndShowBox($txt, $box, opts);
+				positionAndShowBox($txt, $box);
 			});
 
-			$txt.on('focus.simple-color-picker', function(evt) {
-				positionAndShowBox($txt, $box, opts);
-			});
-
-			$txt.on('blur.simple-color-picker', function(evt) {
-				hideBox($box, opts);
-			});
+			if ($txt.is('input')) {
+				$txt.on('focus.simple_color_picker', function() {
+					positionAndShowBox($txt, $box);
+				});
+			}
 		});
 	};
 

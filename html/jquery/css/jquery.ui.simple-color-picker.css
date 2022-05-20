@@ -1,4 +1,4 @@
-div.simple-color-picker {
+div.ui-simple-color-picker {
 	border: 1px solid #000;
 	position: absolute;
 	left: 0px;
@@ -7,7 +7,7 @@ div.simple-color-picker {
 	background-color: #fff;
 }
 
-div.simple-color-picker ul {
+div.ui-simple-color-picker ul {
 	height: 17px;
 	list-style: none;
 	margin: 0px;
@@ -15,7 +15,7 @@ div.simple-color-picker ul {
 	white-space: nowrap;
 }
 
-div.simple-color-picker ul li {
+div.ui-simple-color-picker ul li {
 	display: inline-block;
 	width: 15px;
 	height: 15px;
