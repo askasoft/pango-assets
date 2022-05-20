@@ -41,26 +41,17 @@
 		$t.find('li').removeClass('node').children('.item').off('.treeview');
 	}
 
+	var api = {
+		'collapse': collapse,
+		'expand': expand,
+		'toggle': toggle,
+		'destroy': unbind
+	};
+
 	$.fn.treeview = function(method, target) {
 		// Methods
 		if (typeof method == 'string') {
-			switch (method) {
-			case 'collapse':
-				collapse(this, target);
-				break;
-			case 'expand':
-				expand(this, target);
-				break;
-			case 'toggle':
-				toggle(this, target);
-				break;
-			case 'destroy':
-				unbind(this);
-				break;
-			default:
-				console.log('Method "' + method + '" does not exist.')
-				break;
-			}
+			api[method].call(this, target);
 			return this;
 		}
 
