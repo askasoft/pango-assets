@@ -2,15 +2,15 @@
 	-webkit-tap-highlight-color: transparent;
 	background-color: #fff;
 	border-radius: 5px;
-	border: solid 1px #e8e8e8;
+	border: solid 1px #ccc;
 	box-sizing: border-box;
 	cursor: pointer;
 	display: inline-block;
 	font-family: inherit;
 	font-size: 14px;
 	font-weight: normal;
-	height: 42px;
-	line-height: 40px;
+	height: 34px;
+	line-height: 32px;
 	outline: none;
 	padding-left: 18px;
 	padding-right: 30px;
@@ -27,13 +27,15 @@
 }
 
 .ui-nice-select:hover {
-	border-color: #dbdbdb;
+	border-color: #bbb;
 }
 
 .ui-nice-select:active,
 .ui-nice-select.open,
 .ui-nice-select:focus {
-	border-color: #999;
+	border-color: #66afe9;
+	-webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px rgb(102 175 233 / 60%);
+	box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px rgb(102 175 233 / 60%);
 }
 
 .ui-nice-select:after {
@@ -154,8 +156,8 @@
 
 .ui-nice-select.small {
 	font-size: 12px;
-	height: 36px;
-	line-height: 34px;
+	height: 32px;
+	line-height: 30px;
 }
 .ui-nice-select.small:after {
 	height: 4px;
