@@ -477,7 +477,6 @@
 	border-radius: 5px;
 	-webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
 	box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
-	padding: 10px;
 	min-width: 100px;
 	min-height: 100px;
 }
@@ -604,10 +603,24 @@
 	border-radius: 4px;
 	padding: 15px;
 }
-
 .ui-popup-error.json {
 	white-space: pre-wrap;
-}div.ui-simple-color-picker {
+}
+
+.ui-popup-header {
+	padding: 15px;
+	border-bottom: 1px solid #e5e5e5;
+}
+.ui-popup-body {
+	position: relative;
+	padding: 15px;
+}
+.ui-popup-footer {
+	padding: 15px;
+	text-align: center;
+	border-top: 1px solid #e5e5e5;
+}
+div.ui-simple-color-picker {
 	border: 1px solid #000;
 	position: absolute;
 	left: 0px;
