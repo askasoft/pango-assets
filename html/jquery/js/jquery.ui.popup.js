@@ -230,7 +230,6 @@
 		_align($p, c.trigger, c.position);
 
 		$p.children('.ui-popup-frame').hide()[c.transition](function() {
-			//$c.find(':input').eq(0).focus();
 			$c.trigger('shown.popup');
 			if (_is_true(c.mouse)) {
 				$(document).on('click.popup', __doc_click);
@@ -246,7 +245,7 @@
 	}
 
 	function __doc_keydown(evt) {
-		if (evt.keyCode == 27) {
+		if (evt.keyCode == 27) { // Esc
 			hide(_active());
 		}
 	}
@@ -278,12 +277,12 @@
 			method: c.method,
 			success: function(data, status, xhr) {
 				if (seq == c.sequence) {
-					c.loaded = true;
-					$c.trigger('loaded.popup');
 					(c.ajaxRender || _ajaxRender)($c, data, status, xhr);
 					$c.find('[popup-dismiss="true"]').click(function() {
 						hide($c);
 					});
+					c.loaded = true;
+					$c.trigger('loaded.popup');
 				}
 			},
 			error: function(xhr, status, err) {
