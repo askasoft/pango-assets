@@ -515,7 +515,7 @@ jQuery.jcookie = function(name, value, options) {
 	};
 
 	$(window).on('load', function() {
-		$('[focusme]').focusme();
+		$('[focusme="true"]').focusme();
 	});
 })(jQuery);
 (function($) {
@@ -2307,7 +2307,7 @@ jQuery.jcookie = function(name, value, options) {
 	};
 
 	$(window).on('load', function() {
-		$('[totop]').totop();
+		$('[totop="true"]').totop();
 	});
 })(jQuery);
 

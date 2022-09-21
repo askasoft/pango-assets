@@ -14,7 +14,7 @@
 	};
 
 	$(window).on('load', function() {
-		$('[totop]').totop();
+		$('[totop="true"]').totop();
 	});
 })(jQuery);
 

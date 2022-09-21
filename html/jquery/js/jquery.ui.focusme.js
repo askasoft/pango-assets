@@ -35,6 +35,6 @@
 	};
 
 	$(window).on('load', function() {
-		$('[focusme]').focusme();
+		$('[focusme="true"]').focusme();
 	});
 })(jQuery);

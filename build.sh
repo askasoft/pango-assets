@@ -3,6 +3,7 @@
 # npm install -g uglify-js clean-css-cli
 
 BASEDIR=$(dirname $(readlink -f $0))
+HTMLDIR=$BASEDIR/html
 
 minjs() {
 	echo --------------------------------------
@@ -16,22 +17,22 @@ mincss() {
 	cleancss -d -o $1.min.css $1.css
 }
 
-cd $BASEDIR/html/datetimepicker/
+cd $HTMLDIR/datetimepicker/
 mincss bootstrap-datetimepicker
 
-cd $BASEDIR/html/jquery/css/
+cd $HTMLDIR/jquery/css/
 cat jquery.*.css > jquery-plugins.css 
 mincss jquery-plugins
 
 
-cd $BASEDIR/html/corejs/
+cd $HTMLDIR/corejs/
 cat core.*.js > corejs.js
 minjs corejs
 
-cd $BASEDIR/html/datetimepicker/
+cd $HTMLDIR/datetimepicker/
 minjs bootstrap-datetimepicker
 
-cd $BASEDIR/html/jquery/js/
+cd $HTMLDIR/jquery/js/
 cat jquery.*.js > jquery-plugins.js 
 minjs jquery-plugins
 
