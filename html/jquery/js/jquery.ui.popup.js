@@ -220,6 +220,16 @@
 		load($c, c);
 	}
 
+	function _bind(c) {
+		$(document).off('.popup');
+		if (_is_true(c.mouse)) {
+			$(document).on('click.popup', __doc_click);
+		}
+		if (_is_true(c.keyboard)) {
+			$(document).on('keydown.popup', __doc_keydown);
+		}
+	}
+
 	function _show($p, $c, c, trigger) {
 		$c.trigger('show.popup');
 
@@ -231,12 +241,7 @@
 
 		$p.children('.ui-popup-frame').hide()[c.transition](function() {
 			$c.trigger('shown.popup');
-			if (_is_true(c.mouse)) {
-				$(document).on('click.popup', __doc_click);
-			}
-			if (_is_true(c.keyboard)) {
-				$(document).on('keydown.popup', __doc_keydown);
-			}
+			_bind(c);
 		}).focus();
 	}
 
@@ -318,9 +323,14 @@
 		$c.html(xhr.responseText);
 	}
 
-	function update($c, o) {
-		if (o) {
-			$.extend($c.data('popup'), o);
+	function update($c, c) {
+		if (c) {
+			c = $.extend($c.data('popup'), c);
+			var $p = _wrapper($c);
+			if (!$p.is(':hidden')) {
+				_bind(c);
+				_masker()[_is_true(c.mask) ? 'show' : 'hide']();
+			}
 		}
 	}
 
