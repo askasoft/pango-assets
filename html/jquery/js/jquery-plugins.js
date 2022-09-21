@@ -898,7 +898,7 @@ jQuery.jcookie = function(name, value, options) {
 	};
 })(jQuery);
 (function($) {
-	function clearMaskTimeout($el) {
+	function _clearTimeout($el) {
 		//if this element has delayed mask scheduled then remove it
 		var t = $el.data("_mask_timeout");
 		if (t) {
@@ -914,11 +914,16 @@ jQuery.jcookie = function(name, value, options) {
 		}
 	}
 
-	function maskElement($el, c) {
+	function _stopEvent(evt) {
+		evt.preventDefault();
+		evt.stopPropagation();
+	}
+
+	function doMask($el, c) {
 		if ($el.isLoadMasked()) {
-			unmaskElement($el);
+			unMask($el);
 		} else {
-			clearMaskTimeout($el);
+			_clearTimeout($el);
 		}
 		
 		var $lm = $('<div class="ui-loadmask">');
@@ -949,7 +954,7 @@ jQuery.jcookie = function(name, value, options) {
 		if ($el.css("position") == "static") {
 			$el.addClass("ui-loadmasked-relative");
 		}
-		if (c.mask !== false) {
+		if (c.mask) {
 			$el.append($('<div class="ui-loadmask-mask"></div>'));
 		}
 		
@@ -957,44 +962,52 @@ jQuery.jcookie = function(name, value, options) {
 
 		if (c.timeout > 0) {
 			$el.data("_unmask_timeout", setTimeout(function() {
-				unmaskElement($el);
+				unMask($el);
 			}, c.timeout));
+		}
+		if (c.keyboard) {
+			$el.on('keydown.loadmask', _stopEvent);
 		}
 	}
 
-	function unmaskElement($el) {
-		clearMaskTimeout($el);
+	function unMask($el) {
+		_clearTimeout($el);
 
+		$el.off('.loadmask');
 		$el.find(".ui-loadmask-mask, .ui-loadmask").remove();
 		$el.removeClass("ui-loadmasked ui-loadmasked-relative");
 	}
 
+	$.loadmask = {
+		defaults: {
+			cssClass: '',		// css class for the mask element
+			mask: true,			// add mask layer
+			keyboard: true,		// add keydown event handler for the mask element to prevent input
+			delay: 0,			// delay in milliseconds before element is masked. If unloadmask() is called before the delay times out, no mask is displayed. This can be used to prevent unnecessary mask display for quick processes.
+			timeout: 0,			// timeout in milliseconds for automatically unloadmask
+		}
+	};
+
 	/**
 	 * Displays loading mask over selected element(s). Accepts both single and multiple selectors.
-	 * @param cssClass css class for the mask element
 	 * @param content  html content that will be add to the loadmask
 	 * @param html  html message that will be display
 	 * @param text  text message that will be display (html tag will be escaped)
-	 * @param mask  add mask layer (default: true)
-	 * @param fixed fixed position (default: false)
-	 * @param delay Delay in milliseconds before element is masked (optional). If unloadmask() is called 
-	 *              before the delay times out, no mask is displayed. This can be used to prevent unnecessary 
-	 *              mask display for quick processes.
 	 */
 	$.fn.loadmask = function(c) {
 		if (typeof(c) == 'string') {
 			c = { text: c };
 		}
-		c = $.extend({}, c);
+		c = $.extend({}, $.loadmask.defaults, c);
 		return this.each(function() {
-			if (c.delay !== undefined && c.delay > 0) {
-				var $el = $(this);
+			var $el = $(this);
+			if (c.delay > 0) {
 				$el.data("_mask_timeout", setTimeout(function() {
-					maskElement($el, c);
+					doMask($el, c);
 				}, c.delay));
 			}
 			else {
-				maskElement($(this), c);
+				doMask($el, c);
 			}
 		});
 	};
@@ -1004,7 +1017,7 @@ jQuery.jcookie = function(name, value, options) {
 	 */
 	$.fn.unloadmask = function() {
 		return this.each(function() {
-			unmaskElement($(this));
+			unMask($(this));
 		});
 	};
 	
@@ -1445,6 +1458,16 @@ jQuery.jcookie = function(name, value, options) {
 		load($c, c);
 	}
 
+	function _bind(c) {
+		$(document).off('.popup');
+		if (_is_true(c.mouse)) {
+			$(document).on('click.popup', __doc_click);
+		}
+		if (_is_true(c.keyboard)) {
+			$(document).on('keydown.popup', __doc_keydown);
+		}
+	}
+
 	function _show($p, $c, c, trigger) {
 		$c.trigger('show.popup');
 
@@ -1456,12 +1479,7 @@ jQuery.jcookie = function(name, value, options) {
 
 		$p.children('.ui-popup-frame').hide()[c.transition](function() {
 			$c.trigger('shown.popup');
-			if (_is_true(c.mouse)) {
-				$(document).on('click.popup', __doc_click);
-			}
-			if (_is_true(c.keyboard)) {
-				$(document).on('keydown.popup', __doc_keydown);
-			}
+			_bind(c);
 		}).focus();
 	}
 
@@ -1543,9 +1561,14 @@ jQuery.jcookie = function(name, value, options) {
 		$c.html(xhr.responseText);
 	}
 
-	function update($c, o) {
-		if (o) {
-			$.extend($c.data('popup'), o);
+	function update($c, c) {
+		if (c) {
+			c = $.extend($c.data('popup'), c);
+			var $p = _wrapper($c);
+			if (!$p.is(':hidden')) {
+				_bind(c);
+				_masker()[_is_true(c.mask) ? 'show' : 'hide']();
+			}
 		}
 	}
 
