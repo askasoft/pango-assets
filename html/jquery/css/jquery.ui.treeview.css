@@ -25,7 +25,7 @@ ul.ui-tree li:before {
 	content: "";
 	display: block;
 	position: absolute;
-	font: normal 14px monospace;
+	font: normal 1em monospace;
 	left: 0;
 	top: 0.5em;
 	width: 1em;
