@@ -1,4 +1,6 @@
 (function($) {
+	"use strict";
+
 	function collapse($f) {
 		if (!$f.hasClass('collapsed')) {
 			$f.addClass('collapsed').children(':not(legend)').slideUp();

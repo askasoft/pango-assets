@@ -6,6 +6,8 @@
  */
 
 (function($) {
+	"use strict";
+
 	$.lightbox = {
 		// Event to bind
 		bindEvent:				'click',
@@ -136,7 +138,7 @@
 			$('#lightbox-btn-next').click(_on_next);
 
 			// If window was resized, calculate the new overlay dimensions
-			$(window).bind('resize', _on_resize);
+			$(window).on('resize', _on_resize);
 
 			// Enable keyboard navigation
 			$(document).keydown(_keyboard_action);
@@ -299,8 +301,8 @@
 		 * Remove jQuery lightbox plugin HTML markup
 		 */
 		function _finish() {
-			$(document).unbind('keydown', _keyboard_action);
-			$(window).unbind('resize', _on_resize);
+			$(document).off('keydown', _keyboard_action);
+			$(window).off('resize', _on_resize);
 
 			$('#lightbox-lightbox').remove();
 			$('#lightbox-overlay').fadeOut(function() { $('#lightbox-overlay').remove(); });
@@ -309,7 +311,7 @@
 			return false;
 		}
 
-		// Return the jQuery object for chaining. The unbind method is used to avoid click conflict when the plugin is called more than once
-		return this.unbind(settings.bindEvent).bind(settings.bindEvent, _initialize);
+		// Return the jQuery object for chaining. The off method is used to avoid click conflict when the plugin is called more than once
+		return this.off(settings.bindEvent).on(settings.bindEvent, _initialize);
 	};
 })(jQuery);

@@ -3,6 +3,8 @@
 // Modified by Frank Wang
 
 (function($) {
+	"use strict";
+
 	$.simpleColorPicker = {
 		defaults: {
 			colorsPerLine: 8,
@@ -137,4 +139,5 @@
 	$(window).on('load', function() {
 		$('[data-spy="simpleColorPicker"]').simpleColorPicker();
 	});
+
 }(jQuery));

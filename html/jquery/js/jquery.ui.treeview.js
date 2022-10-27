@@ -1,4 +1,6 @@
 ﻿(function($) {
+	"use strict";
+
 	function init($t) {
 		$t.find('li').removeClass('node leaf').children('.item').off('.treeview').each(function() {
 			var $i = $(this), $n = $i.parent();
@@ -64,4 +66,5 @@
 	$(window).on('load', function() {
 		$('ul[data-spy="treeview"]').treeview();
 	});
+
 }(jQuery));

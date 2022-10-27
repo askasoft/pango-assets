@@ -4,6 +4,8 @@
 // Modified by Frank Wang
 
 (function($) {
+	"use strict";
+
 	function __document_click(evt) {
 		if ($(evt.target).closest('.ui-nice-select').length === 0) {
 			$('.ui-nice-select').removeClass('open');
@@ -205,4 +207,5 @@
 		no_css_pointer_events();
 		$('[data-spy="niceSelect"]').niceSelect();
 	});
+
 }(jQuery));

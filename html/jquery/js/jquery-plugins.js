@@ -1,4 +1,117 @@
 (function($) {
+	"use strict";
+
+	var _xhrOK = (function() {
+		var input = document.createElement('input'),
+			xhr = new XMLHttpRequest();
+		input.type = 'file';
+		return ('multiple' in input)
+			&& typeof(xhr.upload) != 'undefined'
+			&& typeof(FileList) != 'undefined'
+			&& typeof(File) != 'undefined';
+	})();
+
+	function addFiles(fs, fadd) {
+		if (fs) {
+			if (typeof(fs) == "string") {
+				fs = $(fs);
+			}
+
+			if ($.isArray(fs)) {
+				$.each(fs, function(i, f) {
+					fadd(f);
+				});
+			} else {
+				$.each(fs, function(n, f) {
+					if ($.isArray(f)) {
+						$.each(f, function(i, f) {
+							fadd(f, n);
+						});
+					} else {
+						fadd(f, n);
+					}
+				});
+			}
+		}
+	}
+
+	function addParams(ps, padd) {
+		if (ps) {
+			function _addParams(n, v) {
+				if ($.isArray(v)) {
+					$.each(v, function(i, v) {
+						padd(n, v);
+					});
+				} else {
+					padd(n, v);
+				}
+			}
+		
+			if ($.isArray(s.data)) {
+				$.each(s.data, function(i, d) {
+					_addParams(d.name, d.value);
+				});
+			} else {
+				$.each(s.data, function(n, v) {
+					_addParams(n, v)
+				});
+			}
+		}
+	}
+
+	// jquery ajax wrapper
+	function ajax(s) {
+		var data = new FormData();
+
+		addParams(s.data, function(n, v) {
+			data.append(n, v);
+		});
+
+		addFiles(s.file, function(f, n) {
+			if (f instanceof FileList) {
+				$.each(f, function(i, f) {
+					data.append(n, f);
+				});
+				return;
+			}
+
+			if (f instanceof File) {
+				data.append(n, f);
+				return;
+			}
+
+			var $f = $(f);
+			n = n || $f.attr('name');
+			$.each($f.prop('files'), function(i, f) {
+				data.append(n, f);
+			});
+		});
+
+		s = $.extend({}, s, {
+			cache: false,
+			contentType: false,
+			processData: false,
+			data: data
+		});
+		delete s.file;
+
+		if (s.progress) {
+			var fp = s.progress;
+			s.xhr = function() {
+				var xhr = $.ajaxSettings.xhr();
+				xhr.upload.addEventListener('progress', function(e) {
+					if (e.lengthComputable) {
+						fp(e.loaded, e.total);
+					}
+				});
+				return xhr;
+			};
+			delete s.progress;
+		}
+
+		return $.ajax(s);
+	}
+	
 	function createIFrame(s) {
 		var id = "ajaf_if_" + s.id;
 		return $('<iframe id="' + id + '" name="' + id + '" src="' + s.secureUrl + '"></iframe>')
@@ -17,7 +130,7 @@
 				id: id,
 				name: id,
 				action: s.url,
-				method: 'POST',
+				method: s.method,
 				target: 'ajaf_if_' + s.id
 			})
 			.css({
@@ -27,66 +140,32 @@
 			})
 			.appendTo('body');
 
-		$form.files = [];
-		
-		function addFile($f, n) {
-			var $c = $f.clone().insertAfter($f);
+		addParams(s.data, function(n, v) {
+			$('<input type="hidden">')
+				.attr('name', n)
+				.val(v)
+				.appendTo($form);
+		});
 
-			n = n || $f.attr('name');
-			$f.attr({
-				id: '',
-				name: n
-			}).appendTo($form);
-			
-			$form.files.push({ real: $f, clon: $c});
-		}
-		
+		$form.files = [];
 		if (s.file) {
 			$form.attr({
+				method: 'POST',
 				encoding: 'multipart/form-data',
 				enctype: 'multipart/form-data'
 			});
 
-			if (typeof(s.file) == "string") {
-				addFile($(s.file));
-			} else if ($.isArray(s.file)) {
-				$.each(s.file, function(i, f) {
-					addFile($(f));
-				});
-			} else {
-				$.each(s.file, function(n, f) {
-					addFile($(f), n);
-				});
-			}
-		}
-		
-		function addParam(n, v) {
-			$('<input type="hidden">')
-				.attr('name', n)
-				.appendTo($form)
-				.val(v);
-		}
-
-		function addParams(n, v) {
-			if ($.isArray(v)) {
-				$.each(v, function(i, v) {
-					addParam(n, v);
-				});
-			} else {
-				addParam(n, v);
-			}
-		}
-
-		if (s.data) {
-			if ($.isArray(s.data)) {
-				$.each(s.data, function(i, d) {
-					addParams(d.name, d.value);
-				});
-			} else {
-				$.each(s.data, function(n, v) {
-					addParams(n, v)
-				});
-			}
+			addFiles(s.file, function(f, n) {
+				var $f = $(f), $c = $f.clone().insertAfter($f);
+	
+				n = n || $f.attr('name');
+				$f.attr({
+					id: '',
+					name: n
+				}).appendTo($form);
+				
+				$form.files.push({ real: $f, copy: $c});
+			});
 		}
 
 		return $form;
@@ -113,13 +192,22 @@
 		return data;
 	}
 
-	$.ajaf = function(s) {
-		// TODO introduce global settings, allowing the client to modify them for all requests, not only timeout
+	function ajaf(s) {
+		s = $.extend({
+			method: 'POST',
+			forceAjaf: false,
+			forceAjax: false
+		}, s);
+
+		if (s.forceAjax || ((_xhrOK) && !s.forceAjaf)) {
+			return ajax(s);
+		}
+		
 		s = $.extend({
 			id: new Date().getTime(),
-			secureUrl: 'javascript:false'
+			secureUrl: 'javascript:false',
 		}, s);
-		
+
 		var $if = createIFrame(s);
 		var $form = createForm(s);
 		
@@ -128,7 +216,7 @@
 			s.start();
 		}
 
-		var done = false, xhr = {};
+		var done = false, loaded = 0, xhr = {};
 
 		// Wait for a response to come back
 		function callback(timeout) {
@@ -169,10 +257,10 @@
 			for (var i = 0; i < $form.files.length; i++) {
 				var f = $form.files[i];
 				f.real.attr({
-					id: f.clon.attr('id'),
-					name: f.clon.attr('name')
-				}).insertAfter(f.clon);
-				f.clon.remove();
+					id: f.copy.attr('id'),
+					name: f.copy.attr('name')
+				}).insertAfter(f.copy);
+				f.copy.remove();
 			}
 			$form.remove();	
 
@@ -216,7 +304,7 @@
 			s.send(xhr, s);
 		}
 
-		// Timeout checker
+		// timeout checker
 		if (s.timeout > 0) {
 			setTimeout(function() {
 				// Check to see if the request is still happening
@@ -225,7 +313,20 @@
 				}
 			}, s.timeout);
 		}
-		
+
+		// fake progress
+		if (s.progress) {
+			loaded++;
+			function _fake_progress() {
+				s.progress(loaded < 95 ? ++loaded : loaded, 100);
+				if (!done) {
+					setTimeout(_fake_progress, 10 + loaded);
+				}
+			}
+			setTimeout(_fake_progress, 10);
+		}
+
+		// submit
 		try {
 			$form.submit();
 		} catch(e) {
@@ -235,11 +336,16 @@
 		}
 		
 		$if.on('load', callback);
-		return;
+		return xhr;
 	};
+
+	$.ajaf = ajaf;
+
 })(jQuery);
 
 (function($) {
+	"use strict";
+
 	$.copyToClipboard = function(s) {
 		if (window.clipboardData) {
 			// ie
@@ -315,63 +421,71 @@
  * @cat Plugins/Cookie
  * @author Klaus Hartl/klaus.hartl@stilbuero.de
  */
-jQuery.cookie = function(name, value, options) {
-	options = $.extend({}, $.cookie.defaults, options);
-	if (typeof value != 'undefined') { // name and value given, set cookie
-		if (value === null) {
-			value = '';
-			options.expires = -1;
-		}
-		var expires = '';
-		if (options.expires && (typeof options.expires == 'number' || options.expires.toUTCString)) {
-			var date;
-			if (typeof options.expires == 'number') {
-				date = new Date();
-				date.setTime(date.getTime() + (options.expires * 24 * 60 * 60 * 1000));
-			} else {
-				date = options.expires;
+
+(function($) {
+	"use strict";
+
+	$.cookie = function(name, value, options) {
+		options = $.extend({}, $.cookie.defaults, options);
+		if (typeof value != 'undefined') { // name and value given, set cookie
+			if (value === null) {
+				value = '';
+				options.expires = -1;
 			}
-			expires = '; expires=' + date.toUTCString(); // use expires attribute, max-age is not supported by IE
-		}
-		// NOTE Needed to parenthesize options.path and options.domain
-		// in the following expressions, otherwise they evaluate to undefined
-		// in the packed version for some reason...
-		var path = options.path ? '; path=' + (options.path) : '';
-		var domain = options.domain ? '; domain=' + (options.domain) : '';
-		var secure = options.secure ? '; secure' : '';
-		document.cookie = [name, '=', encodeURIComponent(value), expires, path, domain, secure].join('');
-	} else { // only name given, get cookie
-		var cookieValue = null;
-		if (document.cookie && document.cookie != '') {
-			var cookies = document.cookie.split(';');
-			for (var i = 0; i < cookies.length; i++) {
-				var cookie = cookies[i].replace(/^[\s\u3000\u0022]+|[\s\u3000\u0022]+$/g, '');
-				// Does this cookie string begin with the name we want?
-				if (cookie.substring(0, name.length + 1) == (name + '=')) {
-					cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-					break;
+			var expires = '';
+			if (options.expires && (typeof options.expires == 'number' || options.expires.toUTCString)) {
+				var date;
+				if (typeof options.expires == 'number') {
+					date = new Date();
+					date.setTime(date.getTime() + (options.expires * 24 * 60 * 60 * 1000));
+				} else {
+					date = options.expires;
+				}
+				expires = '; expires=' + date.toUTCString(); // use expires attribute, max-age is not supported by IE
+			}
+			// NOTE Needed to parenthesize options.path and options.domain
+			// in the following expressions, otherwise they evaluate to undefined
+			// in the packed version for some reason...
+			var path = options.path ? '; path=' + (options.path) : '';
+			var domain = options.domain ? '; domain=' + (options.domain) : '';
+			var secure = options.secure ? '; secure' : '';
+			document.cookie = [name, '=', encodeURIComponent(value), expires, path, domain, secure].join('');
+		} else { // only name given, get cookie
+			var cookieValue = null;
+			if (document.cookie && document.cookie != '') {
+				var cookies = document.cookie.split(';');
+				for (var i = 0; i < cookies.length; i++) {
+					var cookie = cookies[i].replace(/^[\s\u3000\u0022]+|[\s\u3000\u0022]+$/g, '');
+					// Does this cookie string begin with the name we want?
+					if (cookie.substring(0, name.length + 1) == (name + '=')) {
+						cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+						break;
+					}
 				}
 			}
+			return cookieValue;
 		}
-		return cookieValue;
-	}
-};
+	};
 
-jQuery.cookie.defaults = {};
+	$.cookie.defaults = {};
 
-jQuery.jcookie = function(name, value, options) {
-	if (typeof value != 'undefined') { // name and value given, set cookie
-		$.cookie(name, btoa(JSON.stringify(value)), options);
-	} else {
-		try {
-			return JSON.parse(atob($.cookie(name)));
-		} catch (ex) {
-			return {};
+	$.jcookie = function(name, value, options) {
+		if (typeof value != 'undefined') { // name and value given, set cookie
+			$.cookie(name, btoa(JSON.stringify(value)), options);
+		} else {
+			try {
+				return JSON.parse(atob($.cookie(name)));
+			} catch (ex) {
+				return {};
+			}
 		}
-	}
-};
+	};
+
+})(jQuery);
 
 (function ($) {
+	"use strict";
+
 	$.fn.disable = function(state) {
 		return this.each(function() {
 			this.disabled = state;
@@ -379,6 +493,8 @@ jQuery.jcookie = function(name, value, options) {
 	};
 })(jQuery);
 (function($) {
+	"use strict";
+
 	$.jcss = function(url) {
 		if ($('link[href="' + url + '"]').size()) {
 			return false;
@@ -389,6 +505,8 @@ jQuery.jcookie = function(name, value, options) {
 })(jQuery);
 
 (function($) {
+	"use strict";
+
 	var jss = {};
 	
 	$.jscript = function(url, callback) {
@@ -411,6 +529,8 @@ jQuery.jcookie = function(name, value, options) {
 })(jQuery);
 
 (function($) {
+	"use strict";
+
 	$.queryArrays = function(s, f) {
 		var qs = [], i = s.indexOf('#');
 		if (i >= 0) {
@@ -471,14 +591,16 @@ jQuery.jcookie = function(name, value, options) {
 	};
 	
 })(jQuery);
-
-
 (function ($) {
+	"use strict";
+
 	$.fn.replaceClass = function(s, t) {
 		return this.removeClass(s).addClass(t);
 	};
 })(jQuery);
 (function($) {
+	"use strict";
+
 	function collapse($f) {
 		if (!$f.hasClass('collapsed')) {
 			$f.addClass('collapsed').children(':not(legend)').slideUp();
@@ -530,6 +652,8 @@ jQuery.jcookie = function(name, value, options) {
 	});
 })(jQuery);
 (function($) {
+	"use strict";
+
 	$.fn.focusme = function() {
 		var f = false;
 		$(this).each(function() {
@@ -568,8 +692,11 @@ jQuery.jcookie = function(name, value, options) {
 	$(window).on('load', function() {
 		$('[focusme="true"]').focusme();
 	});
+
 })(jQuery);
 (function($) {
+	"use strict";
+
 	$.fn.changeValue = function(v) {
 		var o = this.val();
 		
@@ -641,6 +768,8 @@ jQuery.jcookie = function(name, value, options) {
  */
 
 (function($) {
+	"use strict";
+
 	$.lightbox = {
 		// Event to bind
 		bindEvent:				'click',
@@ -771,7 +900,7 @@ jQuery.jcookie = function(name, value, options) {
 			$('#lightbox-btn-next').click(_on_next);
 
 			// If window was resized, calculate the new overlay dimensions
-			$(window).bind('resize', _on_resize);
+			$(window).on('resize', _on_resize);
 
 			// Enable keyboard navigation
 			$(document).keydown(_keyboard_action);
@@ -934,8 +1063,8 @@ jQuery.jcookie = function(name, value, options) {
 		 * Remove jQuery lightbox plugin HTML markup
 		 */
 		function _finish() {
-			$(document).unbind('keydown', _keyboard_action);
-			$(window).unbind('resize', _on_resize);
+			$(document).off('keydown', _keyboard_action);
+			$(window).off('resize', _on_resize);
 
 			$('#lightbox-lightbox').remove();
 			$('#lightbox-overlay').fadeOut(function() { $('#lightbox-overlay').remove(); });
@@ -944,11 +1073,13 @@ jQuery.jcookie = function(name, value, options) {
 			return false;
 		}
 
-		// Return the jQuery object for chaining. The unbind method is used to avoid click conflict when the plugin is called more than once
-		return this.unbind(settings.bindEvent).bind(settings.bindEvent, _initialize);
+		// Return the jQuery object for chaining. The off method is used to avoid click conflict when the plugin is called more than once
+		return this.off(settings.bindEvent).on(settings.bindEvent, _initialize);
 	};
 })(jQuery);
 (function($) {
+	"use strict";
+
 	function _clearTimeout($el) {
 		//if this element has delayed mask scheduled then remove it
 		var t = $el.data("_mask_timeout");
@@ -1085,6 +1216,8 @@ jQuery.jcookie = function(name, value, options) {
 // Modified by Frank Wang
 
 (function($) {
+	"use strict";
+
 	function __document_click(evt) {
 		if ($(evt.target).closest('.ui-nice-select').length === 0) {
 			$('.ui-nice-select').removeClass('open');
@@ -1286,6 +1419,7 @@ jQuery.jcookie = function(name, value, options) {
 		no_css_pointer_events();
 		$('[data-spy="niceSelect"]').niceSelect();
 	});
+
 }(jQuery));
 (function($) {
 	function _is_true(b) {
@@ -1571,7 +1705,7 @@ jQuery.jcookie = function(name, value, options) {
 			method: c.method,
 			success: function(data, status, xhr) {
 				if (seq == c.sequence) {
-					(c.ajaxRender || _ajaxRender)($c, data, status, xhr);
+					c.ajaxRender($c, data, status, xhr);
 					$c.find('[popup-dismiss="true"]').click(function() {
 						hide($c);
 					});
@@ -1581,7 +1715,7 @@ jQuery.jcookie = function(name, value, options) {
 			},
 			error: function(xhr, status, err) {
 				if (seq == c.sequence) {
-					(c.ajaxError || _ajaxError)($c, xhr, status, err);
+					c.ajaxError($c, xhr, status, err);
 				}
 			},
 			complete: function() {
@@ -1671,7 +1805,7 @@ jQuery.jcookie = function(name, value, options) {
 				}
 				c[k] = s;
 			}
-		})
+		});
 		return c;
 	}
 
@@ -1759,7 +1893,9 @@ jQuery.jcookie = function(name, value, options) {
 		position: 'auto',
 		transition: 'slideDown',
 		mouse: true,
-		keyboard: true
+		keyboard: true,
+		ajaxRender: _ajaxRender,
+		ajaxError: _ajaxError
 	};
 
 	// POPUP DATA-API
@@ -1775,6 +1911,8 @@ jQuery.jcookie = function(name, value, options) {
 
 })(jQuery);
 (function($) {
+	"use strict";
+
 	$.fn.scrollIntoView = function(speed, easing, callback) {
 		if (!this.length) {
 			return this;
@@ -1794,8 +1932,11 @@ jQuery.jcookie = function(name, value, options) {
 		$('html').animate(ss, speed, easing, callback);
 		return this;
 	};
+
 })(jQuery);
 (function($) {
+	"use strict";
+
 	$.fn.selectText = function() {
 		var $t = $(this);
 		if ($t.length) {
@@ -1817,12 +1958,15 @@ jQuery.jcookie = function(name, value, options) {
 			}
 		}
 	};
+
 })(jQuery);
 ﻿// jQuery simple color picker
 // https://github.com/rachel-carvalho/simple-color-picker
 // Modified by Frank Wang
 
 (function($) {
+	"use strict";
+
 	$.simpleColorPicker = {
 		defaults: {
 			colorsPerLine: 8,
@@ -1957,8 +2101,11 @@ jQuery.jcookie = function(name, value, options) {
 	$(window).on('load', function() {
 		$('[data-spy="simpleColorPicker"]').simpleColorPicker();
 	});
+
 }(jQuery));
 (function($) {
+	"use strict";
+
 	$.fn.enterfire = function() {
 		$(this).each(function() {
 			var f = $(this).attr('enterfire');
@@ -1995,9 +2142,12 @@ jQuery.jcookie = function(name, value, options) {
 		$('textarea[enterfire]').enterfire();
 		$('textarea[autosize]').autosize();
 	});
+
 })(jQuery);
 // jQuery toast plugin created by Kamran Ahmed copyright MIT license 2015 (modified by Frank Wang)
 (function($) {
+	"use strict";
+
 	function setOptions(os, base, options) {
 		var o = {};
 
@@ -2343,6 +2493,8 @@ jQuery.jcookie = function(name, value, options) {
 
 })(jQuery);
 (function($) {
+	"use strict";
+
 	$.fn.totop = function() {
 		$(this).each(function() {
 			var $t = $(this);
@@ -2360,9 +2512,11 @@ jQuery.jcookie = function(name, value, options) {
 	$(window).on('load', function() {
 		$('[totop="true"]').totop();
 	});
-})(jQuery);
 
+})(jQuery);
 ﻿(function($) {
+	"use strict";
+
 	function init($t) {
 		$t.find('li').removeClass('node leaf').children('.item').off('.treeview').each(function() {
 			var $i = $(this), $n = $i.parent();
@@ -2428,8 +2582,11 @@ jQuery.jcookie = function(name, value, options) {
 	$(window).on('load', function() {
 		$('ul[data-spy="treeview"]').treeview();
 	});
+
 }(jQuery));
 (function($) {
+	"use strict";
+
 	$.each({
 		zoomIn: { opacity: 'show' },
 		zoomOut: { opacity: 'hide' },
@@ -2446,4 +2603,5 @@ jQuery.jcookie = function(name, value, options) {
 			return this.animate(props, opt);
 		};
 	});
+
 })(jQuery);

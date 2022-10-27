@@ -1,5 +1,7 @@
 // jQuery toast plugin created by Kamran Ahmed copyright MIT license 2015 (modified by Frank Wang)
 (function($) {
+	"use strict";
+
 	function setOptions(os, base, options) {
 		var o = {};
 

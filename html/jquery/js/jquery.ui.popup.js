@@ -282,7 +282,7 @@
 			method: c.method,
 			success: function(data, status, xhr) {
 				if (seq == c.sequence) {
-					(c.ajaxRender || _ajaxRender)($c, data, status, xhr);
+					c.ajaxRender($c, data, status, xhr);
 					$c.find('[popup-dismiss="true"]').click(function() {
 						hide($c);
 					});
@@ -292,7 +292,7 @@
 			},
 			error: function(xhr, status, err) {
 				if (seq == c.sequence) {
-					(c.ajaxError || _ajaxError)($c, xhr, status, err);
+					c.ajaxError($c, xhr, status, err);
 				}
 			},
 			complete: function() {
@@ -382,7 +382,7 @@
 				}
 				c[k] = s;
 			}
-		})
+		});
 		return c;
 	}
 
@@ -470,7 +470,9 @@
 		position: 'auto',
 		transition: 'slideDown',
 		mouse: true,
-		keyboard: true
+		keyboard: true,
+		ajaxRender: _ajaxRender,
+		ajaxError: _ajaxError
 	};
 
 	// POPUP DATA-API

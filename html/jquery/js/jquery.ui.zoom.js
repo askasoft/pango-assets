@@ -1,4 +1,6 @@
 (function($) {
+	"use strict";
+
 	$.each({
 		zoomIn: { opacity: 'show' },
 		zoomOut: { opacity: 'hide' },
@@ -15,4 +17,5 @@
 			return this.animate(props, opt);
 		};
 	});
+
 })(jQuery);

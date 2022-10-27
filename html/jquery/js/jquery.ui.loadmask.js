@@ -1,4 +1,6 @@
 (function($) {
+	"use strict";
+
 	function _clearTimeout($el) {
 		//if this element has delayed mask scheduled then remove it
 		var t = $el.data("_mask_timeout");
