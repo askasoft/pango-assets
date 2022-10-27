@@ -119,6 +119,8 @@
 	line-height: 14px;
 	font-size: 14px;
 	font-style: normal;
+	font-family: monospace;
+	font-weight: bold;
 	cursor: pointer;
 	background-color: #eee;
 	border: 1px solid #999;
