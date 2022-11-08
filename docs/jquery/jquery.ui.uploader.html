@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>JQuery Uploader Plugin</title>
+	<link href="../../html/bootstrap3/css/bootstrap.css" rel="stylesheet" type="text/css" />
+	<link href="../../html/fontawesome4/css/font-awesome.css" rel="stylesheet" type="text/css" />
+	<link href="../../html/jquery/css/jquery.ui.uploader.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+	<div class="container">
+		<h1 style="text-align: center; margin: 20px 0px;">JQuery Uploader Plugin</h1>
+
+		<hr>
+		<p>Single File upload via ajax</p>
+		<div id="single"
+			data-upload-url="https://panda-demo.azurewebsites.net/files/upload"
+			data-dnload-url="https://panda-demo.azurewebsites.net/files/download?file=$"
+			data-spy="uploader">
+			
+			<input type="file" name="file" class="ui-uploader-file" accept="image/*" style="display:none"/>
+			<a class="btn btn-sm btn-default ui-uploader-btn">Browse...</a>
+		</div>
+
+		<hr>
+		<p>Single File upload via iframe</p>
+		<div id="singlef"
+			data-upload-url="https://panda-demo.azurewebsites.net/files/upload"
+			data-dnload-url="https://panda-demo.azurewebsites.net/files/download?file=$"
+			data-force-ajaf="true"
+			data-spy="uploader">
+			
+			<input type="file" name="file" class="ui-uploader-file" accept="image/*" style="display:none"/>
+			<a class="btn btn-sm btn-default ui-uploader-btn">Browse...</a>
+		</div>
+
+		<hr>
+		<p>Multiple Files upload via ajax</p>
+		<div id="multi"
+			data-upload-url="https://panda-demo.azurewebsites.net/files/uploads"
+			data-dnload-url="https://panda-demo.azurewebsites.net/files/download?file=$"
+			data-spy="uploader">
+			
+			<input type="file" name="files" multiple class="ui-uploader-file" accept="image/*" style="display:none"/>
+			<a class="btn btn-sm btn-default ui-uploader-btn">Browse...</a>
+		</div>
+
+		<hr>
+		<p>Multiple Files upload vai iframe</p>
+		<div id="multif"
+			data-upload-url="https://panda-demo.azurewebsites.net/files/uploads"
+			data-dnload-url="https://panda-demo.azurewebsites.net/files/download?file=$"
+			data-force-ajaf="true"
+			data-spy="uploader">
+			
+			<input type="file" name="files" multiple class="ui-uploader-file" accept="image/*" style="display:none"/>
+			<a class="btn btn-sm btn-default ui-uploader-btn">Browse...</a>
+		</div>
+	</div>
+
+	<script src="../../html/jquery/js/jquery-1.12.4.min.js"></script>
+	<script src="../../html/jquery/js/jquery.ajaf.js"></script>
+	<script src="../../html/jquery/js/jquery.ui.uploader.js"></script>
+</body>
+</html>

@@ -47,12 +47,12 @@
 				}
 			}
 		
-			if ($.isArray(s.data)) {
-				$.each(s.data, function(i, d) {
+			if ($.isArray(ps)) {
+				$.each(ps, function(i, d) {
 					_addParams(d.name, d.value);
 				});
 			} else {
-				$.each(s.data, function(n, v) {
+				$.each(ps, function(n, v) {
 					_addParams(n, v)
 				});
 			}
@@ -772,34 +772,34 @@
 
 	$.lightbox = {
 		// Event to bind
-		bindEvent:				'click',
+		bindEvent: 'click.lightbox',
 
 		// Configuration related to overlay
-		overlayBgColor: 		'#000',		// (string) Background color to overlay; inform a hexadecimal value like: #RRGGBB. Where RR, GG, and BB are the hexadecimal values for the red, green, and blue values of the color.
-		overlayOpacity:			0.8,		// (integer) Opacity value to overlay; inform: 0.X. Where X are number from 0 to 9
+		overlayBgColor: '#000',		// (string) Background color to overlay; inform a hexadecimal value like: #RRGGBB. Where RR, GG, and BB are the hexadecimal values for the red, green, and blue values of the color.
+		overlayOpacity: 0.8,		// (integer) Opacity value to overlay; inform: 0.X. Where X are number from 0 to 9
 
 		// Configuration related to navigation
-		fixedNavigation:		false,		// (boolean) Boolean that informs if the navigation (next and prev button) will be fixed or not in the interface.
-		loopNavigation:			false,		// (boolean) Boolean that loop the navigation.
+		fixedNavigation: false,		// (boolean) Boolean that informs if the navigation (next and prev button) will be fixed or not in the interface.
+		loopNavigation: false,		// (boolean) Boolean that loop the navigation.
 
 		// Configuration related to images
-		textBtnPrev:			'&lsaquo;',		// (string) the text of prev button
-		textBtnNext:			'&rsaquo;',		// (string) the text of next button
-		textBtnClose:			'&times;',		// (string) the text of close button
+		textBtnPrev: '&lsaquo;',		// (string) the text of prev button
+		textBtnNext: '&rsaquo;',		// (string) the text of next button
+		textBtnClose: '&times;',		// (string) the text of close button
 
 		// Configuration related to container image box
-		containerBorderSize:	10,			// (integer) If you adjust the padding in the CSS for the container, #lightbox-imagebox, you will need to update this value
-		containerResizeSpeed:	400,		// (integer) Specify the resize duration of container image. These number are miliseconds. 400 is default.
+		containerBorderSize: 10,			// (integer) If you adjust the padding in the CSS for the container, #lightbox-imagebox, you will need to update this value
+		containerResizeSpeed: 400,		// (integer) Specify the resize duration of container image. These number are miliseconds. 400 is default.
 
 		// Configuration related to texts in caption. For example: 'Image # / $' -> 'Image 2 of 8'.
-		textPager:				'# / $',	// (string) #: Image No.  $: Total Images
+		textPager: '# / $',	// (string) #: Image No.  $: Total Images
 
 		// Configuration related to keyboard navigation
-		keyToClose:				'c',		// (string) (c = close) Letter to close the jQuery lightbox interface. Beyond this letter, the letter X and the SCAPE key is used to.
-		keyToPrev:				'p',		// (string) (p = previous) Letter to show the previous image
-		keyToNext:				'n',		// (string) (n = next) Letter to show the next image.
+		keyToClose: 'c',		// (string) (c = close) Letter to close the jQuery lightbox interface. Beyond this letter, the letter X and the SCAPE key is used to.
+		keyToPrev: 'p',		// (string) (p = previous) Letter to show the previous image
+		keyToNext: 'n'		// (string) (n = next) Letter to show the next image.
 	};
-	
+
 	/**
 	 * $ is an alias to jQuery object
 	 */
@@ -809,7 +809,7 @@
 
 		// Caching the jQuery object with all elements matched
 		var $jos = this; // This, in this context, refer to jQuery object
-		
+
 		/**
 		 * Initializing the plugin calling the start function
 		 *
@@ -828,7 +828,7 @@
 		 */
 		function _start(objClicked, $jos) {
 			$('body').addClass('lightbox-open');
-			
+
 			// Call the function to create the markup structure; style some elements; assign events in some elements.
 			_set_interface();
 
@@ -840,10 +840,9 @@
 			for (var i = 0; i < $jos.length; i++) {
 				var el = $jos[i];
 				if (el.tagName == 'A') {
-					settings.images.push([ el.getAttribute('href'), el.getAttribute('title') ]);
-				}
-				else if (el.tagName == 'IMG') {
-					settings.images.push([ el.getAttribute('src'), el.getAttribute('alt') ]);
+					settings.images.push([el.getAttribute('href'), el.getAttribute('title')]);
+				} else if (el.tagName == 'IMG') {
+					settings.images.push([el.getAttribute('src'), el.getAttribute('alt')]);
 				}
 				if (el == objClicked) {
 					settings.active = i;
@@ -861,29 +860,29 @@
 			// Apply the HTML markup into body tag
 			$('body').append('<div id="lightbox-overlay"></div>'
 				+ '<div id="lightbox-lightbox">'
-					+ '<div id="lightbox-imagebox">'
-						+ '<img id="lightbox-image">'
-						+ '<div style="" id="lightbox-nav">'
-							+ '<a href="#" id="lightbox-btn-prev">'
-								+ '<span id="lightbox-txt-prev">' + settings.textBtnPrev + '</span>'
-							+ '</a>'
-							+ '<a href="#" id="lightbox-btn-next">'
-								+ '<span id="lightbox-txt-next">' + settings.textBtnNext + '</span>'
-							+ '</a>'
-						+ '</div>'
-						+ '<a href="#" id="lightbox-loading"></a>'
-					+ '</div>'
-					+ '<div id="lightbox-statusbox">'
-						+ '<div id="lightbox-image-caption"></div>'
-						+ '<div id="lightbox-image-number"></div>'
-						+ '<a href="#" id="lightbox-btn-close">' + settings.textBtnClose + '</a>'
-					+ '</div>'
+				+ '<div id="lightbox-imagebox">'
+				+ '<img id="lightbox-image">'
+				+ '<div style="" id="lightbox-nav">'
+				+ '<a href="#" id="lightbox-btn-prev">'
+				+ '<span id="lightbox-txt-prev">' + settings.textBtnPrev + '</span>'
+				+ '</a>'
+				+ '<a href="#" id="lightbox-btn-next">'
+				+ '<span id="lightbox-txt-next">' + settings.textBtnNext + '</span>'
+				+ '</a>'
+				+ '</div>'
+				+ '<a href="#" id="lightbox-loading"></a>'
+				+ '</div>'
+				+ '<div id="lightbox-statusbox">'
+				+ '<div id="lightbox-image-caption"></div>'
+				+ '<div id="lightbox-image-number"></div>'
+				+ '<a href="#" id="lightbox-btn-close">' + settings.textBtnClose + '</a>'
+				+ '</div>'
 				+ '</div>');
 
 			// Style overlay and show it
 			$('#lightbox-overlay').css({
-				backgroundColor:	settings.overlayBgColor,
-				opacity:			settings.overlayOpacity,
+				backgroundColor: settings.overlayBgColor,
+				opacity: settings.overlayOpacity,
 			}).fadeIn();
 
 			// set lightbox-imagebox line-height to center image
@@ -905,7 +904,7 @@
 			// Enable keyboard navigation
 			$(document).keydown(_keyboard_action);
 		}
-		
+
 		/**
 		 * set lightbox-imagebox line-height to center image
 		 */
@@ -920,12 +919,13 @@
 			if (settings.images.length < 1) {
 				return true;
 			}
-			
+
 			if (settings.active > 0) {
 				settings.active--;
 				_set_image_to_view();
 				return false;
 			}
+
 			if (settings.loopNavigation) {
 				settings.active = settings.images.length - 1;
 				_set_image_to_view();
@@ -940,19 +940,20 @@
 			if (settings.images.length < 1) {
 				return true;
 			}
-			
+
 			if (settings.active < settings.images.length - 1) {
 				settings.active++;
 				_set_image_to_view();
 				return false;
 			}
+
 			if (settings.loopNavigation) {
 				settings.active = 0;
 				_set_image_to_view();
 				return false;
 			}
 		}
-		
+
 		/**
 		 * Prepares image exibition; doing a image's preloader to calculate it's size
 		 */
@@ -971,11 +972,11 @@
 				_show_image();
 
 				//	clear onLoad, IE behaves irratically with animated gifs otherwise
-				img.onload = function(){};
+				img.onload = function() { };
 			};
 			img.src = settings.images[settings.active][0];
 		};
-		
+
 
 		/**
 		 * Show the prepared image
@@ -1000,7 +1001,7 @@
 					'#': settings.active + 1,
 					"$": settings.images.length
 				};
-			
+
 				$('#lightbox-image-number').html(settings.textPager.replace(/[\#\$]/g, function(c) {
 					return tpm[c];
 				}));
@@ -1014,7 +1015,7 @@
 		function _set_navigation() {
 			// Show the prev button, if not the first image in set
 			$('#lightbox-btn-prev')[((settings.loopNavigation && settings.images.length > 1) || settings.active > 0) ? 'addClass' : 'removeClass']('lightbox-has-prev');
-			
+
 			// Show the next button, if not the last image in set
 			$('#lightbox-btn-next')[((settings.loopNavigation && settings.images.length > 1) || settings.active < settings.images.length - 1) ? 'addClass' : 'removeClass']('lightbox-has-next');
 		}
@@ -1023,25 +1024,22 @@
 		 * Perform the keyboard actions
 		 */
 		function _keyboard_action(evt) {
-			evt = evt || event;
-			var keycode = evt.keyCode;
-			var escapeKey = evt.DOM_VK_ESCAPE || 27;
-
-			// Get the key in lower case form
-			key = String.fromCharCode(keycode).toLowerCase();
+			var keycode = evt.keyCode,
+				escapeKey = evt.DOM_VK_ESCAPE || 27,
+				key = String.fromCharCode(keycode).toLowerCase();
 
 			// Verify the keys to close the ligthBox
-			if (( key == settings.keyToClose ) || ( key == 'x' ) || ( keycode == escapeKey )) {
+			if ((key == settings.keyToClose) || (key == 'x') || (keycode == escapeKey)) {
 				return _finish();
 			}
 
 			// Verify the key to show the previous image
-			if (( key == settings.keyToPrev ) || ( keycode == 37 )) {
+			if ((key == settings.keyToPrev) || (keycode == 37)) {
 				return _on_prev();
 			}
 
 			// Verify the key to show the next image
-			if (( key == settings.keyToNext ) || ( keycode == 39 )) {
+			if ((key == settings.keyToNext) || (keycode == 39)) {
 				return _on_next();
 			}
 		}
@@ -1051,12 +1049,17 @@
 		 */
 		function _preload_neighbor_images() {
 			if (settings.images.length) {
-				var i = settings.active - 1;
-				(new Image()).src = settings.images[i < 0 ? settings.images.length - 1 : i][0];
-				
-				i = settings.active + 1;
-				(new Image()).src = settings.images[i >= settings.images.length ? 0 : i][0];
+				var p = settings.active - 1, n = settings.active + 1;
+				(new Image()).src = settings.images[p < 0 ? settings.images.length - 1 : p][0];
+				(new Image()).src = settings.images[n >= settings.images.length ? 0 : n][0];
 			}
+		}
+
+		/**
+		 * Remove overlay
+		 */
+		function _remove_overlay() {
+			$('#lightbox-overlay').remove();
 		}
 
 		/**
@@ -1067,7 +1070,7 @@
 			$(window).off('resize', _on_resize);
 
 			$('#lightbox-lightbox').remove();
-			$('#lightbox-overlay').fadeOut(function() { $('#lightbox-overlay').remove(); });
+			$('#lightbox-overlay').fadeOut(_remove_overlay);
 
 			$('body').removeClass('lightbox-open');
 			return false;
@@ -1422,10 +1425,6 @@
 
 }(jQuery));
 (function($) {
-	function _is_true(b) {
-		return b === true || b == 'true';
-	}
-
 	var ArrowClasses = {
 		'top left': 'dn hr1 vb',
 		'top right': 'dn hl1 vb',
@@ -1596,6 +1595,9 @@
 	function _wrapper($c) {
 		return $c.parent().parent('.ui-popup-wrap');
 	}
+	function _data($c) {
+		return $c.data('popup');
+	}
 
 	function toggle($c, trigger) {
 		trigger = trigger || window;
@@ -1605,8 +1607,7 @@
 			return;
 		}
 
-		var c = $c.data('popup');
-		if (c.trigger === trigger) {
+		if (_data($c).trigger === trigger) {
 			hide($c);
 			return;
 		}
@@ -1620,6 +1621,7 @@
 			$c.trigger('hide.popup');
 			$p.hide();
 			$(document).off('.popup');
+			$(window).off('.popup');
 			$c.trigger('hidden.popup');
 		}
 		_masker().hide();
@@ -1628,13 +1630,13 @@
 	function show($c, trigger) {
 		hide(_active());
 
-		var $p = _wrapper($c), c = $c.data('popup');
+		var $p = _wrapper($c), c = _data($c);
 
-		if (_is_true(c.mask)) {
+		if (c.mask) {
 			_masker().show();
 		}
 
-		if (c.loaded || !c.url) {
+		if (c.loaded || !c.ajax.url) {
 			_show($p, $c, c, trigger);
 			return;
 		}
@@ -1645,18 +1647,21 @@
 
 	function _bind(c) {
 		$(document).off('.popup');
-		if (_is_true(c.mouse)) {
+		if (c.mouse) {
 			$(document).on('click.popup', __doc_click);
 		}
-		if (_is_true(c.keyboard)) {
+		if (c.keyboard) {
 			$(document).on('keydown.popup', __doc_keydown);
+		}
+		if (c.resize) {
+			$(window).on('resize.popup', __doc_resize);
 		}
 	}
 
 	function _show($p, $c, c, trigger) {
 		$c.trigger('show.popup');
 
-		$p.find('.ui-popup-closer')[_is_true(c.closer) ? 'show' : 'hide']();
+		$p.find('.ui-popup-closer')[c.closer ? 'show' : 'hide']();
 
 		c.trigger = trigger || window;
 
@@ -1678,12 +1683,17 @@
 		}
 	}
 
+	function __doc_resize() {
+		var $c = _active(), $p = _wrapper($c), c = _data($c);
+		_align($p, c.trigger, c.position);
+	}
+
 	function load($c, c) {
 		var $p = _wrapper($c);
 
-		c = $.extend($c.data('popup'), c);
+		c = $.extend(_data($c), c);
 
-		if (_is_true(c.loader)) {
+		if (c.loader) {
 			$c.html('<div class="ui-popup-loader"></div>');
 			_align($p, c.showing, c.position);
 		}
@@ -1698,24 +1708,21 @@
 
 		$c.trigger('load.popup');
 
-		$.ajax({
-			url: c.url,
-			data: c.data,
-			dataType: c.dataType,
-			method: c.method,
+		$.ajax($.extend({}, c.ajax, {
 			success: function(data, status, xhr) {
 				if (seq == c.sequence) {
-					c.ajaxRender($c, data, status, xhr);
+					c.ajaxDone.call($c, data, status, xhr);
 					$c.find('[popup-dismiss="true"]').click(function() {
 						hide($c);
 					});
 					c.loaded = true;
-					$c.trigger('loaded.popup');
+					$c.trigger('loaded.popup', data);
 				}
 			},
 			error: function(xhr, status, err) {
 				if (seq == c.sequence) {
-					c.ajaxError($c, xhr, status, err);
+					c.ajaxFail.call($c, xhr, status, err);
+					$c.trigger('failed.popup');
 				}
 			},
 			complete: function() {
@@ -1725,11 +1732,11 @@
 					delete c.showing;
 				}
 			}
-		});
+		}));
 	}
 
-	function _ajaxError($c, xhr, status, err) {
-		var $e = $('<div class="ui-popup-error">');
+	function _ajaxFail(xhr, status, err) {
+		var $c = $(this), $e = $('<div class="ui-popup-error">');
 
 		if (xhr.responseJSON) {
 			$e.addClass('json').text(JSON.stringify(xhr.responseJSON, null, 4));
@@ -1742,30 +1749,28 @@
 		$c.empty().append($e);
 	}
 
-	function _ajaxRender($c, data, status, xhr) {
-		$c.html(xhr.responseText);
+	function _ajaxDone(data, status, xhr) {
+		$(this).html(xhr.responseText);
 	}
 
 	function update($c, c) {
 		if (c) {
-			c = $.extend($c.data('popup'), c);
+			c = $.extend(_data($c), c);
 			var $p = _wrapper($c);
 			if (!$p.is(':hidden')) {
 				_bind(c);
-				_masker()[_is_true(c.mask) ? 'show' : 'hide']();
+				_masker()[c.mask ? 'show' : 'hide']();
 			}
 		}
 	}
 
-	function destroy($c) {
-		_wrapper($c).remove();
+	function trigger($c, evt) {
+		var a = [].slice.call(arguments, 2);
+		$(_data($c).trigger).trigger(evt, a);
 	}
 
-	function callback($c) {
-		var c = $c.data('popup');
-		if (typeof(c.callback) == 'function') {
-			c.callback.apply(c.trigger, [].slice.call(arguments, 1));
-		}
+	function destroy($c) {
+		_wrapper($c).remove();
 	}
 
 	function _camelCase(s) {
@@ -1776,34 +1781,33 @@
 	}
 
 	function _options($c) {
-		var ks = [
-			'url',
-			'method',
-			'data',
-			'data-type',
-			'autoload',
-			'position',
-			'transition',
-			'mask',
-			'loader',
-			'closer',
-			'mouse',
-			'keyboard',
-			'callback',
-			'ajax-render',
-			'ajax-error'
-		];
-		var fs = ['callback', 'ajaxRender', 'ajaxError'];
+		var fs = ['ajax-done', 'ajax-fail'];
+		var bs = ['loaded', 'autoload', 'mask', 'loader', 'closer', 'mouse', 'keyboard', 'resize'];
 
 		var c = {};
-		$.each(ks, function(i, k) {
-			var s = $c.attr('popup-' + k);
-			if (s !== undefined && s !== null && s != '') {
-				k = _camelCase(k);
-				if ($.inArray(k, fs) >= 0) {
-					s = new Function(s);
-				}
-				c[k] = s;
+		$.each($c[0].attributes, function(i, a) {
+			var p = a.name.substring(0, 6),
+				n = a.name.substring(6),
+				v = a.value;
+
+			if ('popup-' != p || !v) {
+				return;
+			}
+
+			if ($.inArray(n, fs) >= 0) {
+				c[_camelCase(n)] = new Function(v);
+				return;
+			}
+
+			if ($.inArray(n, bs) >= 0) {
+				v = (v === 'true');
+			}
+
+			if ('ajax-' == n.substring(0, 5)) {
+				c.ajax ||= {};
+				c.ajax[_camelCase(n.substring(5))] = v;
+			} else {
+				c[_camelCase(n)] = v;
 			}
 		});
 		return c;
@@ -1838,7 +1842,7 @@
 
 		$c.appendTo($f).data('popup', c).addClass('ui-popup').show();
 
-		if (c.url) {
+		if (c.ajax.url) {
 			c.loaded = false;
 			if (c.autoload) {
 				_load($p, $c, c);
@@ -1857,17 +1861,17 @@
 		hide: hide,
 		toggle: toggle,
 		update: update,
-		destroy: destroy,
-		callback: callback
+		trigger: trigger,
+		destroy: destroy
 	};
 
 	$.fn.popup = function(c) {
 		var args = [].slice.call(arguments);
-		this.each(function() {
+		return this.each(function() {
 			var $c = $(this);
 
 			if (typeof(c) == 'string') {
-				var p = $c.data('popup');
+				var p = _data($c);
 				if (!p) {
 					_init($c);
 				}
@@ -1878,7 +1882,6 @@
 
 			_init($c, c);
 		});
-		return this;
 	};
 
 	$.popup = function() {
@@ -1888,14 +1891,17 @@
 	};
 
 	$.popup.defaults = {
-		dataType: 'html',
-		method: 'GET',
 		position: 'auto',
 		transition: 'slideDown',
+		mask: false,
+		loader: false,
+		closer: false,
 		mouse: true,
 		keyboard: true,
-		ajaxRender: _ajaxRender,
-		ajaxError: _ajaxError
+		resize: true,
+		ajax: {},
+		ajaxDone: _ajaxDone,
+		ajaxFail: _ajaxFail
 	};
 
 	// POPUP DATA-API
@@ -2106,36 +2112,32 @@
 (function($) {
 	"use strict";
 
+	function _enterfire(evt) {
+		if (evt.ctrlKey && evt.which == 13) {
+			var $t = $(this), ef = $t.attr('enterfire');
+			if (ef == 'form' || ef == 'submit' || ef == 'true') {
+				$t.closest('form').submit();
+			} else {
+				$(ef).click();
+			}
+		}
+	}
+
 	$.fn.enterfire = function() {
-		$(this).each(function() {
-			var f = $(this).attr('enterfire');
-			if (f != 'hooked') {
-				$(this).attr('enterfire', 'hooked').keyup(function(evt) {
-					if (evt.ctrlKey && evt.which == 13) {
-						if (f == 'form' || f == 'submit' || f == 'true') {
-							$(this).closest('form').submit();
-						}
-						else {
-							$(f).click();
-						}
-					}
-				});
-			}
-		});
+		$(this).off('keyup.enterfire').on('keyup.enterfire', _enterfire);
 	};
-	
+
+	function _autosize() {
+		var $t = $(this);
+		$t.css('height', 'auto').height($t.prop('scrollHeight'));
+	}
+
 	$.fn.autosize = function() {
-		$(this).each(function() {
-			var a = $(this).attr('autosize');
-			if (a == 'hooked') {
-				$(this).css('height', 'auto').height($(this).prop('scrollHeight'));
-			}
-			else {
-				$(this).css('overflow-y', 'hidden').attr('autosize', 'hooked').on('input', function() {
-					$(this).css('height', 'auto').height($(this).prop('scrollHeight'));
-				});
-			}
+		$(this).off('input.autosize').on('input.autosize', _autosize).css({ 
+			'overflow-y': 'hidden',
+			'resize': 'none'
 		});
+		_autosize.call(this);
 	};
 
 	$(window).on('load', function() {
@@ -2584,6 +2586,315 @@
 	});
 
 }(jQuery));
+(function($) {
+	"use strict";
+
+	var isAdvancedUpload = function() {
+		var div = document.createElement('div');
+		return (('draggable' in div) || ('ondragstart' in div && 'ondrop' in div)) && 'FormData' in window && 'FileReader' in window;
+	}();
+
+	var UNITS = [ "B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" ];
+	function _filesize(n, p) {
+		var i = 0, l = UNITS.length - 1;
+		while (n >= 1024 && i < l) {
+			n = n / 1024
+			i++
+		}
+
+		p = Math.pow(10, p || 2);
+		return '(' + Math.round(n * p) / p + ' ' + UNITS[i] + ')';
+	}
+
+	function _filename(fn) {
+		var u = fn.lastIndexOf('/');
+		var w = fn.lastIndexOf('\\');
+		var i = u > w ? u : w;
+		return fn.substr(i + 1);
+	}
+	
+	function _filetype(s) {
+		var i = s.indexOf('/');
+		return (i >= 0) ? s.slice(0, i) : s;
+	}
+
+	function _show_item($u, fi) {
+		if (!fi) {
+			return;
+		}
+
+		var uc = $u.data('uploader'),
+			fid = fi.id || fi.path || fi.name,
+			fnm = _filename(fi.name || fi.path || fi.id),
+			fsz = fi.size,
+			fct = _filetype(fi.type || '');
+
+		var $fit = $('<div>').addClass('ui-uploader-item').insertAfter($u.children('.ui-uploader-sep')),
+			$fid = $('<input>').attr('type', 'hidden').attr('name', uc.name).addClass('ui-uploader-fid').appendTo($fit),
+			$ftx = $('<span>').addClass('ui-uploader-text').appendTo($fit),
+			$fim = $('<div>').addClass('ui-uploader-image').appendTo($fit);
+
+		$fid.val(fid || '');
+		
+		fnm = fnm || fid || $u.children('.ui-upload-file').val();
+		var durl;
+		if (uc.dnloadUrl && fid) {
+			durl = uc.dnloadUrl.replace(uc.dnloadHolder, encodeURIComponent(fid));
+		}
+		
+		if (fnm) {
+			var ii = uc.cssIcons[fct] || uc.cssIcons['file'];
+			var s = '<i class="' + ii + ' ui-uploader-icon"></i> ' + fnm + ' ' + _filesize(fsz);
+			if (durl) {
+				$('<a>').attr('href', durl).html(s).appendTo($ftx);
+			} else {
+				$('<span>').html(s).appendTo($ftx);
+			}
+		}
+		
+		$ftx.append($('<i>').addClass('ui-uploader-remove fa fa-remove').click(function() {
+			$(this).closest('.ui-uploader-item').fadeOut(function() {
+				$(this).remove();
+			});
+			$u.find('.ui-uploader-error').hide().empty();
+		}));
+
+		if (durl && fct == 'image') {
+			$('<a>', { href: durl })
+				.append($('<img>', { src: durl }))
+				.appendTo($fim)
+				.fadeIn();
+		}
+	}
+
+	function _ajaxDone(d) {
+		if (d) {
+			var r = d.result || d.files, $u = $(this);
+			if (r && !$u.children('.ui-uploader-file').prop('multiple')) {
+				$u.children('.ui-uploader-item').remove();
+			}
+
+			if ($.isArray(r)) {
+				for (var i = 0; i < r.length; i++) {
+					_show_item($u, r[i]);
+				}
+			} else {
+				_show_item($u, r);
+			}
+		}
+	}
+
+	function _ajaxFail(xhr, status, e) {
+		$(this).children('.ui-uploader-error')
+			.empty()
+			.text(e ? (e + "") : (xhr ? xhr.responseText : status))
+			.show();
+	}
+	
+	function _init($u, uc) {
+		$u.addClass('ui-uploader').data('uploader', uc);
+
+		var loading = false,
+			$uf = $u.children('.ui-uploader-file'),
+			$ub = $u.children('.ui-uploader-btn'),
+			$ue = $u.children('.ui-uploader-error'),
+			$us = $u.children('.ui-uploader-sep'),
+			$up = $('<div class="ui-uploader-progress" style="display: none">')
+				.addClass(uc.cssProgress)
+				.append($('<div class="ui-uploader-progressbar" style="width: 0%">').addClass(uc.cssProgressBar))
+				.insertAfter($ub.length > 0 ? $ub : $uf);
+
+		if ($ue.length < 1) {
+			$ue = $('<div class="ui-uploader-error"></div>').insertAfter($up);
+		}
+		$ue.hide();
+		
+		if ($us.length < 1) {
+			$us = $('<div class="ui-uploader-sep"></div>').insertAfter($ue);
+		}
+
+		uc.name ||= $uf.attr('name');
+		uc.uploadName ||= $uf.attr('name') || uc.name;
+
+		// functions
+		function _set_progress(v) {
+			$up.children('.ui-uploader-progressbar').css({width: v + '%'});
+		}
+		
+		function __start_upload() {
+			loading = true;
+	
+			($ub.length ? $ub : $uf).hide();
+			$ue.hide().empty();
+	
+			_set_progress(0);
+			$up.show();
+		}
+	
+		function __end_upload() {
+			loading = false;
+	
+			$up.hide();
+			_set_progress(0);
+
+			$uf.val("");
+			($ub.length ? $ub : $uf).show();
+		}
+	
+		function __upload_on_progress(loaded, total) {
+			var p = Math.round(loaded * 100 / total);
+			_set_progress(p);
+		}
+		
+		function __upload_on_success(data, status, xhr) {
+			uc.ajaxDone.call($u, data, status, xhr);
+			$u.trigger('uploaded.uploader', data);
+		}
+
+		function __upload_on_error(xhr, status, e) {
+			uc.ajaxFail.call($u, xhr, status, e);
+		}
+
+		function __ajaf_upload(file) {
+			__start_upload();
+	
+			$.ajaf({
+				url: uc.uploadUrl,
+				data: uc.uploadData,
+				file: file,
+				dataType: 'json',
+				forceAjaf: uc.forceAjaf,
+				progress: __upload_on_progress,
+				success: __upload_on_success,
+				error: __upload_on_error,
+				complete: __end_upload
+			});
+		}
+	
+		function __file_on_change() {
+			if (loading || $uf.val() == "") {
+				return;
+			}
+	
+			var f = {}; f[uc.uploadName] = $uf;
+			__ajaf_upload(f);
+		}
+	
+		function __file_on_drop(e) {
+			e.preventDefault();
+			if (loading) {
+				return;
+			}
+
+			var fs = e.originalEvent.dataTransfer.files;
+			if (fs.length) {
+				var f = {}; f[uc.uploadName] = $uf.prop('multiple') ? fs : fs.item(0);
+				__ajaf_upload(f);
+			}
+		}
+	
+		// event handler
+		$uf.change(function() {
+			setTimeout(__file_on_change, 10);
+		});
+		
+		$ub.click(function(e) {
+			e.preventDefault();
+			$uf.trigger('click');
+			return false;
+		});
+
+		// drap & drop
+		if (isAdvancedUpload) {
+			$u.addClass('ui-uploader-draggable')
+				.on('drag dragstart dragend dragover dragenter dragleave drop', function(e) {
+					e.preventDefault();
+					e.stopPropagation();
+				})
+				.on('dragover dragenter', function() {
+					$u.addClass('ui-uploader-dragover');
+				})
+				.on('dragleave dragend drop', function() {
+					$u.removeClass('ui-uploader-dragover');
+				})
+				.on('drop', __file_on_drop);
+		}
+	}
+
+	function _options($u) {
+		var ks = [
+			'name',
+			'forceAjaf',
+			'uploadUrl',
+			'uploadName',
+			'dnloadUrl',
+			'dnloadHolder'
+		];
+		var ds = ['uploadData'];
+		var fs = ['ajaxDone', 'ajaxFail'];
+
+		var c = {};
+		$.each(ks, function(i, k) {
+			var v = $u.data(k);
+			if (v) {
+				if ($.inArray(k, ds) >= 0) {
+					if (typeof(v) == 'string') {
+						try {
+							v = JSON.parse(v);
+						} catch (e) {
+							return;
+						}
+					}
+				} else if ($.inArray(k, fs) >= 0) {
+					v = new Function(v);
+				}
+				c[k] = v;
+			}
+		});
+		return c;
+	}
+
+	// UPLOADER FUNCTION
+	// ==================
+	$.uploader = {
+		defaults: {
+			forceAjaf: false,
+			dnloadHolder: '$',
+
+			// bootstrap3/4 css
+			cssProgress: 'progress',
+			cssProgressBar: 'progress-bar progress-bar-info progress-bar-striped',
+
+			// fontawesome4 css
+			cssIcons: {
+				image: 'fa fa-file-image-o',
+				video: 'fa fa-file-video-o',
+				file: 'fa fa-clip'
+			},
+
+			ajaxDone: _ajaxDone,
+			ajaxFail: _ajaxFail
+		}
+	};
+
+	$.fn.uploader = function(c) {
+		return this.each(function() {
+			var $u = $(this);
+			if ($u.data('uploader')) {
+				return;
+			}
+	
+			_init($u, $.extend({}, $.uploader.defaults, _options($u), c));
+		});
+	};
+	
+	// UPLOADER DATA-API
+	// ==================
+	$(window).on('load', function() {
+		$('[data-spy="uploader"]').uploader();
+	});
+
+})(jQuery);
 (function($) {
 	"use strict";
 
