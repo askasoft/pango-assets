@@ -1,8 +1,4 @@
 (function($) {
-	function _is_true(b) {
-		return b === true || b == 'true';
-	}
-
 	var ArrowClasses = {
 		'top left': 'dn hr1 vb',
 		'top right': 'dn hl1 vb',
@@ -173,6 +169,9 @@
 	function _wrapper($c) {
 		return $c.parent().parent('.ui-popup-wrap');
 	}
+	function _data($c) {
+		return $c.data('popup');
+	}
 
 	function toggle($c, trigger) {
 		trigger = trigger || window;
@@ -182,8 +181,7 @@
 			return;
 		}
 
-		var c = $c.data('popup');
-		if (c.trigger === trigger) {
+		if (_data($c).trigger === trigger) {
 			hide($c);
 			return;
 		}
@@ -197,6 +195,7 @@
 			$c.trigger('hide.popup');
 			$p.hide();
 			$(document).off('.popup');
+			$(window).off('.popup');
 			$c.trigger('hidden.popup');
 		}
 		_masker().hide();
@@ -205,13 +204,13 @@
 	function show($c, trigger) {
 		hide(_active());
 
-		var $p = _wrapper($c), c = $c.data('popup');
+		var $p = _wrapper($c), c = _data($c);
 
-		if (_is_true(c.mask)) {
+		if (c.mask) {
 			_masker().show();
 		}
 
-		if (c.loaded || !c.url) {
+		if (c.loaded || !c.ajax.url) {
 			_show($p, $c, c, trigger);
 			return;
 		}
@@ -222,18 +221,21 @@
 
 	function _bind(c) {
 		$(document).off('.popup');
-		if (_is_true(c.mouse)) {
+		if (c.mouse) {
 			$(document).on('click.popup', __doc_click);
 		}
-		if (_is_true(c.keyboard)) {
+		if (c.keyboard) {
 			$(document).on('keydown.popup', __doc_keydown);
+		}
+		if (c.resize) {
+			$(window).on('resize.popup', __doc_resize);
 		}
 	}
 
 	function _show($p, $c, c, trigger) {
 		$c.trigger('show.popup');
 
-		$p.find('.ui-popup-closer')[_is_true(c.closer) ? 'show' : 'hide']();
+		$p.find('.ui-popup-closer')[c.closer ? 'show' : 'hide']();
 
 		c.trigger = trigger || window;
 
@@ -255,12 +257,17 @@
 		}
 	}
 
+	function __doc_resize() {
+		var $c = _active(), $p = _wrapper($c), c = _data($c);
+		_align($p, c.trigger, c.position);
+	}
+
 	function load($c, c) {
 		var $p = _wrapper($c);
 
-		c = $.extend($c.data('popup'), c);
+		c = $.extend(_data($c), c);
 
-		if (_is_true(c.loader)) {
+		if (c.loader) {
 			$c.html('<div class="ui-popup-loader"></div>');
 			_align($p, c.showing, c.position);
 		}
@@ -275,24 +282,21 @@
 
 		$c.trigger('load.popup');
 
-		$.ajax({
-			url: c.url,
-			data: c.data,
-			dataType: c.dataType,
-			method: c.method,
+		$.ajax($.extend({}, c.ajax, {
 			success: function(data, status, xhr) {
 				if (seq == c.sequence) {
-					c.ajaxRender($c, data, status, xhr);
+					c.ajaxDone.call($c, data, status, xhr);
 					$c.find('[popup-dismiss="true"]').click(function() {
 						hide($c);
 					});
 					c.loaded = true;
-					$c.trigger('loaded.popup');
+					$c.trigger('loaded.popup', data);
 				}
 			},
 			error: function(xhr, status, err) {
 				if (seq == c.sequence) {
-					c.ajaxError($c, xhr, status, err);
+					c.ajaxFail.call($c, xhr, status, err);
+					$c.trigger('failed.popup');
 				}
 			},
 			complete: function() {
@@ -302,11 +306,11 @@
 					delete c.showing;
 				}
 			}
-		});
+		}));
 	}
 
-	function _ajaxError($c, xhr, status, err) {
-		var $e = $('<div class="ui-popup-error">');
+	function _ajaxFail(xhr, status, err) {
+		var $c = $(this), $e = $('<div class="ui-popup-error">');
 
 		if (xhr.responseJSON) {
 			$e.addClass('json').text(JSON.stringify(xhr.responseJSON, null, 4));
@@ -319,30 +323,28 @@
 		$c.empty().append($e);
 	}
 
-	function _ajaxRender($c, data, status, xhr) {
-		$c.html(xhr.responseText);
+	function _ajaxDone(data, status, xhr) {
+		$(this).html(xhr.responseText);
 	}
 
 	function update($c, c) {
 		if (c) {
-			c = $.extend($c.data('popup'), c);
+			c = $.extend(_data($c), c);
 			var $p = _wrapper($c);
 			if (!$p.is(':hidden')) {
 				_bind(c);
-				_masker()[_is_true(c.mask) ? 'show' : 'hide']();
+				_masker()[c.mask ? 'show' : 'hide']();
 			}
 		}
 	}
 
-	function destroy($c) {
-		_wrapper($c).remove();
+	function trigger($c, evt) {
+		var a = [].slice.call(arguments, 2);
+		$(_data($c).trigger).trigger(evt, a);
 	}
 
-	function callback($c) {
-		var c = $c.data('popup');
-		if (typeof(c.callback) == 'function') {
-			c.callback.apply(c.trigger, [].slice.call(arguments, 1));
-		}
+	function destroy($c) {
+		_wrapper($c).remove();
 	}
 
 	function _camelCase(s) {
@@ -353,34 +355,33 @@
 	}
 
 	function _options($c) {
-		var ks = [
-			'url',
-			'method',
-			'data',
-			'data-type',
-			'autoload',
-			'position',
-			'transition',
-			'mask',
-			'loader',
-			'closer',
-			'mouse',
-			'keyboard',
-			'callback',
-			'ajax-render',
-			'ajax-error'
-		];
-		var fs = ['callback', 'ajaxRender', 'ajaxError'];
+		var fs = ['ajax-done', 'ajax-fail'];
+		var bs = ['loaded', 'autoload', 'mask', 'loader', 'closer', 'mouse', 'keyboard', 'resize'];
 
 		var c = {};
-		$.each(ks, function(i, k) {
-			var s = $c.attr('popup-' + k);
-			if (s !== undefined && s !== null && s != '') {
-				k = _camelCase(k);
-				if ($.inArray(k, fs) >= 0) {
-					s = new Function(s);
-				}
-				c[k] = s;
+		$.each($c[0].attributes, function(i, a) {
+			var p = a.name.substring(0, 6),
+				n = a.name.substring(6),
+				v = a.value;
+
+			if ('popup-' != p || !v) {
+				return;
+			}
+
+			if ($.inArray(n, fs) >= 0) {
+				c[_camelCase(n)] = new Function(v);
+				return;
+			}
+
+			if ($.inArray(n, bs) >= 0) {
+				v = (v === 'true');
+			}
+
+			if ('ajax-' == n.substring(0, 5)) {
+				c.ajax ||= {};
+				c.ajax[_camelCase(n.substring(5))] = v;
+			} else {
+				c[_camelCase(n)] = v;
 			}
 		});
 		return c;
@@ -415,7 +416,7 @@
 
 		$c.appendTo($f).data('popup', c).addClass('ui-popup').show();
 
-		if (c.url) {
+		if (c.ajax.url) {
 			c.loaded = false;
 			if (c.autoload) {
 				_load($p, $c, c);
@@ -434,17 +435,17 @@
 		hide: hide,
 		toggle: toggle,
 		update: update,
-		destroy: destroy,
-		callback: callback
+		trigger: trigger,
+		destroy: destroy
 	};
 
 	$.fn.popup = function(c) {
 		var args = [].slice.call(arguments);
-		this.each(function() {
+		return this.each(function() {
 			var $c = $(this);
 
 			if (typeof(c) == 'string') {
-				var p = $c.data('popup');
+				var p = _data($c);
 				if (!p) {
 					_init($c);
 				}
@@ -455,7 +456,6 @@
 
 			_init($c, c);
 		});
-		return this;
 	};
 
 	$.popup = function() {
@@ -465,14 +465,17 @@
 	};
 
 	$.popup.defaults = {
-		dataType: 'html',
-		method: 'GET',
 		position: 'auto',
 		transition: 'slideDown',
+		mask: false,
+		loader: false,
+		closer: false,
 		mouse: true,
 		keyboard: true,
-		ajaxRender: _ajaxRender,
-		ajaxError: _ajaxError
+		resize: true,
+		ajax: {},
+		ajaxDone: _ajaxDone,
+		ajaxFail: _ajaxFail
 	};
 
 	// POPUP DATA-API

@@ -74,6 +74,6 @@
 	$('#popup_list tbody>tr').click(function() {
 		$(this).closest('.ui-popup')
 			.popup('hide')
-			.popup('callback', $(this).find('td:last').text());
+			.popup('trigger', 'callback.popup', $(this).find('td:last').text());
 	});
 </script>
