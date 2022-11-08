@@ -47,12 +47,12 @@
 				}
 			}
 		
-			if ($.isArray(s.data)) {
-				$.each(s.data, function(i, d) {
+			if ($.isArray(ps)) {
+				$.each(ps, function(i, d) {
 					_addParams(d.name, d.value);
 				});
 			} else {
-				$.each(s.data, function(n, v) {
+				$.each(ps, function(n, v) {
 					_addParams(n, v)
 				});
 			}
