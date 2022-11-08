@@ -10,34 +10,34 @@
 
 	$.lightbox = {
 		// Event to bind
-		bindEvent:				'click',
+		bindEvent: 'click.lightbox',
 
 		// Configuration related to overlay
-		overlayBgColor: 		'#000',		// (string) Background color to overlay; inform a hexadecimal value like: #RRGGBB. Where RR, GG, and BB are the hexadecimal values for the red, green, and blue values of the color.
-		overlayOpacity:			0.8,		// (integer) Opacity value to overlay; inform: 0.X. Where X are number from 0 to 9
+		overlayBgColor: '#000',		// (string) Background color to overlay; inform a hexadecimal value like: #RRGGBB. Where RR, GG, and BB are the hexadecimal values for the red, green, and blue values of the color.
+		overlayOpacity: 0.8,		// (integer) Opacity value to overlay; inform: 0.X. Where X are number from 0 to 9
 
 		// Configuration related to navigation
-		fixedNavigation:		false,		// (boolean) Boolean that informs if the navigation (next and prev button) will be fixed or not in the interface.
-		loopNavigation:			false,		// (boolean) Boolean that loop the navigation.
+		fixedNavigation: false,		// (boolean) Boolean that informs if the navigation (next and prev button) will be fixed or not in the interface.
+		loopNavigation: false,		// (boolean) Boolean that loop the navigation.
 
 		// Configuration related to images
-		textBtnPrev:			'&lsaquo;',		// (string) the text of prev button
-		textBtnNext:			'&rsaquo;',		// (string) the text of next button
-		textBtnClose:			'&times;',		// (string) the text of close button
+		textBtnPrev: '&lsaquo;',		// (string) the text of prev button
+		textBtnNext: '&rsaquo;',		// (string) the text of next button
+		textBtnClose: '&times;',		// (string) the text of close button
 
 		// Configuration related to container image box
-		containerBorderSize:	10,			// (integer) If you adjust the padding in the CSS for the container, #lightbox-imagebox, you will need to update this value
-		containerResizeSpeed:	400,		// (integer) Specify the resize duration of container image. These number are miliseconds. 400 is default.
+		containerBorderSize: 10,			// (integer) If you adjust the padding in the CSS for the container, #lightbox-imagebox, you will need to update this value
+		containerResizeSpeed: 400,		// (integer) Specify the resize duration of container image. These number are miliseconds. 400 is default.
 
 		// Configuration related to texts in caption. For example: 'Image # / $' -> 'Image 2 of 8'.
-		textPager:				'# / $',	// (string) #: Image No.  $: Total Images
+		textPager: '# / $',	// (string) #: Image No.  $: Total Images
 
 		// Configuration related to keyboard navigation
-		keyToClose:				'c',		// (string) (c = close) Letter to close the jQuery lightbox interface. Beyond this letter, the letter X and the SCAPE key is used to.
-		keyToPrev:				'p',		// (string) (p = previous) Letter to show the previous image
-		keyToNext:				'n',		// (string) (n = next) Letter to show the next image.
+		keyToClose: 'c',		// (string) (c = close) Letter to close the jQuery lightbox interface. Beyond this letter, the letter X and the SCAPE key is used to.
+		keyToPrev: 'p',		// (string) (p = previous) Letter to show the previous image
+		keyToNext: 'n'		// (string) (n = next) Letter to show the next image.
 	};
-	
+
 	/**
 	 * $ is an alias to jQuery object
 	 */
@@ -47,7 +47,7 @@
 
 		// Caching the jQuery object with all elements matched
 		var $jos = this; // This, in this context, refer to jQuery object
-		
+
 		/**
 		 * Initializing the plugin calling the start function
 		 *
@@ -66,7 +66,7 @@
 		 */
 		function _start(objClicked, $jos) {
 			$('body').addClass('lightbox-open');
-			
+
 			// Call the function to create the markup structure; style some elements; assign events in some elements.
 			_set_interface();
 
@@ -78,10 +78,9 @@
 			for (var i = 0; i < $jos.length; i++) {
 				var el = $jos[i];
 				if (el.tagName == 'A') {
-					settings.images.push([ el.getAttribute('href'), el.getAttribute('title') ]);
-				}
-				else if (el.tagName == 'IMG') {
-					settings.images.push([ el.getAttribute('src'), el.getAttribute('alt') ]);
+					settings.images.push([el.getAttribute('href'), el.getAttribute('title')]);
+				} else if (el.tagName == 'IMG') {
+					settings.images.push([el.getAttribute('src'), el.getAttribute('alt')]);
 				}
 				if (el == objClicked) {
 					settings.active = i;
@@ -99,29 +98,29 @@
 			// Apply the HTML markup into body tag
 			$('body').append('<div id="lightbox-overlay"></div>'
 				+ '<div id="lightbox-lightbox">'
-					+ '<div id="lightbox-imagebox">'
-						+ '<img id="lightbox-image">'
-						+ '<div style="" id="lightbox-nav">'
-							+ '<a href="#" id="lightbox-btn-prev">'
-								+ '<span id="lightbox-txt-prev">' + settings.textBtnPrev + '</span>'
-							+ '</a>'
-							+ '<a href="#" id="lightbox-btn-next">'
-								+ '<span id="lightbox-txt-next">' + settings.textBtnNext + '</span>'
-							+ '</a>'
-						+ '</div>'
-						+ '<a href="#" id="lightbox-loading"></a>'
-					+ '</div>'
-					+ '<div id="lightbox-statusbox">'
-						+ '<div id="lightbox-image-caption"></div>'
-						+ '<div id="lightbox-image-number"></div>'
-						+ '<a href="#" id="lightbox-btn-close">' + settings.textBtnClose + '</a>'
-					+ '</div>'
+				+ '<div id="lightbox-imagebox">'
+				+ '<img id="lightbox-image">'
+				+ '<div style="" id="lightbox-nav">'
+				+ '<a href="#" id="lightbox-btn-prev">'
+				+ '<span id="lightbox-txt-prev">' + settings.textBtnPrev + '</span>'
+				+ '</a>'
+				+ '<a href="#" id="lightbox-btn-next">'
+				+ '<span id="lightbox-txt-next">' + settings.textBtnNext + '</span>'
+				+ '</a>'
+				+ '</div>'
+				+ '<a href="#" id="lightbox-loading"></a>'
+				+ '</div>'
+				+ '<div id="lightbox-statusbox">'
+				+ '<div id="lightbox-image-caption"></div>'
+				+ '<div id="lightbox-image-number"></div>'
+				+ '<a href="#" id="lightbox-btn-close">' + settings.textBtnClose + '</a>'
+				+ '</div>'
 				+ '</div>');
 
 			// Style overlay and show it
 			$('#lightbox-overlay').css({
-				backgroundColor:	settings.overlayBgColor,
-				opacity:			settings.overlayOpacity,
+				backgroundColor: settings.overlayBgColor,
+				opacity: settings.overlayOpacity,
 			}).fadeIn();
 
 			// set lightbox-imagebox line-height to center image
@@ -143,7 +142,7 @@
 			// Enable keyboard navigation
 			$(document).keydown(_keyboard_action);
 		}
-		
+
 		/**
 		 * set lightbox-imagebox line-height to center image
 		 */
@@ -158,12 +157,13 @@
 			if (settings.images.length < 1) {
 				return true;
 			}
-			
+
 			if (settings.active > 0) {
 				settings.active--;
 				_set_image_to_view();
 				return false;
 			}
+
 			if (settings.loopNavigation) {
 				settings.active = settings.images.length - 1;
 				_set_image_to_view();
@@ -178,19 +178,20 @@
 			if (settings.images.length < 1) {
 				return true;
 			}
-			
+
 			if (settings.active < settings.images.length - 1) {
 				settings.active++;
 				_set_image_to_view();
 				return false;
 			}
+
 			if (settings.loopNavigation) {
 				settings.active = 0;
 				_set_image_to_view();
 				return false;
 			}
 		}
-		
+
 		/**
 		 * Prepares image exibition; doing a image's preloader to calculate it's size
 		 */
@@ -209,11 +210,11 @@
 				_show_image();
 
 				//	clear onLoad, IE behaves irratically with animated gifs otherwise
-				img.onload = function(){};
+				img.onload = function() { };
 			};
 			img.src = settings.images[settings.active][0];
 		};
-		
+
 
 		/**
 		 * Show the prepared image
@@ -238,7 +239,7 @@
 					'#': settings.active + 1,
 					"$": settings.images.length
 				};
-			
+
 				$('#lightbox-image-number').html(settings.textPager.replace(/[\#\$]/g, function(c) {
 					return tpm[c];
 				}));
@@ -252,7 +253,7 @@
 		function _set_navigation() {
 			// Show the prev button, if not the first image in set
 			$('#lightbox-btn-prev')[((settings.loopNavigation && settings.images.length > 1) || settings.active > 0) ? 'addClass' : 'removeClass']('lightbox-has-prev');
-			
+
 			// Show the next button, if not the last image in set
 			$('#lightbox-btn-next')[((settings.loopNavigation && settings.images.length > 1) || settings.active < settings.images.length - 1) ? 'addClass' : 'removeClass']('lightbox-has-next');
 		}
@@ -261,25 +262,22 @@
 		 * Perform the keyboard actions
 		 */
 		function _keyboard_action(evt) {
-			evt = evt || event;
-			var keycode = evt.keyCode;
-			var escapeKey = evt.DOM_VK_ESCAPE || 27;
-
-			// Get the key in lower case form
-			key = String.fromCharCode(keycode).toLowerCase();
+			var keycode = evt.keyCode,
+				escapeKey = evt.DOM_VK_ESCAPE || 27,
+				key = String.fromCharCode(keycode).toLowerCase();
 
 			// Verify the keys to close the ligthBox
-			if (( key == settings.keyToClose ) || ( key == 'x' ) || ( keycode == escapeKey )) {
+			if ((key == settings.keyToClose) || (key == 'x') || (keycode == escapeKey)) {
 				return _finish();
 			}
 
 			// Verify the key to show the previous image
-			if (( key == settings.keyToPrev ) || ( keycode == 37 )) {
+			if ((key == settings.keyToPrev) || (keycode == 37)) {
 				return _on_prev();
 			}
 
 			// Verify the key to show the next image
-			if (( key == settings.keyToNext ) || ( keycode == 39 )) {
+			if ((key == settings.keyToNext) || (keycode == 39)) {
 				return _on_next();
 			}
 		}
@@ -289,12 +287,17 @@
 		 */
 		function _preload_neighbor_images() {
 			if (settings.images.length) {
-				var i = settings.active - 1;
-				(new Image()).src = settings.images[i < 0 ? settings.images.length - 1 : i][0];
-				
-				i = settings.active + 1;
-				(new Image()).src = settings.images[i >= settings.images.length ? 0 : i][0];
+				var p = settings.active - 1, n = settings.active + 1;
+				(new Image()).src = settings.images[p < 0 ? settings.images.length - 1 : p][0];
+				(new Image()).src = settings.images[n >= settings.images.length ? 0 : n][0];
 			}
+		}
+
+		/**
+		 * Remove overlay
+		 */
+		function _remove_overlay() {
+			$('#lightbox-overlay').remove();
 		}
 
 		/**
@@ -305,7 +308,7 @@
 			$(window).off('resize', _on_resize);
 
 			$('#lightbox-lightbox').remove();
-			$('#lightbox-overlay').fadeOut(function() { $('#lightbox-overlay').remove(); });
+			$('#lightbox-overlay').fadeOut(_remove_overlay);
 
 			$('body').removeClass('lightbox-open');
 			return false;
