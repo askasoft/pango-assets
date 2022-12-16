@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>corejs string</title>
+	<link href="../../html/bootstrap3/css/bootstrap.css" rel="stylesheet" type="text/css" />
+	<link href="../../html/fontawesome4/css/font-awesome.css" rel="stylesheet" type="text/css" />
+	<style>
+		#result th {
+			width: 1%;
+		}
+		#result td {
+			white-space: pre-wrap;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<h1 style="text-align: center; margin: 20px 0px;">corejs string</h1>
+		<hr>
+
+<textarea id="source" class="form-control" rows="10">
+"あいうえお".hashCode();
+"あいうえお".contains('う');
+"あいうえお".startsWith('あ');
+"あいうえお".endsWith('お');
+"  あいうえお".trimLeft();
+"あいうえお  ".trimRight();
+"  あいうえお  ".trim();
+"　　あいうえお".stripLeft();
+"あいうえお　　".stripRight();
+"　　あいうえお　　".strip();
+"あいうえお".left(1);
+"あいうえお".mid(2, 1);
+"あいうえお".right(1);
+"あいうえお".leftPad(4, '=');
+"あいうえお".rightPad(4, '=');
+"start".capitalize();
+"Start".uncapitalize();
+"starts-with".snakeCase();
+"starts-with".camelCase();
+"starts-with".pascalCase();
+"{0}, {1}, {2}".format("s0", "s1", "s2");
+"あいうえお".substrAfter('う');
+"あいうえお".substrBefore('う');
+"abcde".ellipsis(3);
+"あいうえお".ellipsiz(4);
+"<a>link</a>".escapeHTML();
+"<a>link</a>".escapeHTML().unescapeHTML();
+"あいうえお".encodeUTF8();
+"あいうえお".encodeUTF8().decodeUTF8();
+"あいうえお".encodeBase64();
+"あいうえお".encodeBase64().decodeBase64();
+</textarea>
+
+		<div class="text-center">
+			<button id="exec" class="btn btn-primary">Run</button>
+		</div>
+
+		<hr>
+		<table id="result" class="table table-striped">
+			<thead><tr><th>#</th><td>Source</td><td>Result</td></tr></thead>
+			<tbody></tbody>
+		</table>
+	</div>
+
+	<script src="../../html/jquery/js/jquery-1.12.4.min.js"></script>
+	<script src="../../html/corejs/core.string.js"></script>
+	<script>
+		$(function() {
+			$('#exec').click(function() {
+				var $tb = $('#result>tbody').empty();
+				var ss = $('#source').val().split("\n");
+				for (var i = 0; i < ss.length; i++) {
+					var s = ss[i].trim(), r = '', $tr = $('<tr>');
+					$tr.append($('<th>').text(i));
+					$tr.append($('<td>').text(s));
+					try {
+						var o = eval(ss[i]);
+						r = (o === undefined ? "" : o) + "";
+					} catch (e) {
+						r = e + "";
+					}
+					$tr.append($('<td>').text(r));
+					$tb.append($tr);
+				}
+			})
+		});
+	</script>
+</body>
+
+</html>
