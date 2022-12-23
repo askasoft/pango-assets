@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>corejs string</title>
+	<link href="../../html/bootstrap3/css/bootstrap.css" rel="stylesheet" type="text/css" />
+	<link href="../../html/fontawesome4/css/font-awesome.css" rel="stylesheet" type="text/css" />
+	<style>
+		#result th {
+			width: 1%;
+		}
+		#result td {
+			white-space: pre-wrap;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<h1 style="text-align: center; margin: 20px 0px;">corejs array</h1>
+		<hr>
+
+<textarea id="source" class="form-control" rows="10">
+["あ", "い", "う", "え", "お"].empty();
+["あ", "い", "う", "え", "お"].indexOf("う");
+["あ", "い", "う", "え", "お"].indexOf("か");
+["あ", "い", "う", "え", "お"].contains("う");
+["あ", "い", "う", "え", "お"].contains("か");
+["あ", "い", "う", "え", "お"].insert(0, "か", "き");
+["あ", "い", "う", "え", "お"].remove("う");
+["あ", "い", "う", "え", "お"].remove("か");
+["あ", "い", "う", "う", "え", "お"].removeDuplicates("う");
+["あ", "い", "う", "え", "お"].removeDuplicates("か");
+</textarea>
+
+		<div class="text-center">
+			<button id="exec" class="btn btn-primary">Run</button>
+		</div>
+
+		<hr>
+		<table id="result" class="table table-striped">
+			<thead><tr><th>#</th><td>Source</td><td>Result</td></tr></thead>
+			<tbody></tbody>
+		</table>
+	</div>
+
+	<script src="../../html/jquery/js/jquery-1.12.4.min.js"></script>
+	<script src="../../html/corejs/core.array.js"></script>
+	<script>
+		$(function() {
+			$('#exec').click(function() {
+				var $tb = $('#result>tbody').empty();
+				var ss = $('#source').val().split("\n");
+				for (var i = 0; i < ss.length; i++) {
+					var s = ss[i].trim(), r = '', $tr = $('<tr>');
+					$tr.append($('<th>').text(i));
+					$tr.append($('<td>').text(s));
+					try {
+						var o = eval(ss[i]);
+						r = (o === undefined ? "" : o) + "";
+					} catch (e) {
+						r = e + "";
+					}
+					$tr.append($('<td>').text(r));
+					$tb.append($tr);
+				}
+			})
+		});
+	</script>
+</body>
+
+</html>
