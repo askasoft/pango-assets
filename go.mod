@@ -1,4 +1,3 @@
 module github.com/pandafw/pango-assets
 
-go 1.18
-
+go 1.20
