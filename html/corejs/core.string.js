@@ -230,27 +230,6 @@
 		};
 	}
 
-	if (typeof String.prototype.prettifyXML != "function") {
-		String.prototype.prettifyXML = function() {
-			var xml = '', pad = 0, ss = this.replace(/(>)(<)(\/*)/g, '$1\n$2$3').split('\n');
-			for (var i = 0; i < ss.length; i++) {
-				var s = ss[i], indent = 0;
-				if (s.match(/.+<\/\w[^>]*>$/)) {
-				} else if (s.match(/^<\/\w/)) {
-					if (pad > 0) {
-						pad -= 1;
-					}
-				} else if (s.match(/^<\w[^>]*[^\/]*>.*$/)) {
-					indent = 1;
-				}
-
-				xml += ('').leftPad(pad * 2) + s + '\r\n';
-				pad += indent;
-			}
-			return xml;
-		};
-	}
-
 	if (typeof String.prototype.encodeUTF8 != "function") {
 		String.prototype.encodeUTF8 = function() {
 			var s = this, utf8 = "";
