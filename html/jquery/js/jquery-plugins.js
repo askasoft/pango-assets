@@ -1474,7 +1474,7 @@
 		$('[data-spy="niceSelect"]').niceSelect();
 	});
 
-}(jQuery));
+})(jQuery);
 (function($) {
 	var ArrowClasses = {
 		'top left': 'dn hr1 vb',
@@ -1712,7 +1712,7 @@
 	function _show($p, $c, c, trigger) {
 		$c.trigger('show.popup');
 
-		$p.find('.ui-popup-closer')[c.closer ? 'show' : 'hide']();
+		$p.find('.ui-popup-closer').toggle(c.closer);
 
 		c.trigger = trigger || window;
 
@@ -1814,7 +1814,7 @@
 			var $p = _wrapper($c);
 			if (!$p.is(':hidden')) {
 				_bind(c);
-				_masker()[c.mask ? 'show' : 'hide']();
+				_masker().toggle(c.mask);
 			}
 		}
 	}
@@ -2145,7 +2145,7 @@
 		$('[data-spy="simpleColorPicker"]').simpleColorPicker();
 	});
 
-}(jQuery));
+})(jQuery);
 (function($) {
 	"use strict";
 
@@ -2543,7 +2543,7 @@
 			}).css({ cursor: 'pointer' });
 
 			$w.scroll(function() {
-				$t[$w.scrollTop() > $w.height() ? 'show' : 'hide']();
+				$t.toggle($w.scrollTop() > $w.height());
 			});
 		});
 	};
@@ -2622,7 +2622,7 @@
 		$('ul[data-spy="treeview"]').treeview();
 	});
 
-}(jQuery));
+})(jQuery);
 (function($) {
 	"use strict";
 
