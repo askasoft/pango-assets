@@ -13,13 +13,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v4
         with:
           go-version: '^1.16'
       - name: Checkout
         uses: actions/checkout@v3
       - name: Run golangci-lint
-        uses: golangci/golangci-lint-action@v3.4.0
+        uses: golangci/golangci-lint-action@v3.6.0
         with:
           version: latest
           args: --verbose
@@ -40,7 +40,7 @@ jobs:
       GOPROXY: https://proxy.golang.org
     steps:
       - name: Set up Go ${{ matrix.go }}
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v4
         with:
           go-version: ${{ matrix.go }}
 
@@ -49,7 +49,7 @@ jobs:
         with:
           ref: ${{ github.ref }}
           
-      - uses: actions/cache@v3.2.6
+      - uses: actions/cache@v3.3.1
         with:
           path: |
             ${{ matrix.go-build }}
