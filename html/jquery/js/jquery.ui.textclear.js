@@ -4,14 +4,13 @@
 	$.fn.textClear = function() {
 		return this.each(function() {
 			var $t = $(this);
-			if ($t.data('textClear')) {
+			if ($t.hasClass('ui-has-textclear')) {
 				return;
 			}
 
-			$t.data('textClear', true);
+			$t.addClass('ui-has-textclear');
 
-			var $i = $('<i class="ui-text-clear">&times;</i>');
-			$t.addClass('ui-has-text-clear');
+			var $i = $('<i class="ui-textclear">&times;</i>');
 			$i.insertAfter($t).click(function() {
 				if ($t.val() != '') {
 					$t.focus().val('').trigger('change');
@@ -23,6 +22,6 @@
 	// DATA-API
 	// ==================
 	$(window).on('load', function () {
-		$('[text-clear]').textClear();
+		$('[textclear]').textClear();
 	});
 })(jQuery);
