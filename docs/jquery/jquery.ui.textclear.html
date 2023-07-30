@@ -4,19 +4,30 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1"/>
 	<link href="../../html/bootstrap3/css/bootstrap.css" rel="stylesheet" type="text/css" />
+	<link href="../../html/jquery/css/jquery.ui.close.css" rel="stylesheet" type="text/css" />
 	<link href="../../html/jquery/css/jquery.ui.textclear.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
 	<div style="padding: 20px">
-		<h1 style="text-align: center; margin: 20px 0px;">jQuery Text-Clear Plugin</h1>
+		<h1 style="text-align: center; margin: 20px 0px;">jQuery TextClear Plugin</h1>
 		<hr>
 
 		<div class="form-horizontal">
 			<div class="form-group">
-				<label class="col-sm-3 control-label">text:</label>
+				<label class="col-sm-3 control-label">Text:</label>
 				<div class="col-sm-9">
 					<input type="text" class="form-control" value="" textclear/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Addon:</label>
+				<div class="col-sm-9">
+					<div class="input-group">
+						<div class="input-group-addon">$</div>
+						<input type="text" class="form-control" textclear>
+						<div class="input-group-addon">.00</div>
+					  </div>
 				</div>
 			</div>
 		</div>

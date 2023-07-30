@@ -10,7 +10,7 @@
 
 			$t.addClass('ui-has-textclear');
 
-			var $i = $('<i class="ui-textclear">&times;</i>');
+			var $i = $('<i class="ui-close ui-textclear"></i>');
 			$i.insertAfter($t).click(function() {
 				if ($t.val() != '') {
 					$t.focus().val('').trigger('change');

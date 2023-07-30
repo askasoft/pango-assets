@@ -1,24 +1,18 @@
 .ui-textclear {
 	cursor: pointer;
-	color: #ccc;
-	display: block;
-	top: 7px;
-	right: 18px;
-	width: 16px;
-	height: 16px;
-	line-height: 18px;
-	font-size: 18px;
-	font-style: normal;
-	font-family: monospace;
-	font-weight: bold;
+	top: 50%;
+	margin-top: -8px;
+	right: 22px;
 	position: absolute;
 	z-index: 3;
 }
-.ui-textclear:hover {
-	color: #999;
-}
 .ui-has-textclear {
-	display: inline-block;
 	padding-right: 22px;
 }
-
+.input-group > .ui-textclear {
+	position: relative;
+	display: inline-block;
+	margin: 10px 0 0 -20px;
+	top: auto;
+	right: auto;
+}
