@@ -13,7 +13,10 @@
 			var $i = $('<i class="ui-close ui-textclear"></i>');
 			$i.insertAfter($t).click(function() {
 				if ($t.val() != '') {
-					$t.focus().val('').trigger('change');
+					$t.val('').trigger('change');
+					if ($t.attr('textclear') == 'focus') {
+						$t.focus();
+					}
 				}
 			});
 		});
