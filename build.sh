@@ -23,6 +23,7 @@ mincss bootstrap-datetimepicker
 cd $HTMLDIR/plugins/css/
 cat jquery.*.css    >  plugins.css
 cat bootstrap.*.css >> plugins.css
+cat ui.*.css        >> plugins.css
 mincss plugins
 
 

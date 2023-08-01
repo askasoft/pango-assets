@@ -9,7 +9,9 @@ cd /d %HTMLDIR%\datetimepicker\
 call :mincss bootstrap-datetimepicker
 
 cd /d %HTMLDIR%\plugins\css\
-copy /b *.*.css plugins.css 
+type jquery.*.css    >  plugins.css
+type bootstrap.*.css >> plugins.css
+type ui.*.css        >> plugins.css
 call :mincss plugins
 
 
@@ -21,7 +23,8 @@ cd /d %HTMLDIR%\datetimepicker\
 call :minjs bootstrap-datetimepicker
 
 cd /d %HTMLDIR%\plugins\js\
-copy /b *.*.js plugins.js 
+type jquery.*.js    >  plugins.js
+type bootstrap.*.js >> plugins.js
 call :minjs plugins
 
 
