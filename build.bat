@@ -8,9 +8,9 @@ set HTMLDIR=%BASEDIR%\html
 cd /d %HTMLDIR%\datetimepicker\
 call :mincss bootstrap-datetimepicker
 
-cd /d %HTMLDIR%\jquery\css\
-copy /b jquery.*.css jquery-plugins.css 
-call :mincss jquery-plugins
+cd /d %HTMLDIR%\plugins\css\
+copy /b *.*.css plugins.css 
+call :mincss plugins
 
 
 cd /d %HTMLDIR%\corejs\
@@ -20,9 +20,9 @@ call :minjs corejs
 cd /d %HTMLDIR%\datetimepicker\
 call :minjs bootstrap-datetimepicker
 
-cd /d %HTMLDIR%\jquery\js\
-copy /b jquery.*.js jquery-plugins.js 
-call :minjs jquery-plugins
+cd /d %HTMLDIR%\plugins\js\
+copy /b *.*.js plugins.js 
+call :minjs plugins
 
 
 echo --------------------------------------

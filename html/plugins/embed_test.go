@@ -1,4 +1,4 @@
-package jquery
+package plugins
 
 import (
 	"fmt"
@@ -16,9 +16,8 @@ func TestEmbedFS(t *testing.T) {
 
 	afs := []string{}
 	fs.WalkDir(FS, ".", func(path string, d fs.DirEntry, err error) error {
-		ext := filepath.Ext(path)
-		if path != "." && ext != ".js" && ext != ".map" {
-			t.Errorf("invalid file embedded: %s", path)
+		if filepath.Ext(path) == ".go" {
+			t.Errorf("go source file embedded: %s", path)
 		}
 		afs = append(afs, strings.ReplaceAll(path, "\\", "/"))
 		return nil
@@ -27,8 +26,11 @@ func TestEmbedFS(t *testing.T) {
 
 	wfs := []string{}
 	filepath.Walk(".", func(path string, info os.FileInfo, err error) error {
-		ext := filepath.Ext(path)
-		if path == "." || ext == ".js" || ext == ".map" {
+		fmt.Println(path)
+		base := filepath.Base(path)
+		ext := filepath.Ext(base)
+		name := strings.TrimSuffix(base, ext)
+		if name != "__debug_bin" && ext != ".go" {
 			wfs = append(wfs, strings.ReplaceAll(path, "\\", "/"))
 		}
 		return nil

@@ -1,8 +1,8 @@
-package jquery
+package plugins
 
 import (
 	"embed"
 )
 
-//go:embed *js *.map
+//go:embed css js
 var FS embed.FS

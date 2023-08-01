@@ -20,9 +20,10 @@ mincss() {
 cd $HTMLDIR/datetimepicker/
 mincss bootstrap-datetimepicker
 
-cd $HTMLDIR/jquery/css/
-cat jquery.*.css > jquery-plugins.css
-mincss jquery-plugins
+cd $HTMLDIR/plugins/css/
+cat jquery.*.css    >  plugins.css
+cat bootstrap.*.css >> plugins.css
+mincss plugins
 
 
 cd $HTMLDIR/corejs/
@@ -32,9 +33,10 @@ minjs corejs
 cd $HTMLDIR/datetimepicker/
 minjs bootstrap-datetimepicker
 
-cd $HTMLDIR/jquery/js/
-cat jquery.*.js > jquery-plugins.js
-minjs jquery-plugins
+cd $HTMLDIR/plugins/js/
+cat jquery.*.js    >  plugins.js
+cat bootstrap.*.js >> plugins.js
+minjs plugins
 
 
 echo --------------------------------------
