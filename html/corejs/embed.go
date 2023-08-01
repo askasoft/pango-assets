@@ -4,5 +4,5 @@ import (
 	"embed"
 )
 
-//go:embed *.js
+//go:embed *.js *.map
 var FS embed.FS
