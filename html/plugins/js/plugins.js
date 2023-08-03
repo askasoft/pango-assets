@@ -2160,7 +2160,7 @@
 (function($) {
 	'use strict';
 
-	function sortable_click(evt) {
+	function sortable_onclick(evt) {
 		var $e = $(evt.target),
 			col = $e.data('sortCol') || $e.text(),
 			dir = $e.data('sortDir') || '';
@@ -2172,13 +2172,26 @@
 		$(this).trigger('sort.sortable', [ col, dir ]);
 	}
 
+	function set_sorted($s, col, dir) {
+		$s.find('.sortable').removeClass('sorted desc asc')
+			.filter('[data-sort-col="' + col + '"]').addClass('sorted ' + (dir || 'asc'));
+	}
+
 	$.fn.sortable = function(api, col, dir) {
 		if (api == 'sorted') {
-			this.find('.sortable').removeClass('sorted desc asc')
-				.filter('[data-sort-col="' + col + '"]').addClass('sorted ' + (dir || 'asc'));
+			set_sorted(this, col, dir);
 			return this;
 		}
-		return this.addClass('ui-sortable').off('click.sortable').on('click.sortable', '.sortable', sortable_click);
+
+		return this.addClass('ui-sortable')
+			.off('click.sortable')
+			.on('click.sortable', '.sortable', sortable_onclick)
+			.each(function() {
+				var $t = $(this), c = $t.data('sortedCol');
+				if (c) {
+					set_sorted($t, c, $t.data('sortedDir'));
+				}
+			});
 	};
 
 	// SORTABLE DATA-API
@@ -3052,23 +3065,18 @@
 (function() {
 	"use strict";
 
-	function _click(evt) {
-		var $pg = $(this), $el = evt.target;
+	function _onclick(evt) {
+		var $pg = $(this), $li = $(evt.target).closest('li'), $a = $li.children('a');
 
-		if ($el.parent().hasClass('disabled')) {
+		if ($li.hasClass('disabled')) {
 			evt.preventDefault();
 			return;
 		}
 
-		var pn = $el.attr('pageno');
-		if (pn >= 0) {
-			var $pg = $(this), js = $pg.data('onclick');
-			if (js) {
-				js = js.replace('#', pn);
-				if (eval(js) === false) {
-					evt.preventDefault();
-				}
-			}
+		var pn = $a.attr('pageno'), href = $a.attr('href');
+		if (pn >= 0 && href == '#') {
+			evt.preventDefault();
+			$pg.trigger('goto.pager', pn);
 		}
 	}
 
@@ -3123,7 +3131,7 @@
 			}
 			return this.find('ul.pagination>li.active>a').attr('pageno');
 		}
-		return this.off('click.pager').on('click.pager', 'a[pageno]', _click);
+		return this.off('click.pager').on('click.pager', 'a[pageno]', _onclick);
 	};
 
 	// PAGER DATA-API

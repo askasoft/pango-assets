@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Bootstrap Pager</title>
+	<link href="../../html/bootstrap3/css/bootstrap.css" rel="stylesheet" type="text/css" />
+	<link href="../../html/fontawesome4/css/font-awesome.css" rel="stylesheet" type="text/css" />
+	<link href="../../html/plugins/css/bootstrap.pager.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+	<div class="container">
+		<h1 style="text-align: center; margin: 20px 0px;">Bootstrap Pager</h1>
+
+		<div data-total="151" data-style="is&lt;fp#nl&gt;" data-spy="pager" class="ui-pager clearfix" data-page="1" data-limit="20">
+			<div class="infos">1 ~ 151 / 151</div>
+			<div class="limits"><select class="select form-control" title="">
+					<option value="20">20</option>
+					<option value="50">50</option>
+					<option value="100">100</option>
+				</select></div>
+			<ul class="pagination">
+				<li class="first hidden"><a href="#" pageno="1"><i class="fa fa-angle-double-left"></i></a></li>
+				<li class="prev hidden"><a href="#" pageno="1"><i class="fa fa-angle-left"></i></a></li>
+				<li class="eleft hidden"><span>…</span></li>
+				<li class="page active"><a href="#" pageno="1">1</a></li>
+				<li class="page"><a href="#" pageno="2">2</a></li>
+				<li class="page"><a href="#" pageno="3">3</a></li>
+				<li class="page"><a href="#" pageno="4">4</a></li>
+				<li class="page"><a href="#" pageno="5">5</a></li>
+				<li class="eright hidden"><span>…</span></li>
+				<li class="next"><a href="#" pageno="2"><i class="fa fa-angle-right"></i></a></li>
+				<li class="last"><a href="#" pageno="8"><i class="fa fa-angle-double-right"></i></a></li>
+			</ul>
+		</div>
+	</div>
+	<script src="../../html/jquery/jquery-1.12.4.min.js"></script>
+	<script src="../../html/bootstrap3/js/bootstrap.js"></script>
+	<script src="../../html/plugins/js/bootstrap.ui.pager.js"></script>
+	<script>
+		$(function() {
+			$('.ui-pager').on('goto.pager', function(evt, pno) {
+				alert('goto.pager: ' + pno);
+			});
+
+			$('.ui-pager select').on('change', function() {
+				alert('change.limits: ' + $(this).val());
+			});
+		});
+	</script>
+</body>
+
+</html>

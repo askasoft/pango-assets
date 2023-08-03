@@ -1,23 +1,18 @@
 (function() {
 	"use strict";
 
-	function _click(evt) {
-		var $pg = $(this), $el = evt.target;
+	function _onclick(evt) {
+		var $pg = $(this), $li = $(evt.target).closest('li'), $a = $li.children('a');
 
-		if ($el.parent().hasClass('disabled')) {
+		if ($li.hasClass('disabled')) {
 			evt.preventDefault();
 			return;
 		}
 
-		var pn = $el.attr('pageno');
-		if (pn >= 0) {
-			var $pg = $(this), js = $pg.data('onclick');
-			if (js) {
-				js = js.replace('#', pn);
-				if (eval(js) === false) {
-					evt.preventDefault();
-				}
-			}
+		var pn = $a.attr('pageno'), href = $a.attr('href');
+		if (pn >= 0 && href == '#') {
+			evt.preventDefault();
+			$pg.trigger('goto.pager', pn);
 		}
 	}
 
@@ -72,7 +67,7 @@
 			}
 			return this.find('ul.pagination>li.active>a').attr('pageno');
 		}
-		return this.off('click.pager').on('click.pager', 'a[pageno]', _click);
+		return this.off('click.pager').on('click.pager', 'a[pageno]', _onclick);
 	};
 
 	// PAGER DATA-API
