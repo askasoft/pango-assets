@@ -13,9 +13,73 @@
 	<div class="container">
 		<h1 style="text-align: center; margin: 20px 0px;">JQuery Sortable Plugin</h1>
 		<hr>
-			<p id="event" class="text-center">　</p>
-		<hr>
+		<div>Event: <span id="event"></span></div>
 		<table id="sortable" class="table table-striped table-bordered ui-sortable" data-spy="sortable">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th class="sortable sorted asc" data-sort-col="first_name">First Name</th>
+					<th class="sortable sorted desc" data-sort-col="last_name">Last Name</th>
+					<th class="sortable" data-sort-col="first_asc"  data-sort-dir="asc" >First Asc</th>
+					<th class="sortable" data-sort-col="first_desc" data-sort-dir="desc">First Desc</th>
+					<th class="sortable" data-sort-col="username">Username</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>1</th>
+					<td>Mark</td>
+					<td>Otto</td>
+					<td>Mark</td>
+					<td>Otto</td>
+					<td>@mdo</td>
+				</tr>
+				<tr>
+					<th>2</th>
+					<td>Jacob</td>
+					<td>Thornton</td>
+					<td>Jacob</td>
+					<td>Thornton</td>
+					<td>@fat</td>
+				</tr>
+				<tr>
+					<th>3</th>
+					<td>Larry</td>
+					<td>the Bird</td>
+					<td>Larry</td>
+					<td>the Bird</td>
+					<td>@twitter</td>
+				</tr>
+				<tr>
+					<th>4</th>
+					<td>Tom</td>
+					<td>Otto</td>
+					<td>Tom</td>
+					<td>Otto</td>
+					<td>@tom</td>
+				</tr>
+				<tr>
+					<th>5</th>
+					<td>Jerry</td>
+					<td>Thornton</td>
+					<td>Jerry</td>
+					<td>Thornton</td>
+					<td>@jerry</td>
+				</tr>
+				<tr>
+					<th>6</th>
+					<td>Hydra</td>
+					<td>the Bird</td>
+					<td>Hydra</td>
+					<td>the Bird</td>
+					<td>@hydra</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<hr/>
+		<div>Event2: <span id="event2"></span></div>
+		<table id="sortable2" class="table table-striped table-bordered ui-sortable" data-spy="sortable" data-sorted-col="username" data-sorted-dir="desc">
 			<thead>
 				<tr>
 					<th>#</th>
@@ -84,6 +148,10 @@
 		$(function() {
 			$('#sortable').on('sort.sortable', function(evt, col, dir) {
 				$('#event').text(col + ' ' + dir);
+				$(this).sortable('sorted', col, dir);
+			})
+			$('#sortable2').on('sort.sortable', function(evt, col, dir) {
+				$('#event2').text(col + ' ' + dir);
 				$(this).sortable('sorted', col, dir);
 			})
 		});
