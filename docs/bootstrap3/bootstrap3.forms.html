@@ -7,6 +7,7 @@
 	<link href="../../html/bootstrap3/css/bootstrap.css" rel="stylesheet" type="text/css" />
 	<link href="../../html/fontawesome4/css/font-awesome.css" rel="stylesheet" type="text/css" />
 	<link href="../../html/plugins/css/bootstrap.forms.css" rel="stylesheet" type="text/css" />
+	<link href="../../html/plugins/css/ui.forms.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -14,13 +15,13 @@
 		<h1 style="text-align: center; margin: 20px 0px;">Bootstrap Forms</h1>
 		<hr>
 
-		<div class="text-center">
-			<label class="checkbox-inline"><input type="checkbox" id="check_grey">Grey</label>
-			<label class="checkbox-inline"><input type="checkbox" id="check_lined">Lined</label>
+		<div class="ui-checks text-center">
+			<label><input type="checkbox" id="check_grey">Grey</label>
+			<label><input type="checkbox" id="check_lined">Lined</label>
 		</div>
 		<hr>
 
-		<form id="form" class="form-horizontal grey lined" method="post" onsubmit="return false;">
+		<form id="form" class="form-horizontal grey lined" method="post">
 			<div class="form-group">
 				<label for="tags_textfield" class="col-sm-3 control-label required">Text Field:</label>
 				<div class="col-sm-9">
@@ -41,25 +42,25 @@
 			<div class="form-group">
 				<label for="tags_radio" class="col-sm-3 control-label">Radio List:</label>
 				<div class="col-sm-9">
-					<div id="tags_radio" class="p-radiomap">
-						<label class="radio-inline"><input type="radio" name="radio" id="tags_radio_1" value="a">aaa</label>
-						<label class="radio-inline"><input type="radio" name="radio" id="tags_radio_2" value="b">bbb</label>
+					<div id="tags_radio" class="ui-radios">
+						<label><input type="radio" name="radio" id="tags_radio_1" value="a">aaa</label>
+						<label><input type="radio" name="radio" id="tags_radio_2" value="b">bbb</label>
 					</div>
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="tags_checkboxlist" class="col-sm-3 control-label">Checkbox List:</label>
 				<div class="col-sm-9">
-					<div id="tags_checkboxlist" class="p-checkboxlist">
-						<label class="checkbox-inline"><input type="checkbox" name="checkboxlist" id="tags_checkboxlist_1" value="a">aaa</label>
-						<label class="checkbox-inline"><input type="checkbox" name="checkboxlist" id="tags_checkboxlist_2" value="b">bbb</label>
+					<div id="tags_checkboxlist" class="ui-checks">
+						<label><input type="checkbox" name="checkboxlist" id="tags_checkboxlist_1" value="a">aaa</label>
+						<label><input type="checkbox" name="checkboxlist" id="tags_checkboxlist_2" value="b">bbb</label>
 					</div>
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="tags_checkbox" class="col-sm-3 control-label">Checkbox:</label>
 				<div class="col-sm-9">
-					<label class="checkbox-inline"><input type="checkbox" id="tags_checkbox" name="checkbox" class="p-checkbox" value="true">label</label>
+					<label class="checkbox-inline"><input type="checkbox" id="tags_checkbox" name="checkbox" value="true">label</label>
 				</div>
 			</div>
 			<div class="form-group">
@@ -69,7 +70,7 @@
 			<div class="form-group">
 				<label for="tags_textarea" class="col-sm-3 control-label">Textarea:</label>
 				<div class="col-sm-9">
-					<textarea id="tags_textarea" name="textarea" class="p-textarea form-control" maxlength="100" autosize="true"></textarea>
+					<textarea id="tags_textarea" name="textarea" class="p-textarea form-control" maxlength="100" autosize="true" enterfire="true"></textarea>
 				</div>
 			</div>
 			<div class="form-group">
@@ -79,18 +80,26 @@
 				</div>
 			</div>
 		</form>
-
 	</div>
 	<script src="../../html/jquery/jquery-1.12.4.min.js"></script>
 	<script src="../../html/bootstrap3/js/bootstrap.js"></script>
+	<script src="../../html/plugins/js/jquery.ui.textarea-autosize.js"></script>
+	<script src="../../html/plugins/js/jquery.ui.textarea-enterfire.js"></script>
 	<script>
 		$(function() {
 			$('#check_grey').click(function() {
 				$('#form')[$(this).prop('checked') ? 'addClass' : 'removeClass']('grey');
 			}).trigger('click');
+
 			$('#check_lined').click(function() {
 				$('#form')[$(this).prop('checked') ? 'addClass' : 'removeClass']('lined');
 			}).trigger('click');
+
+			$('#form').submit(function() {
+				var $t = $('#tags_textarea');
+				$t.val($t.val() + "\nsubmit!");
+				return false;
+			});
 		});
 	</script>
 </body>
