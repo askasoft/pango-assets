@@ -1286,7 +1286,8 @@ label {
 	.ui-sidenavi > .card-body, .ui-sidenavi > .card ul.nav, .ui-sidenavi > .card ul.nav > li {
 		display: inline-block;
 	}
-}.ui-corner {
+}
+.ui-corner {
 	border: solid 1px #ddd;
 	border-radius: 20px;
 	color: #aaa;
