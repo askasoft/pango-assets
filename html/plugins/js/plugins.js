@@ -2246,11 +2246,10 @@
 	}
 
 	$.fn.autosize = function() {
-		$(this).off('input.autosize').on('input.autosize', _autosize).css({
+		return $(this).off('input.autosize').on('input.autosize', _autosize).css({
 			'overflow-y': 'hidden',
 			'resize': 'none'
-		});
-		_autosize.call(this);
+		}).trigger('input');
 	};
 
 	$(window).on('load', function() {
@@ -2296,7 +2295,7 @@
 			var $i = $('<i class="ui-close ui-textclear"></i>');
 			$i.insertAfter($t).click(function() {
 				if ($t.val() != '') {
-					$t.val('').trigger('change');
+					$t.val('').trigger('input').trigger('change');
 					if ($t.attr('textclear') == 'focus') {
 						$t.focus();
 					}

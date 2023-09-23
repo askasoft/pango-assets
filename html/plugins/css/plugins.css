@@ -713,8 +713,6 @@ div.ui-simple-color-picker ul li {
 }
 .ui-textclear {
 	cursor: pointer;
-	top: 50%;
-	margin-top: -8px;
 	right: 22px;
 	position: absolute;
 	z-index: 3;
@@ -722,12 +720,21 @@ div.ui-simple-color-picker ul li {
 .ui-has-textclear {
 	padding-right: 24px;
 }
-.input-group > .ui-textclear {
+
+input.ui-has-textclear + .ui-textclear {
+	margin-top: -8px;
+	top: 50%;
+}
+.input-group > input.ui-has-textclear + .ui-textclear {
 	position: relative;
 	display: inline-block;
 	margin: 10px 0 0 -22px;
 	top: auto;
 	right: auto;
+}
+
+textarea.ui-has-textclear + .ui-textclear {
+	top: 8px;
 }
 /**
  * jQuery toast plugin created by Kamran Ahmed copyright MIT license 2014
