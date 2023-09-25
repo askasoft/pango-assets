@@ -548,7 +548,7 @@
 	"use strict";
 
 	$.jcss = function(url) {
-		if ($('link[href="' + url + '"]').size()) {
+		if ($('link[href="' + url + '"]').length) {
 			return false;
 		}
 		$('<link>').attr({ type: 'text/css', rel: 'stylesheet', href: url }).appendTo('head');
@@ -3122,10 +3122,10 @@
 
 		$u.find('li.active').removeClass('active');
 
-		var m = $p.data('pages'), b = n - Math.floor($n.size() / 2);
+		var m = $p.data('pages'), b = n - Math.floor($n.length / 2);
 
-		if (b + $n.size() > m) {
-			b = m - $n.size() + 1;
+		if (b + $n.length > m) {
+			b = m - $n.length + 1;
 		}
 		if (b < 1) {
 			b = 1;
