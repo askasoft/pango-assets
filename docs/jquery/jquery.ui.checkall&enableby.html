@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>JQuery CheckAll / EnableBy Plugin</title>
+	<link href="../../html/bootstrap3/css/bootstrap.css" rel="stylesheet" type="text/css" />
+	<link href="../../html/fontawesome4/css/font-awesome.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+	<div class="container">
+		<h1 style="text-align: center; margin: 20px 0px;">JQuery CheckAll / EnableBy Plugin</h1>
+		<hr>
+
+		<fieldset>
+			<legend>
+				<label>
+					<input type="checkbox" id="ca" checkall="#checks .sub"/>
+					Checkall
+				</label>
+			</legend>
+
+			<div id="checks">
+				<div class="row">
+					<div class="col-sm-2">
+						<label><input type="checkbox" id="iapple" class="sub" checkall="#apples input"/> Apple</label>
+					</div>
+					<div class="col-sm-4" id="apples">
+						<label><input type="checkbox"/> Apple 1</label>
+						<label><input type="checkbox"/> Apple 2</label>
+						<label><input type="checkbox"/> Apple 3</label>
+					</div>
+					<div class="col-sm-6">
+						<button class="btn btn-default" enableby="#iapple"> Enably By APPLE ALL</button>
+						<button class="btn btn-default" enableby="#apples input"> Enably By APPLE 1/2/3</button>
+					</div>
+				</div>
+				<hr/>
+				<div class="row">
+					<div class="col-sm-2">
+						<label><input type="checkbox" id="ibanana" class="sub" checkall="#bananas input"/> Banana</label>
+					</div>
+					<div class="col-sm-4" id="bananas">
+						<label><input type="checkbox"/> Banana 1</label>
+						<label><input type="checkbox"/> Banana 2</label>
+						<label><input type="checkbox"/> Banana 3</label>
+					</div>
+					<div class="col-sm-6">
+						<button class="btn btn-default" enableby="#ibanana"> Enably By BANANA ALL</button>
+						<button class="btn btn-default" enableby="#bananas input"> Enably By BANANA 1/2/3</button>
+					</div>
+				</div>
+				<hr/>
+				<div class="row">
+					<div class="col-sm-2">
+						<label><input type="checkbox" id="ipear" class="sub" checkall="#pears input"/> Pear</label>
+					</div>
+					<div class="col-sm-4" id="pears">
+						<label><input type="checkbox" checked/> Pear 1</label>
+						<label><input type="checkbox" checked/> Pear 2</label>
+						<label><input type="checkbox" checked/> Pear 3</label>
+					</div>
+					<div class="col-sm-6">
+						<button class="btn btn-default" enableby="#ipear"> Enably By PEAR</button>
+						<button class="btn btn-default" enableby="#pears input"> Enably By PEAR 1/2/3</button>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+	</div>
+
+	<script src="../../html/jquery/jquery-1.12.4.min.js"></script>
+	<script src="../../html/plugins/js/jquery.ui.checkall.js"></script>
+	<script src="../../html/plugins/js/jquery.ui.enableby.js"></script>
+</body>
+
+</html>
