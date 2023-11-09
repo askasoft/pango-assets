@@ -1,4 +1,4 @@
-package chartjs
+package chartjs4
 
 import (
 	"fmt"
@@ -16,8 +16,9 @@ func TestEmbedFS(t *testing.T) {
 
 	afs := []string{}
 	fs.WalkDir(FS, ".", func(path string, d fs.DirEntry, err error) error {
-		if path != "." && filepath.Ext(path) != ".js" {
-			t.Fatalf("invalid file embedded: %s", path)
+		ext := filepath.Ext(path)
+		if path != "." && ext != ".js" && ext != ".map" {
+			t.Errorf("invalid file embedded: %s", path)
 		}
 		afs = append(afs, strings.ReplaceAll(path, "\\", "/"))
 		return nil
@@ -26,7 +27,8 @@ func TestEmbedFS(t *testing.T) {
 
 	wfs := []string{}
 	filepath.Walk(".", func(path string, info os.FileInfo, err error) error {
-		if path == "." || filepath.Ext(path) == ".js" {
+		ext := filepath.Ext(path)
+		if path == "." || ext == ".js" || ext == ".map" {
 			wfs = append(wfs, strings.ReplaceAll(path, "\\", "/"))
 		}
 		return nil

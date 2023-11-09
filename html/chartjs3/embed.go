@@ -1,4 +1,4 @@
-package chartjs
+package chartjs3
 
 import (
 	"embed"
