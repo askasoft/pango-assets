@@ -3,11 +3,11 @@
 	margin: 20px 0;
 	text-align: center;
 }
-.ui-pager > .infos {
+.ui-pager > div.infos {
 	float: left;
 	padding: 8px;
 }
-.ui-pager > .limits {
+.ui-pager > div.limits {
 	float: right;
 }
 .ui-pager > .pagination {
@@ -19,6 +19,11 @@
 .ui-pager > .pagination > li:last-child > a,
 .ui-pager > .pagination > li:last-child > span {
 	border-radius: 0;
+}
+.ui-pager > .pagination > li.limits > select {
+	display: inline;
+	float: left;
+	width: auto;
 }
 
 .ui-pager.lined > .pagination > li > a,
