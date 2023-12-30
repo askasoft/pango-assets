@@ -6,6 +6,7 @@
 	<title>JQuery Uploader Plugin</title>
 	<link href="../../html/bootstrap3/css/bootstrap.css" rel="stylesheet" type="text/css" />
 	<link href="../../html/fontawesome4/css/font-awesome.css" rel="stylesheet" type="text/css" />
+	<link href="../../html/plugins/css/jquery.ui.close.css" rel="stylesheet" type="text/css" />
 	<link href="../../html/plugins/css/jquery.ui.uploader.css" rel="stylesheet" type="text/css" />
 </head>
 
@@ -16,8 +17,8 @@
 		<hr>
 		<p>Single File upload via ajax</p>
 		<div id="single"
-			data-upload-url="https://panda-demo.azurewebsites.net/files/upload"
-			data-dnload-url="https://panda-demo.azurewebsites.net/files/download?file=$"
+			data-upload-url="https://xdemo.aska-soft.com/files/upload"
+			data-dnload-url="https://xdemo.aska-soft.com/files/$"
 			data-spy="uploader">
 			
 			<input type="hidden" name="token" class="ui-uploader-data" value="single"/>
@@ -26,41 +27,51 @@
 		</div>
 
 		<hr>
-		<p>Single File upload via iframe</p>
-		<div id="singlef"
-			data-upload-url="https://panda-demo.azurewebsites.net/files/upload"
-			data-dnload-url="https://panda-demo.azurewebsites.net/files/download?file=$"
-			data-force-ajaf="true"
-			data-spy="uploader">
-	
-			<input type="hidden" name="token" class="ui-uploader-data" value="singlef"/>
-			<input type="file" name="file" class="ui-uploader-file" accept="image/*" style="display:none"/>
-			<a class="btn btn-sm btn-default ui-uploader-btn">Browse...</a>
-		</div>
-
-		<hr>
 		<p>Multiple Files upload via ajax</p>
 		<div id="multi"
-			data-upload-url="https://panda-demo.azurewebsites.net/files/uploads"
-			data-dnload-url="https://panda-demo.azurewebsites.net/files/download?file=$"
+			data-upload-url="https://xdemo.aska-soft.com/files/upload"
+			data-dnload-url="https://xdemo.aska-soft.com/files/$"
 			data-spy="uploader">
-			
+
 			<input type="hidden" name="token" class="ui-uploader-data" value="multi"/>
-			<input type="file" name="files" multiple class="ui-uploader-file" accept="image/*" style="display:none"/>
-			<a class="btn btn-sm btn-default ui-uploader-btn">Browse...</a>
+			<input type="file" name="file" multiple class="ui-uploader-file" accept="image/*" style="display:none"/>
+			<div class="text-center">
+				<p>Drag and drop files to this area</p>
+				<a class="btn btn-sm btn-default ui-uploader-btn">Browse...</a>
+			</div>
 		</div>
 
 		<hr>
-		<p>Multiple Files upload vai iframe</p>
-		<div id="multif"
-			data-upload-url="https://panda-demo.azurewebsites.net/files/uploads"
-			data-dnload-url="https://panda-demo.azurewebsites.net/files/download?file=$"
-			data-force-ajaf="true"
+		<p>Multiple Files upload via ajax (image preview)</p>
+		<div id="multi2"
+			data-upload-url="https://xdemo.aska-soft.com/files/upload"
+			data-dnload-url="https://xdemo.aska-soft.com/files/$"
+			data-upload-remover="true"
+			data-dnload-view="true"
 			data-spy="uploader">
-			
-			<input type="hidden" name="token" class="ui-uploader-data" value="multif"/>
-			<input type="file" name="files" multiple class="ui-uploader-file" accept="image/*" style="display:none"/>
-			<a class="btn btn-sm btn-default ui-uploader-btn">Browse...</a>
+
+			<input type="hidden" name="token" class="ui-uploader-data" value="multi"/>
+			<input type="file" name="file" multiple class="ui-uploader-file" accept="image/*" style="display:none"/>
+			<div class="text-center">
+				<p>Drag and drop files to this area</p>
+				<a class="btn btn-sm btn-default ui-uploader-btn">Browse...</a>
+			</div>
+		</div>
+
+		<hr>
+		<p>Multiple Files upload via ajax (concurrent: 5)</p>
+		<div id="multi2"
+			data-upload-url="https://xdemo.aska-soft.com/files/upload"
+			data-dnload-url="https://xdemo.aska-soft.com/files/$"
+			data-upload-limit="5"
+			data-spy="uploader">
+
+			<input type="hidden" name="token" class="ui-uploader-data" value="multi"/>
+			<input type="file" name="file" multiple class="ui-uploader-file" accept="image/*" style="display:none"/>
+			<div class="text-center">
+				<p>Drag and drop files to this area</p>
+				<a class="btn btn-sm btn-default ui-uploader-btn">Browse...</a>
+			</div>
 		</div>
 	</div>
 
