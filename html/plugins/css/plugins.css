@@ -1145,6 +1145,7 @@ label {
 	font-family: Consolas, monospace;
 }
 
+input.form-control[size],
 input.form-control[type="month"],
 input.form-control[type="date"],
 input.form-control[type="time"],
@@ -1152,6 +1153,7 @@ input.form-control[type="datetime-local"] {
 	display: inline-block;
 	width: auto;
 }
+
 select.form-control {
 	width: auto;
 }
