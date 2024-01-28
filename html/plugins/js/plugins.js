@@ -677,7 +677,6 @@
 	};
 
 
-	// POPUP DATA-API
 	// ==================
 	$(window).on('load', function() {
 		$('[checkall]').checkAll();
@@ -700,7 +699,6 @@
 	};
 
 
-	// POPUP DATA-API
 	// ==================
 	$(window).on('load', function() {
 		$('[enableby]').enableBy();
@@ -2326,7 +2324,6 @@
 		});
 	};
 	
-	// DATA-API
 	// ==================
 	$(window).on('load', function () {
 		$('[textclear]').textClear();
@@ -2664,6 +2661,7 @@
 
 	$.toast.defaults = {
 		icon: false,
+		html: false,
 		text: '',
 		heading: '',
 		loader: true,

@@ -21,7 +21,6 @@
 		});
 	};
 	
-	// DATA-API
 	// ==================
 	$(window).on('load', function () {
 		$('[textclear]').textClear();
