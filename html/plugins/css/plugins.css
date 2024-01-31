@@ -1351,6 +1351,9 @@ select.form-control {
 		display: inline-block;
 	}
 }
+.table > thead > tr > th {
+	vertical-align: middle;
+}
 .ui-corner {
 	border: solid 1px #ddd;
 	border-radius: 20px;
