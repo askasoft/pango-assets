@@ -1088,8 +1088,8 @@ function DecimalFormat(pattern) {
 		};
 	}
 
-	if (typeof String.prototype.leftPad != "function") {
-		String.prototype.leftPad = function(n, c) {
+	if (typeof String.prototype.padLeft != "function") {
+		String.prototype.padLeft = function(n, c) {
 			c = c || ' ';
 			var s = this;
 			while (s.length < n) {
@@ -1098,13 +1098,28 @@ function DecimalFormat(pattern) {
 			return s;
 		};
 	}
-	if (typeof String.prototype.rightPad != "function") {
-		String.prototype.rightPad = function(n, c) {
+	if (typeof String.prototype.padRight != "function") {
+		String.prototype.padRight = function(n, c) {
 			c = c || ' ';
 			var s = this;
 			while (s.length < n) {
-				s += n;
+				s += c;
 			}
+			return s;
+		};
+	}
+	if (typeof String.prototype.padCenter != "function") {
+		String.prototype.padRight = function(n, c) {
+			c = c || ' ';
+			var s = this, z = s.length, p = n - z;
+			if (p <= 0) {
+				return s;
+			}
+			while (s.length < n) {
+				s += c;
+			}
+			s = s.padLeft(z+p/2, c);
+			s = s.padRight(n, c);
 			return s;
 		};
 	}
