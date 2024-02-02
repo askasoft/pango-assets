@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup
-        uses: actions/setup-go@v4
+        uses: actions/setup-go@v5
         with:
           go-version: '^1.16'
       - name: Checkout
@@ -29,7 +29,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        go: ['1.16', '1.17', '1.18', '1.19', '1.20']
+        go: ['1.16', '1.17', '1.18', '1.19', '1.20', '1.21']
         include:
           - os: ubuntu-latest
             go-build: ~/.cache/go-build
@@ -40,7 +40,7 @@ jobs:
       GOPROXY: https://proxy.golang.org
     steps:
       - name: Set up Go ${{ matrix.go }}
-        uses: actions/setup-go@v4
+        uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.go }}
 
@@ -49,7 +49,7 @@ jobs:
         with:
           ref: ${{ github.ref }}
           
-      - uses: actions/cache@v3.3.2
+      - uses: actions/cache@v4.0.0
         with:
           path: |
             ${{ matrix.go-build }}
