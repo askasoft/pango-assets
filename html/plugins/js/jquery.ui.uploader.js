@@ -69,7 +69,7 @@
 
 		var durl;
 		if (uc.dnloadUrl && fid) {
-			durl = uc.dnloadUrl.replace(uc.dnloadHolder, encodeURIComponent(fid));
+			durl = uc.dnloadUrl.replace(uc.dnloadHolder, uc.dnloadEncode ? encodeURIComponent(fid) : fid);
 		}
 
 		$fit.find('.ui-uploader-icon').prop('className', (uc.cssIcons[fct] || uc.cssIcons['file']) + ' ui-uploader-icon');
@@ -273,7 +273,8 @@
 	function _options($u) {
 		var ds = ['uploadData'],
 			fs = ['ajaxDone', 'ajaxFail'],
-			ks = [
+			bs = ['dnloadEncode'],
+			ps = [
 				'name',
 				'uploadUrl',
 				'uploadName',
@@ -284,7 +285,8 @@
 				'dnloadView',
 				'pgbarFgcolor',
 				'pgbarBgcolor'
-			];
+			],
+			ks = [].concat(ds, fs, bs, ps);
 
 		var c = {};
 		$.each(ks, function(i, k) {
@@ -300,6 +302,8 @@
 					}
 				} else if ($.inArray(k, fs) >= 0) {
 					v = new Function(v);
+				} else if ($.inArray(k, bs) >= 0) {
+					v = (v === 'true');
 				}
 				c[k] = v;
 			}
