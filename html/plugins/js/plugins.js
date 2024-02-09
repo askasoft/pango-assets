@@ -2799,9 +2799,24 @@
 		return fn.substr(i + 1);
 	}
 
-	function _filetype(s) {
-		var i = s.indexOf('/');
-		return (i >= 0) ? s.slice(0, i) : s;
+	function _filetype(t, e) {
+		if (t) {
+			var i = t.indexOf('/'), c = (i >= 0) ? t.slice(0, i) : t;
+			return ($.inArray(c, ['image', 'audio', 'video', 'file']) >= 0) ? c : 'file';
+		}
+		if (e) {
+			e = e.toLowerCase();
+			if ($.inArray(e, ['.jpg', '.jpeg', '.gif', '.png', '.tif', '.tiff', '.svg', '.bmp', '.webp']) >= 0) {
+				return 'image';
+			}
+			if ($.inArray(e, ['.mp3', '.flac', '.weba', '.wav', '.mid', '.oga', '.wma']) >= 0) {
+				return 'audio';
+			}
+			if ($.inArray(e, ['.avi', '.mpg', '.mpeg', '.mp4', '.m4v', 'mov', '.webm', '.wmv']) >= 0) {
+				return 'video';
+			}
+		}
+		return 'file';
 	}
 
 	function _item_on_remove() {
@@ -2837,7 +2852,7 @@
 			fid = fi.id || fi.path || fi.name,
 			fnm = _filename(fi.name || fi.path || fi.id),
 			fsz = fi.size,
-			fct = _filetype(fi.type || '');
+			fct = _filetype(fi.type, fi.ext);
 
 		$fit.find('.ui-uploader-fid').val(fid || '');
 
@@ -2846,7 +2861,7 @@
 			durl = uc.dnloadUrl.replace(uc.dnloadHolder, uc.dnloadEncode ? encodeURIComponent(fid) : fid);
 		}
 
-		$fit.find('.ui-uploader-icon').prop('className', (uc.cssIcons[fct] || uc.cssIcons['file']) + ' ui-uploader-icon');
+		$fit.find('.ui-uploader-icon').prop('className', uc.cssIcons[fct] + ' ui-uploader-icon');
 
 		if (fnm) {
 			$fit.find('.ui-uploader-text').text(fnm + ' ' + _filesize(fsz));
@@ -3103,9 +3118,10 @@
 
 			// fontawesome4 css
 			cssIcons: {
-				image: 'fa fa-file-image-o',
-				video: 'fa fa-file-video-o',
 				file: 'fa fa-file-o',
+				image: 'fa fa-file-image-o',
+				audio: 'fa fa-file-audio-o',
+				video: 'fa fa-file-video-o',
 				error: 'fa fa-exclamation-circle',
 				waiting: 'fa fa-refresh',
 				loading: 'fa fa-refresh fa-spin'
