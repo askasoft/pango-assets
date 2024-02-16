@@ -1092,31 +1092,34 @@ function DecimalFormat(pattern) {
 		String.prototype.padLeft = function(n, c) {
 			c = c || ' ';
 			var s = this;
+			if (s.length >= n) {
+				return s;
+			}
 			while (s.length < n) {
 				s = c + s;
 			}
-			return s;
+			return s.right(n);
 		};
 	}
 	if (typeof String.prototype.padRight != "function") {
 		String.prototype.padRight = function(n, c) {
 			c = c || ' ';
 			var s = this;
-			while (s.length < n) {
-				s += c;
-			}
-			return s;
-		};
-	}
-	if (typeof String.prototype.padCenter != "function") {
-		String.prototype.padRight = function(n, c) {
-			c = c || ' ';
-			var s = this, z = s.length, p = n - z;
-			if (p <= 0) {
+			if (s.length >= n) {
 				return s;
 			}
 			while (s.length < n) {
 				s += c;
+			}
+			return s.left(n);
+		};
+	}
+	if (typeof String.prototype.padCenter != "function") {
+		String.prototype.padCenter = function(n, c) {
+			c = c || ' ';
+			var s = this, z = s.length, p = n - z;
+			if (p <= 0) {
+				return s;
 			}
 			s = s.padLeft(z+p/2, c);
 			s = s.padRight(n, c);
