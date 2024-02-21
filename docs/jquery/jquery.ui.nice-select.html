@@ -433,6 +433,83 @@
 			</select>
 		</div>
 
+		<h2>Multiple</h2>
+		<p>Enable multiple select.</p>
+
+		<p>Add a <code class="language-html">multiple</code> attribute to the desired select. For example:</p>
+
+		<pre><code class="language-html">&lt;select multiple&gt;
+  &lt;option value=&quot;1&quot;&gt;Some option&lt;/option&gt;
+  &lt;option value=&quot;2&quot;&gt;Another option&lt;/option&gt;
+  &lt;option value=&quot;3&quot; disabled&gt;A disabled option&lt;/option&gt;
+  &lt;option value=&quot;4&quot;&gt;Potato&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+
+		<div class="box">
+			<select multiple>
+				<option>Nothing</option>
+				<option value="1">Some option</option>
+				<option value="2">Another option</option>
+				<option value="3" disabled>A disabled option</option>
+				<option value="4">Potato</option>
+			</select>
+		</div>
+
+		<div class="box">
+			<label>Wide</label>
+			<select multiple class="wide">
+				<option data-display="Select">Nothing</option>
+				<option value="1">Some option</option>
+				<option value="2">Another option</option>
+				<option value="3" disabled>A disabled option</option>
+				<option value="4">Potato</option>
+			</select>
+		</div>
+
+		<div class="box">
+			<label>Right</label>
+			<select multiple class="right">
+				<option data-display="Select">Nothing</option>
+				<option value="1">Some option</option>
+				<option value="2">Another option</option>
+				<option value="3" disabled>A disabled option</option>
+				<option value="4">Potato</option>
+			</select>
+		</div>
+
+		<div class="box">
+			<label>Small</label>
+			<select multiple class="small">
+				<option data-display="Select">Nothing</option>
+				<option value="1">Some option</option>
+				<option value="2">Another option</option>
+				<option value="3" disabled>A disabled option</option>
+				<option value="4">Potato</option>
+			</select>
+		</div>
+
+		<div class="box">
+			<label>2 Columns</label>
+			<select multiple class="col2">
+				<option data-display="Select">Nothing</option>
+				<option value="1">Some option</option>
+				<option value="2">Another option</option>
+				<option value="3" disabled>A disabled option</option>
+				<option value="4">Potato</option>
+			</select>
+		</div>
+
+		<div class="box">
+			<label>3 Columns</label>
+			<select multiple class="col3">
+				<option data-display="Select">Nothing</option>
+				<option value="1">Some option</option>
+				<option value="2">Another option</option>
+				<option value="3" disabled>A disabled option</option>
+				<option value="4">Potato</option>
+			</select>
+		</div>
+
 		<h2>Methods</h2>
 
 		<h3>update</h3>
@@ -478,7 +555,7 @@
 				}
 			});
 			$('select:not(.ignore)').niceSelect();
-		});    
+		});
 	</script>
 </body>
 

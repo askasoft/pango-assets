@@ -1344,13 +1344,13 @@
 
 	function __dropdown_keydown(evt) {
 		var $dropdown = $(this);
-		var $focused_option = $($dropdown.find('.focus') || $dropdown.find('ui li.selected'));
+		var $focused = ($dropdown.find('.focus') || $dropdown.find('.selected')).first();
 
 		switch (evt.keyCode) {
 		case 32: // Space
 		case 13: // Enter
 			if ($dropdown.hasClass('open')) {
-				$focused_option.trigger('click');
+				$focused.trigger('click');
 			} else {
 				$dropdown.trigger('click');
 			}
@@ -1359,10 +1359,10 @@
 			if (!$dropdown.hasClass('open')) {
 				$dropdown.trigger('click');
 			} else {
-				var $next = $focused_option.nextAll('li:not(.disabled)').first();
+				var $next = ($focused.length > 0 ? $focused.nextAll('li:not(.disabled)') : $dropdown.find('li:not(.disabled)')).first();
 				if ($next.length > 0) {
 					$dropdown.find('.focus').removeClass('focus');
-					$next.addClass('focus');
+					$next.addClass('focus').focus();
 				}
 			}
 			return false;
@@ -1370,10 +1370,10 @@
 			if (!$dropdown.hasClass('open')) {
 				$dropdown.trigger('click');
 			} else {
-				var $prev = $focused_option.prevAll('li:not(.disabled)').first();
+				var $prev = ($focused.length > 0 ? $focused.prevAll('li:not(.disabled)').first() : $dropdown.find('li:not(.disabled)').last());
 				if ($prev.length > 0) {
 					$dropdown.find('.focus').removeClass('focus');
-					$prev.addClass('focus');
+					$prev.addClass('focus').focus();
 				}
 			}
 			return false;
@@ -1398,10 +1398,6 @@
 		$dropdown.toggleClass('open');
 
 		if ($dropdown.hasClass('open')) {
-			$dropdown.find('li');
-			$dropdown.find('.focus').removeClass('focus');
-			$dropdown.find('.selected').addClass('focus');
-
 			// Close when clicking outside
 			$(document).on('click.nice_select', __document_click);
 		} else {
@@ -1414,15 +1410,40 @@
 
 	function __dropdown_option_click() {
 		var $option = $(this);
-		var $dropdown = $option.closest('.ui-nice-select');
 
-		$dropdown.find('.selected').removeClass('selected');
+		if ($option.hasClass('selected')) {
+			return;
+		}
+
+		var $dropdown = $option.closest('.ui-nice-select'),
+			$select = $dropdown.prev('select'),
+			val = $option.data('value'),
+			text = $option.data('display') || $option.text();
+
+		if ($dropdown.hasClass('multiple')) {
+			$dropdown.append($('<span>', { 'class': 'current', 'data-value': val}).text(text));
+			$select.find('option').filter(function() { return this.value == val; }).attr('selected', 'selected');
+		} else {
+			$dropdown.find('.selected').removeClass('selected');
+	
+			$dropdown.find('.current').text(text);
+	
+			$select.val(val).trigger('change');
+		}
+
 		$option.addClass('selected');
+	}
 
-		var text = $option.data('display') || $option.text();
-		$dropdown.find('.current').text(text);
-
-		$dropdown.prev('select').val($option.data('value')).trigger('change');
+	function __dropdown_current_click() {
+		var $t = $(this),
+			val = $t.data('value'),
+			$dropdown = $t.closest('.ui-nice-select'),
+			$select = $dropdown.prev('select');
+		
+		$dropdown.find('li').filter(function() { return $(this).data('value') == val; }).removeClass('selected');
+		$select.find('option').filter(function() { return this.value == val; }).removeAttr('selected');
+		$t.remove();
+		return false;
 	}
 
 	function update() {
@@ -1468,16 +1489,19 @@
 	function create_nice_select($select) {
 		var $options = $select.find('option'),
 			$selected = $select.find('option:selected'),
-			$current = $('<span class="current"></span>'),
 			$ul = $('<ul></ul>'),
 			$dropdown = $('<div></div>')
 				.addClass('ui-nice-select')
 				.addClass($select.attr('class') || '')
-				.addClass($select.attr('disabled') ? 'disabled' : '')
-				.attr('tabindex', $select.attr('disabled') ? null : ($select.attr('tabindex') || '0'))
-				.append($current, $ul);
+				.addClass($select.prop('disabled') ? 'disabled' : '')
+				.addClass($select.prop('multiple') ? 'multiple' : '')
+				.attr('tabindex', $select.prop('disabled') ? null : ($select.attr('tabindex') || '0'))
+				.append($ul);
 
-		$current.text($selected.data('display') || $selected.text());
+		$selected.each(function() {
+			var $t = $(this);
+			$dropdown.append($('<span>', { 'class': 'current', 'data-value': $t.val()}).text($t.data('display') || $t.text()));
+		});
 
 		$options.each(function() {
 			var $option = $(this);
@@ -1488,6 +1512,7 @@
 				.addClass(
 					($option.is(':selected') ? ' selected' : '') +
 					($option.is(':disabled') ? ' disabled' : ''))
+				.attr('tabindex', $option.is(':disabled') ? null : '0')
 				.text($option.text())
 			);
 		});
@@ -1500,6 +1525,11 @@
 
 		// Option click
 		$dropdown.on('click', 'li:not(.disabled)', __dropdown_option_click);
+
+		// multiple
+		if ($dropdown.hasClass('multiple')) {
+			$dropdown.on('click', '.current', __dropdown_current_click)
+		}
 
 		$select.after($dropdown);
 	}
