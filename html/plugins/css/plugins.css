@@ -1155,23 +1155,32 @@ select.form-control {
 	width: auto;
 }
 
+/** bootstrap4/5 */
+.col-form-label {
+	text-align: right;
+	position: relative;
+}
+
 /** disable bootstrap not-allowed cursor */
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
 	cursor: auto;
 }
 
 /** bootstrap form layout */
-.form-horizontal.grey {
+form.grey {
 	color: #333;
 	background-color: #f9f9f9;
 	padding: 10px;
 }
-.form-horizontal.lined .form-group {
+form.lined .form-group, form.lined .row {
 	border-bottom: 1px solid #ccc;
 	margin: 0;
 	padding: 7px;
 }
-.form-horizontal.lined .form-group:last-of-type {
+form .row > div {
+	position: relative;
+}
+form.lined .form-group:last-of-type, form.lined .row:last-of-type {
 	border-bottom: 0;
 }
 /** navbar toogle */
@@ -1292,6 +1301,12 @@ select.form-control {
 .ui-sidenavi > .panel > .panel-body, .ui-sidenavi > .card > .card-body {
 	padding: 2px 5px;
 }
+.ui-sidenavi ul.nav > li {
+	border-bottom: solid 1px #ccc;
+}
+.ui-sidenavi ul.nav > li:last-child {
+	border-bottom: none;
+}
 .ui-sidenavi ul.nav > li > a {
 	padding: 5px 0.5em;
 }
@@ -1307,48 +1322,81 @@ select.form-control {
 	font-weight: bold;
 }
 
+/* mininav */
+.ui-sidenavi.mininav {
+	text-align: right;
+}
+.ui-sidenavi.mininav > .panel, .ui-sidenavi.mininav > .card {
+	text-align: center;
+	width: 45px;
+}
+.ui-sidenavi.mininav > .panel > .panel-heading, .ui-sidenavi.mininav > .card > .card-header {
+	padding: 10px 5px;
+}
+.ui-sidenavi.mininav > .panel > .panel-heading span, .ui-sidenavi.mininav > .panel > .panel-body a > span,
+.ui-sidenavi.mininav > .card  > .card-header span,   .ui-sidenavi.mininav > .card  > .card-body a > span {
+	display: none;
+}
+
+/* minimal */
 @media (max-width: 991px) {
-	.ui-sidenavi {
+	.ui-sidenavi.minimal {
 		text-align: right;
 	}
-	.ui-sidenavi > .panel, .ui-sidenavi > .card {
+	.ui-sidenavi.minimal > .panel, .ui-sidenavi.minimal > .card {
 		text-align: center;
 		width: 45px;
 	}
-	.ui-sidenavi > .panel > .panel-heading, .ui-sidenavi > .card > .card-header {
+	.ui-sidenavi.minimal > .panel > .panel-heading, .ui-sidenavi.minimal > .card > .card-header {
 		padding: 10px 5px;
 	}
-	.ui-sidenavi > .panel > .panel-heading span, .ui-sidenavi > .panel > .panel-body a > span,
-	.ui-sidenavi > .card > .card-header span, .ui-sidenavi > .card > .card-body a > span {
+	.ui-sidenavi.minimal > .panel > .panel-heading span, .ui-sidenavi.minimal > .panel > .panel-body a > span,
+	.ui-sidenavi.minimal > .card  > .card-header span,   .ui-sidenavi.minimal > .card  > .card-body a > span {
 		display: none;
 	}
 }
-@media (min-width: 768px) {
-	.ui-sidenavi ul.nav > li {
-		border-bottom: solid 1px #ccc;
-	}
-	.ui-sidenavi ul.nav > li:last-child {
-		border-bottom: none;
-	}
+
+/* flatbar */
+.ui-sidenavi.flatbar {
+	text-align: left;
 }
+.ui-sidenavi.flatbar > .panel, .ui-sidenavi.flatbar > .card {
+	display: inline-block;
+	text-align: left;
+	margin-bottom: 5px;
+	width: auto;
+}
+.ui-sidenavi.flatbar > .panel > .panel-heading, .ui-sidenavi.flatbar > .card > .card-header {
+	display: none;
+}
+.ui-sidenavi.flatbar > .panel-body, .ui-sidenavi.flatbar > .panel ul.nav, .ui-sidenavi.flatbar > .panel ul.nav > li,
+.ui-sidenavi.flatbar > .card-body,  .ui-sidenavi.flatbar > .card ul.nav,  .ui-sidenavi.flatbar > .card ul.nav > li {
+	display: inline-block;
+}
+.ui-sidenavi.flatbar ul.nav > li, .ui-sidenavi.flatbar ul.nav > li:last-child {
+	border-bottom: none;
+}
+
+/* barable */
 @media (max-width: 767px) {
-	.ui-sidenavi {
+	.ui-sidenavi.barable {
 		text-align: left;
 	}
-	.ui-sidenavi > .panel, .ui-sidenavi > .card {
+	.ui-sidenavi.barable > .panel, .ui-sidenavi.barable > .card {
 		display: inline-block;
 		text-align: left;
+		margin-bottom: 5px;
 		width: auto;
 	}
-	.ui-sidenavi > .panel, .side-card.panel {
-		margin-bottom: 5px;
-	}
-	.ui-sidenavi > .panel > .panel-heading, .ui-sidenavi > .card > .card-header {
+	.ui-sidenavi.barable > .panel > .panel-heading, .ui-sidenavi.barable > .card > .card-header {
 		display: none;
 	}
-	.ui-sidenavi > .panel-body, .ui-sidenavi > .panel ul.nav, .ui-sidenavi > .panel ul.nav > li,
-	.ui-sidenavi > .card-body, .ui-sidenavi > .card ul.nav, .ui-sidenavi > .card ul.nav > li {
+	.ui-sidenavi.barable > .panel-body, .ui-sidenavi.barable > .panel ul.nav, .ui-sidenavi.barable > .panel ul.nav > li,
+	.ui-sidenavi.barable > .card-body,  .ui-sidenavi.barable > .card ul.nav,  .ui-sidenavi.barable > .card ul.nav > li {
 		display: inline-block;
+	}
+	.ui-sidenavi.barable ul.nav > li, .ui-sidenavi.barable ul.nav > li:last-child {
+		border-bottom: none;
 	}
 }
 .table > thead > tr > th {
@@ -1402,7 +1450,7 @@ select.form-control {
 .ui-checks.vertical > label > input, .ui-radios.vertical > label > input {
 	margin-left: -21px;
 }
-.form-horizontal .ui-checks, .form-horizontal .ui-radios {
+.form-horizontal .ui-checks, .form-horizontal .ui-radios, .row .ui-checks, .row .ui-radios {
 	padding-top: 7px;
 }
 
@@ -1454,16 +1502,16 @@ select.form-control {
 	border-radius: 5px;
 	text-align: center;
 	vertical-align: middle;
-}
-.ui-menu-item > div {
-	line-height: 1em;
-	padding: 10px 0 0 0;
+	text-decoration: none;
 }
 .ui-menu-item:hover {
 	background-color: #FFF8DC;
 	text-decoration: none;
 }
-
+.ui-menu-item > div {
+	line-height: 1em;
+	padding: 10px 0 0 0;
+}
 /*--------------------------------------------------
  * ui-toolbar, ui-navibar (ul)
 --------------------------------------------------*/

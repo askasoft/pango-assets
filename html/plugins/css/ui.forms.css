@@ -13,7 +13,7 @@
 .ui-checks.vertical > label > input, .ui-radios.vertical > label > input {
 	margin-left: -21px;
 }
-.form-horizontal .ui-checks, .form-horizontal .ui-radios {
+.form-horizontal .ui-checks, .form-horizontal .ui-radios, .row .ui-checks, .row .ui-radios {
 	padding-top: 7px;
 }
 
