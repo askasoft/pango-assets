@@ -27,10 +27,16 @@ select.form-control {
 	width: auto;
 }
 
+/** bootstrap3 */
+.control-label {
+	white-space: pre-wrap;
+}
+
 /** bootstrap4/5 */
 .col-form-label {
 	text-align: right;
 	position: relative;
+	white-space: pre-wrap;
 }
 
 /** disable bootstrap not-allowed cursor */
