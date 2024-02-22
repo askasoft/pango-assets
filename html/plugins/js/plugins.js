@@ -2334,7 +2334,7 @@
 (function($) {
 	"use strict";
 
-	$.fn.textClear = function() {
+	$.fn.textclear = function() {
 		return this.each(function() {
 			var $t = $(this);
 			if ($t.hasClass('ui-has-textclear')) {
@@ -2356,7 +2356,7 @@
 	
 	// ==================
 	$(window).on('load', function () {
-		$('[textclear]').textClear();
+		$('[textclear]').textclear();
 	});
 })(jQuery);
 // jQuery toast plugin created by Kamran Ahmed copyright MIT license 2015 (modified by Frank Wang)
