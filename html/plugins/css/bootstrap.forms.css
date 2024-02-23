@@ -2,6 +2,9 @@ label {
 	font-weight: normal;
 }
 
+.required {
+	padding-right: 15px;
+}
 .required:after {
 	color: #f00;
 	content: '*';
@@ -34,9 +37,18 @@ select.form-control {
 
 /** bootstrap4/5 */
 .col-form-label {
-	text-align: right;
 	position: relative;
 	white-space: pre-wrap;
+}
+@media (min-width: 768px) {
+	.form-horizontal .col-form-label {
+		text-align: right;
+	}
+}
+@media (max-width: 767px) {
+	.form-horizontal .col-form-label {
+		width: auto;
+	}
 }
 
 /** disable bootstrap not-allowed cursor */

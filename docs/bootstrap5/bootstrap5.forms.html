@@ -3,9 +3,9 @@
 
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title>Bootstrap3 Forms</title>
-	<link href="../../html/bootstrap3/css/bootstrap.css" rel="stylesheet" type="text/css" />
-	<link href="../../html/fontawesome4/css/font-awesome.css" rel="stylesheet" type="text/css" />
+	<title>Bootstrap5 Forms</title>
+	<link href="../../html/bootstrap5/css/bootstrap.css" rel="stylesheet" type="text/css" />
+	<link href="../../html/bootstrapicons/bootstrap-icons.css" rel="stylesheet" type="text/css" />
 	<link href="../../html/plugins/css/bootstrap.forms.css" rel="stylesheet" type="text/css" />
 	<link href="../../html/plugins/css/ui.forms.css" rel="stylesheet" type="text/css" />
 	<link href="../../html/plugins/css/jquery.ui.close.css" rel="stylesheet" type="text/css" />
@@ -14,7 +14,7 @@
 
 <body>
 	<div class="container">
-		<h1 style="text-align: center; margin: 20px 0px;">Bootstrap3 Forms</h1>
+		<h1 style="text-align: center; margin: 20px 0px;">Bootstrap5 Forms</h1>
 		<hr>
 
 		<div class="ui-checks text-center">
@@ -24,51 +24,51 @@
 		<hr>
 
 		<form id="form" class="form-horizontal grey lined" method="post">
-			<div class="form-group">
-				<label for="tags_textfield" class="col-md-3 control-label required">Text Field:</label>
+			<div class="row py-3">
+				<label for="tags_textfield" class="col-md-3 col-form-label required">Text Field:</label>
 				<div class="col-md-9">
 					<input type="text" id="tags_textfield" name="textfield" class="form-control" textclear/>
 				</div>
 			</div>
-			<div class="form-group">
-				<label for="tags_textfield" class="col-md-3 control-label required">Number Field:</label>
+			<div class="row py-3">
+				<label for="tags_textfield" class="col-md-3 col-form-label required">Number Field:</label>
 				<div class="col-md-9">
 					<input type="number" id="tags_numberfield" name="numberfield" size="8" class="form-control" textclear/>
 				</div>
 			</div>
-			<div class="form-group">
-				<label for="tags_datefield" class="col-md-3 control-label required">Date Field:</label>
+			<div class="row py-3">
+				<label for="tags_datefield" class="col-md-3 col-form-label required">Date Field:</label>
 				<div class="col-md-9">
 					<input type="date" id="tags_datefield" name="datefield"class="form-control"/>
 				</div>
 			</div>
-			<div class="form-group">
-				<label for="tags_timefield" class="col-md-3 control-label required">Time Field:</label>
+			<div class="row py-3">
+				<label for="tags_timefield" class="col-md-3 col-form-label required">Time Field:</label>
 				<div class="col-md-9">
 					<input type="time" id="tags_timefield" name="timefield" class="form-control"/>
 				</div>
 			</div>
-			<div class="form-group">
-				<label for="tags_datetimefield" class="col-md-3 control-label required">DateTime Field:</label>
+			<div class="row py-3">
+				<label for="tags_datetimefield" class="col-md-3 col-form-label required">DateTime Field:</label>
 				<div class="col-md-9">
 					<input type="datetime-local" id="tags_datetimefield" name="datetimefield" class="form-control"/>
 				</div>
 			</div>
-			<div class="form-group">
-				<label for="tags_monthfield" class="col-md-3 control-label required">Month Field:</label>
+			<div class="row py-3">
+				<label for="tags_monthfield" class="col-md-3 col-form-label required">Month Field:</label>
 				<div class="col-md-9">
 					<input type="month" id="tags_monthfield" name="monthfield" class="form-control"/>
 				</div>
 			</div>
-			<div class="form-group">
-				<label for="tags_rangefield" class="col-md-3 control-label required">Range Field:</label>
+			<div class="row py-3">
+				<label for="tags_rangefield" class="col-md-3 col-form-label required">Range Field:</label>
 				<div class="col-md-9">
-					<input type="range" id="tags_rangefield" name="rangefield" class="form-control"
+					<input type="range" id="tags_rangefield" name="rangefield" class="form-range mt-2"
 						min="0" max="100" value="90" step="10"/>
 				</div>
 			</div>
-			<div class="form-group">
-				<label for="tags_select" class="col-md-3 control-label">Select:</label>
+			<div class="row py-3">
+				<label for="tags_select" class="col-md-3 col-form-label">Select:</label>
 				<div class="col-md-9">
 					<select id="tags_select" name="select" class="form-control">
 						<option selected="true"></option>
@@ -77,8 +77,8 @@
 					</select>
 				</div>
 			</div>
-			<div class="form-group">
-				<label for="tags_radio" class="col-md-3 control-label">Radio List:</label>
+			<div class="row py-3">
+				<label for="tags_radio" class="col-md-3 col-form-label">Radio List:</label>
 				<div class="col-md-9">
 					<div id="tags_radio" class="ui-radios">
 						<label><input type="radio" name="radio" id="tags_radio_1" value="a">aaa</label>
@@ -86,8 +86,8 @@
 					</div>
 				</div>
 			</div>
-			<div class="form-group">
-				<label for="tags_checkboxlist" class="col-md-3 control-label">Checkbox List:</label>
+			<div class="row py-3">
+				<label for="tags_checkboxlist" class="col-md-3 col-form-label">Checkbox List:</label>
 				<div class="col-md-9">
 					<div id="tags_checkboxlist" class="ui-checks">
 						<label><input type="checkbox" name="checkboxlist" id="tags_checkboxlist_1" value="a">aaa</label>
@@ -95,32 +95,26 @@
 					</div>
 				</div>
 			</div>
-			<div class="form-group">
-				<label for="tags_checkbox" class="col-md-3 control-label">Checkbox:</label>
-				<div class="col-md-9">
-					<label class="checkbox-inline"><input type="checkbox" id="tags_checkbox" name="checkbox" value="true">label</label>
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="tags_file" class="col-md-3 control-label">File:</label>
+			<div class="row py-3">
+				<label for="tags_file" class="col-md-3 col-form-label">File:</label>
 				<div class="col-md-9"><input type="file" id="tags_file" name="file" class="form-control"></div>
 			</div>
-			<div class="form-group">
-				<label for="tags_textarea" class="col-md-3 control-label">Textarea:</label>
+			<div class="row py-3">
+				<label for="tags_textarea" class="col-md-3 col-form-label">Textarea:</label>
 				<div class="col-md-9">
 					<textarea id="tags_textarea" name="textarea" class="p-textarea form-control" maxlength="100" autosize textclear enterfire></textarea>
 				</div>
 			</div>
-			<div class="form-group">
-				<div class="col-md-offset-3 col-md-9">
-					<button type="submit" id="tags_0" class="btn btn-primary" value="Submit"><i class="fa fa-upload"></i> Submit</button>
-					<button type="reset" id="tags_1" class="btn btn-default" value="Reset"><i class="fa fa-undo"></i> Reset</button>
+			<div class="row py-3">
+				<div class="offset-md-3 col-md-9">
+					<button type="submit" id="tags_0" class="btn btn-primary" value="Submit"><i class="bi bi-upload"></i> Submit</button>
+					<button type="reset" id="tags_1" class="btn btn-secondary" value="Reset"><i class="bi bi-arrow-counterclockwise"></i> Reset</button>
 				</div>
 			</div>
 		</form>
 	</div>
-	<script src="../../html/jquery/jquery-1.12.4.min.js"></script>
-	<script src="../../html/bootstrap3/js/bootstrap.js"></script>
+	<script src="../../html/jquery/jquery-3.6.0.js"></script>
+	<script src="../../html/bootstrap5/js/bootstrap.bundle.js"></script>
 	<script src="../../html/plugins/js/jquery.ui.textarea-autosize.js"></script>
 	<script src="../../html/plugins/js/jquery.ui.textarea-enterfire.js"></script>
 	<script src="../../html/plugins/js/jquery.ui.textclear.js"></script>
