@@ -20,3 +20,7 @@ input[size].ui-has-textclear + .ui-textclear,
 	right: auto;
 }
 
+.ui-has-textclear:disabled + .ui-textclear.ui-close {
+	display: none;
+}
+

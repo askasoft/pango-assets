@@ -4,13 +4,11 @@
 	height: 16px;
 	opacity: 0.3;
 }
-
 .ui-close:hover {
 	opacity: 1;
 }
 
-.ui-close:before,
-.ui-close:after {
+.ui-close:before, .ui-close:after {
 	position: absolute;
 	left: 50%;
 	top: 50%;
@@ -21,6 +19,12 @@
 	width: 2px;
 	background-color: #333;
 }
+.ui-close:before {
+	transform: rotate(45deg);
+}
+.ui-close:after {
+	transform: rotate(-45deg);
+}
 
 .ui-close.circle {
 	background-color: #fff;
@@ -28,13 +32,7 @@
 	border-radius: 50%;
 }
 
-.ui-close:before {
-	transform: rotate(45deg);
-}
-
-.ui-close:after {
-	transform: rotate(-45deg);
-}fieldset.ui-fieldset {
+fieldset.ui-fieldset {
 	border: solid 1px #ccc;
 	margin: 10px 0;
 	padding: 10px;
@@ -755,6 +753,10 @@ input[size].ui-has-textclear + .ui-textclear,
 .input-group > input.ui-has-textclear + .ui-textclear {
 	margin-left: -22px;
 	right: auto;
+}
+
+.ui-has-textclear:disabled + .ui-textclear.ui-close {
+	display: none;
 }
 
 /**
