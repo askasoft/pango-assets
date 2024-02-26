@@ -8,13 +8,30 @@
 		if (o != v) {
 			this.trigger('change');
 		}
+		return this;
 	};
 
-	$.fn.values = function(vs, trigger) {
+	$.fn.formClear = function() {
+		this.find('textarea, select').val('');
+		this.find('input').each(function() {
+			var $i = $(this);
+			switch ($i.attr('type')) {
+			case 'checkbox':
+			case 'radio':
+				$i.prop('checked', false);
+				break;
+			default:
+				$i.val('');
+			}
+		});
+		return this;
+	};
+
+	$.fn.formValues = function(vs, trigger) {
 		if (vs) {
 			for (var n in vs) {
 				var v = vs[n];
-				this.find(':input[name="' + n + '"]').each(function() {
+				this.find(':input').filter(function() { return this.name == n; }).each(function() {
 					var $t = $(this);
 					switch ($t.attr('type')) {
 					case 'button':

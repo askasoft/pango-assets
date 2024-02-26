@@ -181,14 +181,14 @@
 			$('#changed').empty();
 		});
 		$('#getvals').click(function() {
-			var o = $('form').values();
+			var o = $('form').formValues();
 			var s = JSON.stringify(o, null, 4);
 			$('#values').val(s);
 		});
 		$('#setvals').click(function() {
 			var s = $('#values').val();
 			var o = JSON.parse(s);
-			$('form').values(o, true);
+			$('form').formValues(o, true);
 		});
 	});
 </script>
