@@ -6,8 +6,9 @@
 		$t.css('height', 'auto').height($t.prop('scrollHeight'));
 	}
 
+	var evts = 'input.autosize change.autosize';
 	$.fn.autosize = function() {
-		return $(this).off('input.autosize').on('input.autosize', _autosize).css({
+		return $(this).off(evts).on(evts, _autosize).css({
 			'overflow-y': 'hidden',
 			'resize': 'none'
 		}).trigger('input');
