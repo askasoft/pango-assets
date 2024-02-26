@@ -63,8 +63,7 @@
 }
 
 .ui-nice-select.disabled {
-	border-color: #ededed;
-	color: #999;
+	background-color: #eee;
 	pointer-events: none;
 }
 .ui-nice-select.disabled:after {
