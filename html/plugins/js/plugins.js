@@ -1426,41 +1426,83 @@
 	}
 
 	function __dropdown_option_click() {
-		var $option = $(this);
+		var $li = $(this);
 
-		if ($option.hasClass('selected')) {
+		if ($li.hasClass('selected')) {
 			return;
 		}
 
-		var $dropdown = $option.closest('.ui-nice-select'),
+		var $dropdown = $li.closest('.ui-nice-select'),
 			$select = $dropdown.prev('select'),
-			val = $option.data('value'),
-			text = $option.data('display') || $option.text();
+			val = $li.attr('value');
 
 		if ($dropdown.hasClass('multiple')) {
-			$dropdown.append($('<span>', { 'class': 'current', 'data-value': val}).text(text));
-			$select.find('option').filter(function() { return this.value == val; }).attr('selected', 'selected');
-		} else {
-			$dropdown.find('.selected').removeClass('selected');
-	
-			$dropdown.find('.current').text(text);
-	
-			$select.val(val).trigger('change');
+			var vs = $select.val() || [];
+			vs.push(val);
+			val = vs;
 		}
-
-		$option.addClass('selected');
+		$select.val(val).trigger('change');
 	}
 
 	function __dropdown_current_click() {
-		var $t = $(this),
-			val = $t.data('value'),
+		var $t = $(this), val = $t.attr('value'),
 			$dropdown = $t.closest('.ui-nice-select'),
 			$select = $dropdown.prev('select');
 		
-		$dropdown.find('li').filter(function() { return $(this).data('value') == val; }).removeClass('selected');
+		$dropdown.find('li').filter(function() { return $(this).attr('value') == val; }).removeClass('selected');
 		$select.find('option').filter(function() { return this.value == val; }).removeAttr('selected');
 		$t.remove();
 		return false;
+	}
+
+	function __select_change() {
+		change.apply($(this));
+	}
+
+	function change() {
+		this.each(function() {
+			var $select = $(this), vs = $select.val();
+			var $dropdown = $select.next('.ui-nice-select');
+
+			var eq = $.isArray(vs)
+				? function(v, a) {
+					for (var i = 0; i < a.length; i++) {
+						if (v == a[i]) {
+							return true;
+						}
+					}
+					return false;
+				}
+				: function(v, a) {
+					return v == a;
+				};
+
+			$dropdown.find('.current').remove();
+			$dropdown.find('.selected').removeClass('selected');
+			$dropdown.find('li')
+				.filter(function() { return eq($(this).attr('value'), vs); })
+				.addClass('selected')
+				.each(function() {
+					var $t = $(this);
+					$dropdown.append($('<span>', { 'class': 'current', 'value': $t.attr('value')}).text($t.attr('display') || $t.text()));
+				});
+		});
+	}
+
+	function update() {
+		this.each(function() {
+			var $select = $(this);
+			var $dropdown = $select.next('.ui-nice-select');
+
+			if ($dropdown.length) {
+				$dropdown.remove();
+				create_nice_select($select);
+
+				if ($dropdown.hasClass('open')) {
+					$select.next().trigger('click');
+				}
+			}
+		});
 	}
 
 	function update() {
@@ -1486,7 +1528,7 @@
 
 			if ($dropdown.length) {
 				$dropdown.remove();
-				$select.css('display', '');
+				$select.css('display', '').off('.nice_select');
 			}
 		});
 		if ($('.ui-nice-select').length == 0) {
@@ -1516,16 +1558,16 @@
 				.append($ul);
 
 		$selected.each(function() {
-			var $t = $(this);
-			$dropdown.append($('<span>', { 'class': 'current', 'data-value': $t.val()}).text($t.data('display') || $t.text()));
+			var $op = $(this);
+			$dropdown.append($('<span>', { 'class': 'current', 'value': $op.val()}).text($op.attr('display') || $op.text()));
 		});
 
 		$options.each(function() {
 			var $option = $(this);
 
 			$ul.append($('<li></li>')
-				.attr('data-value', $option.val())
-				.attr('data-display', ($option.data('display') || null))
+				.attr('value', $option.val())
+				.attr('display', ($option.attr('display') || ''))
 				.addClass(
 					($option.is(':selected') ? ' selected' : '') +
 					($option.is(':disabled') ? ' disabled' : ''))
@@ -1549,6 +1591,8 @@
 		}
 
 		$select.after($dropdown);
+
+		$select.on('change.nice_select', __select_change);
 	}
 
 	var api = {
