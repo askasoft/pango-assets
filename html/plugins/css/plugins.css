@@ -243,6 +243,9 @@ fieldset.ui-fieldset.collapsed>legend::before {
 	z-index: 2900;
 	zoom: 1;
 }
+.ui-loadmask-mask.fullscreen {
+	position: fixed;
+}
 
 .ui-loadmask {
 	display: table-cell;
@@ -254,6 +257,9 @@ fieldset.ui-fieldset.collapsed>legend::before {
 	transform: translate(-50%, -50%);
 	-webkit-transform: translate(-50%, -50%);
 	z-index: 2901;
+}
+.ui-loadmask.fullscreen {
+	position: fixed;
 }
 
 .ui-loadmask-load {

@@ -1243,7 +1243,9 @@
 			_clearTimeout($el);
 		}
 
-		var $lm = $('<div class="ui-loadmask">');
+		var fs = ($el.prop('tagName') == 'BODY' ? ' fullscreen' : '');
+
+		var $lm = $('<div>', { 'class': "ui-loadmask" + fs });
 		if (c.cssClass) {
 			$lm.addClass(c.cssClass);
 		}
@@ -1272,7 +1274,8 @@
 			$el.addClass("ui-loadmasked-relative");
 		}
 		if (c.mask) {
-			$el.append($('<div class="ui-loadmask-mask"></div>'));
+			var $m = $('<div>', { 'class': "ui-loadmask-mask" + fs });
+			$el.append($m);
 		}
 
 		$el.append($lm).addClass("ui-loadmasked");
@@ -1322,8 +1325,7 @@
 				$el.data("_mask_timeout", setTimeout(function() {
 					doMask($el, c);
 				}, c.delay));
-			}
-			else {
+			} else {
 				doMask($el, c);
 			}
 		});
