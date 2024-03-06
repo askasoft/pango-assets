@@ -388,6 +388,9 @@ fieldset.ui-fieldset.collapsed>legend::before {
 	content: "\00d7";
 	padding: 0 0 0 5px;
 }
+.ui-nice-select.multiple.disabled .current:after {
+	display: none;
+}
 
 .ui-nice-select > ul {
 	background-color: #fff;
