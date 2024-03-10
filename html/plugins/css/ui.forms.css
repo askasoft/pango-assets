@@ -17,3 +17,25 @@
 	padding-top: 7px;
 }
 
+/** form view */
+.ui-view > .row {
+	padding: 10px 0;
+}
+.ui-view.lined > .row {
+	border-bottom: 1px solid #ccc;
+}
+.ui-view.lined > .row:last-of-type {
+	border-bottom: 0;
+}
+.ui-view > .row > .ui-label {
+	text-align: right;
+}
+.ui-view > .row > .ui-value {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+.ui-view.grey {
+	color: #333;
+	background-color: #f9f9f9;
+	padding: 15px 30px;
+}

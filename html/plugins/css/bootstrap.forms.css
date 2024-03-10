@@ -31,8 +31,9 @@ select.form-control {
 }
 
 /** bootstrap3 */
-.control-label {
+.control-label, .control-value {
 	white-space: pre-wrap;
+	word-break: break-all;
 }
 
 /** bootstrap4/5 */
@@ -51,6 +52,12 @@ select.form-control {
 	}
 }
 
+/** view only control value */
+.control-value, .col-form-value {
+	padding-top: 7px;
+	padding-bottom: 7px;
+}
+
 /** disable bootstrap not-allowed cursor */
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
 	cursor: auto;
@@ -60,7 +67,7 @@ select.form-control {
 form.grey {
 	color: #333;
 	background-color: #f9f9f9;
-	padding: 10px;
+	padding: 15px;
 }
 form.lined .form-group, form.lined .row {
 	border-bottom: 1px solid #ccc;

@@ -25,15 +25,22 @@
 
 		<form id="form" class="form-horizontal grey lined" method="post">
 			<div class="row py-3">
+				<label for="tags_viewfield" class="col-md-3 col-form-label">View Field:</label>
+				<div class="col-md-9 col-form-value">Earth is the third planet from the Sun and the only astronomical object known to harbor life.
+This is enabled by Earth being a water world, the only one in the Solar System sustaining liquid surface water.
+Almost all of Earth's water is contained in its global ocean, covering 70.8% of Earth's crust.
+The remaining 29.2% of Earth's crust is land, most of which is located in the form of continental landmasses within one hemisphere, Earth's land hemisphere.</div>
+			</div>
+			<div class="row py-3">
 				<label for="tags_textfield" class="col-md-3 col-form-label required">Text Field:</label>
 				<div class="col-md-9">
 					<input type="text" id="tags_textfield" name="textfield" class="form-control" textclear/>
 				</div>
 			</div>
 			<div class="row py-3">
-				<label for="tags_textfieldd" class="col-md-3 col-form-label required">Disabled Field:</label>
+				<label for="tags_disfield" class="col-md-3 col-form-label">Disabled Field:</label>
 				<div class="col-md-9">
-					<input type="text" id="tags_textfieldd" name="textfieldd" class="form-control" disabled textclear value="test"/>
+					<input type="text" id="tags_disfieldd" name="disfieldd" class="form-control" disabled textclear value="test"/>
 				</div>
 			</div>
 			<div class="row py-3">
@@ -84,20 +91,38 @@
 				</div>
 			</div>
 			<div class="row py-3">
-				<label for="tags_radio" class="col-md-3 col-form-label">Radio List:</label>
+				<label for="tags_hradios" class="col-md-3 col-form-label">Horizontal Radio List:</label>
 				<div class="col-md-9">
-					<div id="tags_radio" class="ui-radios">
-						<label><input type="radio" name="radio" id="tags_radio_1" value="a">aaa</label>
-						<label><input type="radio" name="radio" id="tags_radio_2" value="b">bbb</label>
+					<div id="tags_hradios" class="ui-radios">
+						<label><input type="radio" name="hradio" id="tags_hradio_1" value="a">Abc</label>
+						<label><input type="radio" name="hradio" id="tags_hradio_2" value="b">Xyz</label>
 					</div>
 				</div>
 			</div>
 			<div class="row py-3">
-				<label for="tags_checkboxlist" class="col-md-3 col-form-label">Checkbox List:</label>
+				<label for="tags_vradios" class="col-md-3 col-form-label">Vertical Radio List:</label>
 				<div class="col-md-9">
-					<div id="tags_checkboxlist" class="ui-checks">
-						<label><input type="checkbox" name="checkboxlist" id="tags_checkboxlist_1" value="a">aaa</label>
-						<label><input type="checkbox" name="checkboxlist" id="tags_checkboxlist_2" value="b">bbb</label>
+					<div id="tags_vradios" class="ui-radios vertical">
+						<label><input type="radio" name="vradio" id="tags_vradio_1" value="a">Abc</label>
+						<label><input type="radio" name="vradio" id="tags_vradio_2" value="b">Xyz</label>
+					</div>
+				</div>
+			</div>
+			<div class="row py-3">
+				<label for="tags_hcheckboxlist" class="col-md-3 col-form-label">Horizontal Checkbox List:</label>
+				<div class="col-md-9">
+					<div id="tags_hcheckboxlist" class="ui-checks">
+						<label><input type="checkbox" name="hcheckboxlist" id="tags_hcheckboxlist_1" value="a">Abc</label>
+						<label><input type="checkbox" name="hcheckboxlist" id="tags_hcheckboxlist_2" value="b">Xyz</label>
+					</div>
+				</div>
+			</div>
+			<div class="row py-3">
+				<label for="tags_vcheckboxlist" class="col-md-3 col-form-label">Vertical Checkbox List:</label>
+				<div class="col-md-9">
+					<div id="tags_vcheckboxlist" class="ui-checks vertical">
+						<label><input type="checkbox" name="vcheckboxlist" id="tags_vcheckboxlist_1" value="a">Abc</label>
+						<label><input type="checkbox" name="vcheckboxlist" id="tags_vcheckboxlist_2" value="b">Xyz</label>
 					</div>
 				</div>
 			</div>

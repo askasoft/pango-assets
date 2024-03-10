@@ -681,7 +681,7 @@ fieldset.ui-fieldset.collapsed>legend::before {
 }
 
 .ui-popup-header {
-	padding: 15px;
+	padding: 20px;
 	border-bottom: 1px solid #e5e5e5;
 }
 .ui-popup-header h1, .ui-popup-header h2, .ui-popup-header h3, .ui-popup-header h4, .ui-popup-header h5, .ui-popup-header h6 {
@@ -690,10 +690,10 @@ fieldset.ui-fieldset.collapsed>legend::before {
 
 .ui-popup-body {
 	position: relative;
-	padding: 15px;
+	padding: 20px;
 }
 .ui-popup-footer {
-	padding: 15px;
+	padding: 20px;
 	text-align: center;
 	border-top: 1px solid #e5e5e5;
 }
@@ -1189,8 +1189,9 @@ select.form-control {
 }
 
 /** bootstrap3 */
-.control-label {
+.control-label, .control-value {
 	white-space: pre-wrap;
+	word-break: break-all;
 }
 
 /** bootstrap4/5 */
@@ -1209,6 +1210,12 @@ select.form-control {
 	}
 }
 
+/** view only control value */
+.control-value, .col-form-value {
+	padding-top: 7px;
+	padding-bottom: 7px;
+}
+
 /** disable bootstrap not-allowed cursor */
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
 	cursor: auto;
@@ -1218,7 +1225,7 @@ select.form-control {
 form.grey {
 	color: #333;
 	background-color: #f9f9f9;
-	padding: 10px;
+	padding: 15px;
 }
 form.lined .form-group, form.lined .row {
 	border-bottom: 1px solid #ccc;
@@ -1502,6 +1509,28 @@ form.lined .form-group:last-of-type, form.lined .row:last-of-type {
 	padding-top: 7px;
 }
 
+/** form view */
+.ui-view > .row {
+	padding: 10px 0;
+}
+.ui-view.lined > .row {
+	border-bottom: 1px solid #ccc;
+}
+.ui-view.lined > .row:last-of-type {
+	border-bottom: 0;
+}
+.ui-view > .row > .ui-label {
+	text-align: right;
+}
+.ui-view > .row > .ui-value {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+.ui-view.grey {
+	color: #333;
+	background-color: #f9f9f9;
+	padding: 15px 30px;
+}
 /*--------------------------------------------------
  * headline
 --------------------------------------------------*/
