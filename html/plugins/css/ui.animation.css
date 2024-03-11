@@ -1,0 +1,21 @@
+/* blink */
+.ui-blink-1s2 {
+	animation: ui-blink-frames 1s 2;
+}
+.ui-blink-2s2 {
+	animation: ui-blink-frames 2s 2;
+}
+
+@keyframes ui-blink-frames {
+	0%   { background-color: #fff; }
+	10%  { background-color: #eee; }
+	20%  { background-color: #ddd; }
+	30%  { background-color: #ccc; }
+	40%  { background-color: #bbb; }
+	50%  { background-color: #aaa; }
+	60%  { background-color: #bbb; }
+	70%  { background-color: #ccc; }
+	80%  { background-color: #ddd; }
+	90%  { background-color: #eee; }
+	100% { background-color: #fff; }
+}
