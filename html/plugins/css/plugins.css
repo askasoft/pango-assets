@@ -681,21 +681,23 @@ fieldset.ui-fieldset.collapsed>legend::before {
 }
 
 .ui-popup-header {
-	padding: 20px;
 	border-bottom: 1px solid #e5e5e5;
+	padding: 20px;
+	position: relative;
 }
 .ui-popup-header h1, .ui-popup-header h2, .ui-popup-header h3, .ui-popup-header h4, .ui-popup-header h5, .ui-popup-header h6 {
 	margin: 0;
 }
 
 .ui-popup-body {
-	position: relative;
 	padding: 20px;
+	position: relative;
 }
 .ui-popup-footer {
-	padding: 20px;
-	text-align: center;
 	border-top: 1px solid #e5e5e5;
+	padding: 20px;
+	position: relative;
+	text-align: center;
 }
 div.ui-simple-color-picker {
 	background-color: #fff;
@@ -749,16 +751,11 @@ div.ui-simple-color-picker ul li {
 }
 
 .ui-has-textclear {
+	display: inline-block;
 	padding-right: 24px;
 }
-
 .ui-has-textclear + .ui-textclear {
 	top: 8px;
-	right: 22px;
-}
-
-input[size].ui-has-textclear + .ui-textclear,
-.input-group > input.ui-has-textclear + .ui-textclear {
 	margin-left: -22px;
 	right: auto;
 }
@@ -1180,15 +1177,15 @@ label {
 	font-family: Consolas, monospace;
 }
 
+.form-control {
+	display: inline-block;
+}
+
 input.form-control[size],
 input.form-control[type="month"],
 input.form-control[type="date"],
 input.form-control[type="time"],
-input.form-control[type="datetime-local"] {
-	display: inline-block;
-	width: auto;
-}
-
+input.form-control[type="datetime-local"],
 select.form-control {
 	width: auto;
 }
@@ -1236,9 +1233,6 @@ form.lined .form-group, form.lined .row {
 	border-bottom: 1px solid #ccc;
 	margin: 0;
 	padding: 7px;
-}
-form .row > div {
-	position: relative;
 }
 form.lined .form-group:last-of-type, form.lined .row:last-of-type {
 	border-bottom: 0;
