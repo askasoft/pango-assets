@@ -653,7 +653,7 @@
 (function($) {
 	"use strict";
 
-	$.fn.checkAll = function(target) {
+	$.fn.checkall = function(target) {
 		$(this).each(function() {
 			var $ca = $(this), $ct = $(target || $ca.attr('checkall'));
 			$ca.change(function(evt, sup) {
@@ -679,13 +679,13 @@
 
 	// ==================
 	$(window).on('load', function() {
-		$('[checkall]').checkAll();
+		$('[checkall]').checkall();
 	});
 })(jQuery);
 (function($) {
 	"use strict";
 
-	$.fn.enableBy = function(target) {
+	$.fn.enableby = function(target) {
 		$(this).each(function() {
 			var $a = $(this), $cs = $(target || $a.attr('enableby'));
 			if ($cs.length) {
@@ -701,7 +701,7 @@
 
 	// ==================
 	$(window).on('load', function() {
-		$('[enableby]').enableBy();
+		$('[enableby]').enableby();
 	});
 })(jQuery);
 (function($) {

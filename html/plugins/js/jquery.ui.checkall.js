@@ -1,7 +1,7 @@
 (function($) {
 	"use strict";
 
-	$.fn.checkAll = function(target) {
+	$.fn.checkall = function(target) {
 		$(this).each(function() {
 			var $ca = $(this), $ct = $(target || $ca.attr('checkall'));
 			$ca.change(function(evt, sup) {
@@ -27,6 +27,6 @@
 
 	// ==================
 	$(window).on('load', function() {
-		$('[checkall]').checkAll();
+		$('[checkall]').checkall();
 	});
 })(jQuery);

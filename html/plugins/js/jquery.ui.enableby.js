@@ -1,7 +1,7 @@
 (function($) {
 	"use strict";
 
-	$.fn.enableBy = function(target) {
+	$.fn.enableby = function(target) {
 		$(this).each(function() {
 			var $a = $(this), $cs = $(target || $a.attr('enableby'));
 			if ($cs.length) {
@@ -17,6 +17,6 @@
 
 	// ==================
 	$(window).on('load', function() {
-		$('[enableby]').enableBy();
+		$('[enableby]').enableby();
 	});
 })(jQuery);
