@@ -27,7 +27,7 @@
 
 		var sm = os.html ? 'html' : 'text';
 		if (os.heading) {
-			$t.append($('<h2 class="ui-toast-heading">')[sm](os.heading));
+			$t.append($('<h4 class="ui-toast-heading">')[sm](os.heading));
 		}
 
 		if ($.isArray(os.text)) {
