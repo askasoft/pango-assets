@@ -6,16 +6,11 @@
 }
 
 .ui-has-textclear {
+	display: inline-block;
 	padding-right: 24px;
 }
-
 .ui-has-textclear + .ui-textclear {
 	top: 8px;
-	right: 22px;
-}
-
-input[size].ui-has-textclear + .ui-textclear,
-.input-group > input.ui-has-textclear + .ui-textclear {
 	margin-left: -22px;
 	right: auto;
 }

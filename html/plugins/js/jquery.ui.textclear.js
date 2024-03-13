@@ -17,7 +17,7 @@
 				}
 				$t.focus();
 				return false;
-			});
+			}).parent().css('position', 'relative');
 		});
 	};
 	
