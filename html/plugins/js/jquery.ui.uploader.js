@@ -59,7 +59,7 @@
 
 		var $fit = $('<div>', { 'class': 'ui-uploader-item' }).data('file', f);
 
-		$('<input', { type: 'hidden', name: uc.name, 'class': 'ui-uploader-fid' }).appendTo($fit);
+		$('<input>', { type: 'hidden', name: uc.name, 'class': 'ui-uploader-fid' }).appendTo($fit);
 		$('<i>', { 'class': 'ui-close' }).click(_item_on_remove).appendTo($fit);
 
 		$('<span>', { 'class': 'ui-uploader-info' })
@@ -342,15 +342,15 @@
 			// show image download view
 			dnloadView: false,
 
-			// fontawesome4 css
+			// fontawesome4/5/6 css
 			cssIcons: {
-				file: 'fa fa-file-o',
-				image: 'fa fa-file-image-o',
-				audio: 'fa fa-file-audio-o',
-				video: 'fa fa-file-video-o',
-				error: 'fa fa-exclamation-circle',
-				waiting: 'fa fa-refresh',
-				loading: 'fa fa-refresh fa-spin'
+				file: 'fa fa-file-o far fa-file',
+				image: 'fa fa-file-image-o far fa-file-image',
+				audio: 'fa fa-file-audio-o far fa-file-audio',
+				video: 'fa fa-file-video-o far fa-file-video',
+				error: 'fa fa-exclamation-circle fas fa-circle-exclamation',
+				waiting: 'fa fas fa-refresh',
+				loading: 'fa fas fa-refresh fa-spin'
 			},
 
 			pgbarFgcolor: '#ccc',
