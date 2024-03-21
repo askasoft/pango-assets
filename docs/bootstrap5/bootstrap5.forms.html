@@ -5,11 +5,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title>Bootstrap5 Forms</title>
 	<link href="../../html/bootstrap5/css/bootstrap.css" rel="stylesheet" type="text/css" />
-	<link href="../../html/bootstrapicons/bootstrap-icons.css" rel="stylesheet" type="text/css" />
+	<link href="../../html/fontawesome6/css/all.css" rel="stylesheet" type="text/css" />
 	<link href="../../html/plugins/css/bootstrap.forms.css" rel="stylesheet" type="text/css" />
 	<link href="../../html/plugins/css/ui.forms.css" rel="stylesheet" type="text/css" />
 	<link href="../../html/plugins/css/jquery.ui.close.css" rel="stylesheet" type="text/css" />
 	<link href="../../html/plugins/css/jquery.ui.textclear.css" rel="stylesheet" type="text/css" />
+	<link href="../../html/plugins/css/jquery.ui.fieldset.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -50,29 +51,42 @@ The remaining 29.2% of Earth's crust is land, most of which is located in the fo
 				</div>
 			</div>
 			<div class="row py-3">
-				<label for="tags_datefield" class="col-md-3 col-form-label required">Date Field:</label>
+				<label for="tags_inputgroup" class="col-md-3 col-form-label required">Input Group:</label>
 				<div class="col-md-9">
-					<input type="date" id="tags_datefield" name="datefield"class="form-control"/>
+					<div class="input-group" style="width: 400px;">
+						<span class="input-group-text">Search</span>
+						<input type="text" class="form-control" name="k" value="" textclear>
+						<button type="submit" class="btn btn-outline-secondary"><i class="fas fa-search"></i> </button>
+					</div>
 				</div>
 			</div>
-			<div class="row py-3">
-				<label for="tags_timefield" class="col-md-3 col-form-label required">Time Field:</label>
-				<div class="col-md-9">
-					<input type="time" id="tags_timefield" name="timefield" class="form-control"/>
+			<fieldset data-spy="fieldset">
+				<legend>Date Time Fields:</legend>
+				<div class="row py-3">
+					<label for="tags_datefield" class="col-md-3 col-form-label required">Date Field:</label>
+					<div class="col-md-9">
+						<input type="date" id="tags_datefield" name="datefield"class="form-control"/>
+					</div>
 				</div>
-			</div>
-			<div class="row py-3">
-				<label for="tags_datetimefield" class="col-md-3 col-form-label required">DateTime Field:</label>
-				<div class="col-md-9">
-					<input type="datetime-local" id="tags_datetimefield" name="datetimefield" class="form-control"/>
+				<div class="row py-3">
+					<label for="tags_timefield" class="col-md-3 col-form-label required">Time Field:</label>
+					<div class="col-md-9">
+						<input type="time" id="tags_timefield" name="timefield" class="form-control"/>
+					</div>
 				</div>
-			</div>
-			<div class="row py-3">
-				<label for="tags_monthfield" class="col-md-3 col-form-label required">Month Field:</label>
-				<div class="col-md-9">
-					<input type="month" id="tags_monthfield" name="monthfield" class="form-control"/>
+				<div class="row py-3">
+					<label for="tags_datetimefield" class="col-md-3 col-form-label required">DateTime Field:</label>
+					<div class="col-md-9">
+						<input type="datetime-local" id="tags_datetimefield" name="datetimefield" class="form-control"/>
+					</div>
 				</div>
-			</div>
+				<div class="row py-3">
+					<label for="tags_monthfield" class="col-md-3 col-form-label required">Month Field:</label>
+					<div class="col-md-9">
+						<input type="month" id="tags_monthfield" name="monthfield" class="form-control"/>
+					</div>
+				</div>
+			</fieldset>
 			<div class="row py-3">
 				<label for="tags_rangefield" class="col-md-3 col-form-label required">Range Field:</label>
 				<div class="col-md-9">
@@ -83,7 +97,7 @@ The remaining 29.2% of Earth's crust is land, most of which is located in the fo
 			<div class="row py-3">
 				<label for="tags_select" class="col-md-3 col-form-label">Select:</label>
 				<div class="col-md-9">
-					<select id="tags_select" name="select" class="form-control">
+					<select id="tags_select" name="select" class="form-select">
 						<option selected="true"></option>
 						<option value="a">aaa</option>
 						<option value="b">bbb</option>
@@ -144,8 +158,8 @@ The remaining 29.2% of Earth's crust is land, most of which is located in the fo
 			</div>
 			<div class="row py-3">
 				<div class="offset-md-3 col-md-9">
-					<button type="submit" id="tags_0" class="btn btn-primary" value="Submit"><i class="bi bi-upload"></i> Submit</button>
-					<button type="reset" id="tags_1" class="btn btn-secondary" value="Reset"><i class="bi bi-arrow-counterclockwise"></i> Reset</button>
+					<button type="submit" id="tags_0" class="btn btn-primary" value="Submit"><i class="fas fa-upload"></i> Submit</button>
+					<button type="reset" id="tags_1" class="btn btn-secondary" value="Reset"><i class="fas fa-rotate-left"></i> Reset</button>
 				</div>
 			</div>
 		</form>
@@ -155,6 +169,7 @@ The remaining 29.2% of Earth's crust is land, most of which is located in the fo
 	<script src="../../html/plugins/js/jquery.ui.textarea-autosize.js"></script>
 	<script src="../../html/plugins/js/jquery.ui.textarea-enterfire.js"></script>
 	<script src="../../html/plugins/js/jquery.ui.textclear.js"></script>
+	<script src="../../html/plugins/js/jquery.ui.fieldset.js"></script>
 	<script>
 		$(function() {
 			$('#check_grey').click(function() {

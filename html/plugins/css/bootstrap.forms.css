@@ -37,6 +37,9 @@ select.form-control {
 }
 
 /** bootstrap4/5 */
+.hidden {
+	display: none !important;
+}
 .col-form-label {
 	position: relative;
 	white-space: pre-wrap;
@@ -65,10 +68,13 @@ select.form-control {
 
 /** bootstrap form layout */
 form.grey {
-	color: #333;
 	background-color: #f9f9f9;
 	padding: 15px;
 }
+[data-bs-theme=dark] form.grey {
+	background-color: #292c2f;
+}
+
 form.lined .form-group, form.lined .row {
 	border-bottom: 1px solid #ccc;
 	margin: 0;

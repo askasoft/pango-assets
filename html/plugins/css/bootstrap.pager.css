@@ -12,6 +12,7 @@
 }
 .ui-pager > .pagination {
 	margin: 0;
+	justify-content: center;
 }
 .ui-pager > .pagination > li.limits > select {
 	display: inline;

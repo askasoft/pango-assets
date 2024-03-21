@@ -5,12 +5,18 @@
 .ui-sidenavi > .panel > .panel-heading, .ui-sidenavi > .card > .card-header {
 	position: relative;
 }
-.ui-sidenavi > .panel > .panel-heading > i, .ui-sidenavi-card .card > .card-header > i {
+.ui-sidenavi > .panel > .panel-heading > i, .ui-sidenavi > .card > .card-header > i {
 	font-size: 120%;
 }
 .ui-sidenavi > .panel > .panel-body, .ui-sidenavi > .card > .card-body {
 	padding: 2px 5px;
 }
+
+.ui-sidenavi > .panel > .panel-heading > span, .ui-sidenavi .card-header > span,
+.ui-sidenavi ul.nav > li > a > span {
+	margin: 0 0 0 8px;
+}
+
 .ui-sidenavi ul.nav > li {
 	border-bottom: solid 1px #ccc;
 }
@@ -18,7 +24,9 @@
 	border-bottom: none;
 }
 .ui-sidenavi ul.nav > li > a {
-	padding: 5px 0.5em;
+	align-items: center;
+	display: flex;
+	padding: 5px 8px;
 }
 .ui-sidenavi ul.nav > li > a:focus, .ui-sidenavi ul.nav > li > a:hover {
 	background-color: #eee;

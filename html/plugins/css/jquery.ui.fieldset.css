@@ -4,16 +4,17 @@ fieldset.ui-fieldset {
 	padding: 10px;
 }
 
-fieldset.ui-fieldset>legend {
+fieldset.ui-fieldset > legend {
 	border: 0;
 	cursor: pointer;
+	float: none;
 	font-size: inherit;
 	margin: 0;
 	padding: 0 10px 0 25px;
 	position: relative;
 	width: auto;
 }
-fieldset.ui-fieldset>legend::before {
+fieldset.ui-fieldset > legend::before {
 	border-top: 2px solid #999;
 	border-right: 2px solid #999;
 	content: "";
@@ -33,9 +34,6 @@ fieldset.ui-fieldset>legend::before {
 	-webkit-transition: all 0.15s ease-in-out;
 	transition: all 0.15s ease-in-out;
 }
-fieldset.ui-fieldset>:not(legend) {
-	display: block;
-}
 
 fieldset.ui-fieldset.collapsed {
 	border-color: #ccc transparent transparent transparent;
@@ -43,7 +41,7 @@ fieldset.ui-fieldset.collapsed {
 	-webkit-transition: all 0.4s;
 	transition: all 0.4s;
 }
-fieldset.ui-fieldset.collapsed>legend::before {
+fieldset.ui-fieldset.collapsed > legend::before {
 	margin-top: -2px;
 	-webkit-transform: rotate(45deg);
 	-ms-transform: rotate(45deg);

@@ -10,6 +10,7 @@
 	<link href="../../html/plugins/css/ui.forms.css" rel="stylesheet" type="text/css" />
 	<link href="../../html/plugins/css/jquery.ui.close.css" rel="stylesheet" type="text/css" />
 	<link href="../../html/plugins/css/jquery.ui.textclear.css" rel="stylesheet" type="text/css" />
+	<link href="../../html/plugins/css/jquery.ui.fieldset.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -50,29 +51,53 @@ The remaining 29.2% of Earth's crust is land, most of which is located in the fo
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="tags_datefield" class="col-md-3 control-label required">Date Field:</label>
+				<label for="tags_inputgroup2" class="col-md-3 control-label required">Input Group2:</label>
 				<div class="col-md-9">
-					<input type="date" id="tags_datefield" name="datefield"class="form-control"/>
+					<div class="input-group">
+						<span class="input-group-addon">Search</span>
+						<input type="text" class="form-control" name="k" value="" textclear>
+					</div>
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="tags_timefield" class="col-md-3 control-label required">Time Field:</label>
+				<label for="tags_inputgroup3" class="col-md-3 control-label required">Input Group 3:</label>
 				<div class="col-md-9">
-					<input type="time" id="tags_timefield" name="timefield" class="form-control"/>
+					<div class="input-group" style="width: 400px;">
+						<span class="input-group-addon">Search</span>
+						<input type="text" class="form-control" name="k" value="" textclear>
+						<span class="input-group-btn">
+							<button type="submit" class="btn btn-default"><i class="fa fa-search"></i> </button>
+						</span>
+					</div>
 				</div>
 			</div>
-			<div class="form-group">
-				<label for="tags_datetimefield" class="col-md-3 control-label required">DateTime Field:</label>
-				<div class="col-md-9">
-					<input type="datetime-local" id="tags_datetimefield" name="datetimefield" class="form-control"/>
+			<fieldset data-spy="fieldset">
+				<legend>Date Time Fields:</legend>
+				<div class="form-group">
+					<label for="tags_datefield" class="col-md-3 control-label required">Date Field:</label>
+					<div class="col-md-9">
+						<input type="date" id="tags_datefield" name="datefield"class="form-control"/>
+					</div>
 				</div>
-			</div>
-			<div class="form-group">
-				<label for="tags_monthfield" class="col-md-3 control-label required">Month Field:</label>
-				<div class="col-md-9">
-					<input type="month" id="tags_monthfield" name="monthfield" class="form-control"/>
+				<div class="form-group">
+					<label for="tags_timefield" class="col-md-3 control-label required">Time Field:</label>
+					<div class="col-md-9">
+						<input type="time" id="tags_timefield" name="timefield" class="form-control"/>
+					</div>
 				</div>
-			</div>
+				<div class="form-group">
+					<label for="tags_datetimefield" class="col-md-3 control-label required">DateTime Field:</label>
+					<div class="col-md-9">
+						<input type="datetime-local" id="tags_datetimefield" name="datetimefield" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="tags_monthfield" class="col-md-3 control-label required">Month Field:</label>
+					<div class="col-md-9">
+						<input type="month" id="tags_monthfield" name="monthfield" class="form-control"/>
+					</div>
+				</div>
+			</fieldset>
 			<div class="form-group">
 				<label for="tags_rangefield" class="col-md-3 control-label required">Range Field:</label>
 				<div class="col-md-9">
@@ -155,6 +180,7 @@ The remaining 29.2% of Earth's crust is land, most of which is located in the fo
 	<script src="../../html/plugins/js/jquery.ui.textarea-autosize.js"></script>
 	<script src="../../html/plugins/js/jquery.ui.textarea-enterfire.js"></script>
 	<script src="../../html/plugins/js/jquery.ui.textclear.js"></script>
+	<script src="../../html/plugins/js/jquery.ui.fieldset.js"></script>
 	<script>
 		$(function() {
 			$('#check_grey').click(function() {

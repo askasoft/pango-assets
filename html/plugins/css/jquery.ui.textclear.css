@@ -1,7 +1,8 @@
 .ui-textclear {
 	cursor: pointer;
 	display: inline-block;
-	position: absolute;
+	position: relative;
+	vertical-align: top;
 	z-index: 3;
 }
 
@@ -10,9 +11,7 @@
 	padding-right: 24px;
 }
 .ui-has-textclear + .ui-textclear {
-	top: 8px;
-	margin-left: -22px;
-	right: auto;
+	margin: 8px 8px 0 -24px !important;
 }
 
 .ui-has-textclear:disabled + .ui-textclear.ui-close {
