@@ -26,7 +26,7 @@ input.form-control[type="month"],
 input.form-control[type="date"],
 input.form-control[type="time"],
 input.form-control[type="datetime-local"],
-select.form-control {
+select.form-control, select.form-select {
 	width: auto;
 }
 
