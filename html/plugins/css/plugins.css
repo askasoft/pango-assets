@@ -697,6 +697,10 @@ fieldset.ui-fieldset.collapsed > legend::before {
 	position: relative;
 	text-align: center;
 }
+
+[data-bs-theme=dark] .ui-popup-frame, [data-bs-theme=dark] .ui-popup-arrow {
+	background-color: var(--bs-body-bg);
+}
 div.ui-simple-color-picker {
 	background-color: #fff;
 	border: 1px solid #000;
@@ -1511,7 +1515,6 @@ form.lined .form-group:last-of-type, form.lined .row:last-of-type {
 .ui-blink-2s2 {
 	animation: ui-blink-frames 2s 2;
 }
-
 @keyframes ui-blink-frames {
 	0%   { background-color: #fff; }
 	10%  { background-color: #eee; }
@@ -1525,6 +1528,27 @@ form.lined .form-group:last-of-type, form.lined .row:last-of-type {
 	90%  { background-color: #eee; }
 	100% { background-color: #fff; }
 }
+
+[data-bs-theme=dark] .ui-blink-1s2 {
+	animation: ui-blink-dark-frames 1s 2;
+}
+[data-bs-theme=dark] .ui-blink-2s2 {
+	animation: ui-blink-dark-frames 2s 2;
+}
+@keyframes ui-blink-dark-frames {
+	0%   { background-color: #111; }
+	10%  { background-color: #222; }
+	20%  { background-color: #333; }
+	30%  { background-color: #444; }
+	40%  { background-color: #555; }
+	50%  { background-color: #666; }
+	60%  { background-color: #555; }
+	70%  { background-color: #444; }
+	80%  { background-color: #333; }
+	90%  { background-color: #222; }
+	100% { background-color: #111; }
+}
+
 .ui-corner {
 	border: solid 1px #ddd;
 	border-radius: 20px;
