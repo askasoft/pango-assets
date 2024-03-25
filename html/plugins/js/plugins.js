@@ -708,11 +708,11 @@
 				f = b.substring(i+1);
 			}
 
+			$(t).on('change', f, function() {
+				$a.prop('disabled', $(b).filter(':checked').length == 0);
+			});
+
 			if ($(b).length) {
-				$(t).on('change', f, function() {
-					$a.prop('disabled', $(b).filter(':checked').length == 0);
-				});
-				
 				$(b).first().trigger('change');
 			} else {
 				$a.prop('disabled', true);
@@ -885,6 +885,11 @@
 		this.find('input').each(function() {
 			var $i = $(this);
 			switch ($i.attr('type')) {
+			case 'hidden':
+			case 'button':
+			case 'submit':
+			case 'reset':
+				break;
 			case 'checkbox':
 			case 'radio':
 				$i.prop('checked', false);
@@ -903,8 +908,8 @@
 				this.find(':input').filter(function() { return this.name == n; }).each(function() {
 					var $t = $(this);
 					switch ($t.attr('type')) {
-					case 'button':
 					case 'file':
+					case 'button':
 					case 'submit':
 					case 'reset':
 						break;

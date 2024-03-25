@@ -13,11 +13,11 @@
 				f = b.substring(i+1);
 			}
 
+			$(t).on('change', f, function() {
+				$a.prop('disabled', $(b).filter(':checked').length == 0);
+			});
+
 			if ($(b).length) {
-				$(t).on('change', f, function() {
-					$a.prop('disabled', $(b).filter(':checked').length == 0);
-				});
-				
 				$(b).first().trigger('change');
 			} else {
 				$a.prop('disabled', true);

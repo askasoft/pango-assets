@@ -16,6 +16,11 @@
 		this.find('input').each(function() {
 			var $i = $(this);
 			switch ($i.attr('type')) {
+			case 'hidden':
+			case 'button':
+			case 'submit':
+			case 'reset':
+				break;
 			case 'checkbox':
 			case 'radio':
 				$i.prop('checked', false);
@@ -34,8 +39,8 @@
 				this.find(':input').filter(function() { return this.name == n; }).each(function() {
 					var $t = $(this);
 					switch ($t.attr('type')) {
-					case 'button':
 					case 'file':
+					case 'button':
 					case 'submit':
 					case 'reset':
 						break;
