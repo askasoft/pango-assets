@@ -11,8 +11,8 @@
 	float: right;
 }
 .ui-pager > .pagination {
+	display: inline-flex;
 	margin: 0;
-	justify-content: center;
 }
 .ui-pager > .pagination > li.limits > select {
 	display: inline;

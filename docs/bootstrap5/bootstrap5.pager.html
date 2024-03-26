@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Bootstrap5 Pager</title>
+	<link href="../../html/bootstrap5/css/bootstrap.css" rel="stylesheet" type="text/css" />
+	<link href="../../html/fontawesome6/css/all.css" rel="stylesheet" type="text/css" />
+	<link href="../../html/plugins/css/bootstrap.pager.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+	<div class="container">
+		<h1 style="text-align: center; margin: 20px 0px;">Bootstrap5 Pager</h1>
+
+		<hr/>
+		<div data-total="151" data-style="is&lt;FP#NL&gt;" data-spy="pager" class="ui-pager" data-page="1" data-limit="20">
+			<div class="infos">1 ~ 151 / 151</div>
+			<div class="limits"><select class="form-select ui-select" title="">
+					<option value="20">20</option>
+					<option value="50">50</option>
+					<option value="100">100</option>
+				</select></div>
+			<ul class="pagination">
+				<li class="page-item first"><a href="#" class="page-link" pageno="1">&lsaquo;</a></li>
+				<li class="page-item prev"><a href="#" class="page-link" pageno="1">&laquo;</a></li>
+				<li class="page-item eleft"><span class="page-link">…</span></li>
+				<li class="page-item page active"><a href="#" class="page-link" pageno="1">1</a></li>
+				<li class="page-item page"><a href="#" class="page-link" pageno="2">2</a></li>
+				<li class="page-item page"><a href="#" class="page-link" pageno="3">3</a></li>
+				<li class="page-item info"><span class="page-link">1 / 10</span></li>
+				<li class="page-item limits"><select class="form-select ui-select" title="">
+					<option value="20">20</option>
+					<option value="50">50</option>
+					<option value="100">100</option>
+				</select></li>
+				<li class="page-item page"><a href="#" class="page-link" pageno="4">4</a></li>
+				<li class="page-item page"><a href="#" class="page-link" pageno="5">5</a></li>
+				<li class="page-item eright"><span class="page-link">…</span></li>
+				<li class="page-item next"><a href="#" class="page-link" pageno="2">&rsaquo;</a></li>
+				<li class="page-item last"><a href="#" class="page-link" pageno="8">&raquo;</a></li>
+			</ul>
+		</div>
+
+		<hr/>
+		<div data-total="151" data-style="is&lt;FP#NL&gt;" data-spy="pager" class="ui-pager lined" data-page="1" data-limit="20">
+			<div class="infos">1 ~ 151 / 151</div>
+			<div class="limits"><select class="form-select ui-select" title="">
+					<option value="20">20</option>
+					<option value="50">50</option>
+					<option value="100">100</option>
+				</select></div>
+			<ul class="pagination">
+				<li class="page-item first"><a href="#" class="page-link" pageno="1">&lsaquo;</a></li>
+				<li class="page-item prev"><a href="#" class="page-link" pageno="1">&laquo;</a></li>
+				<li class="page-item eleft"><span class="page-link">…</span></li>
+				<li class="page-item page active"><a href="#" class="page-link" pageno="1">1</a></li>
+				<li class="page-item page"><a href="#" class="page-link" pageno="2">2</a></li>
+				<li class="page-item page"><a href="#" class="page-link" pageno="3">3</a></li>
+				<li class="page-item info"><span class="page-link">1 / 10</span></li>
+				<li class="page-item limits"><select class="form-select ui-select" title="">
+					<option value="20">20</option>
+					<option value="50">50</option>
+					<option value="100">100</option>
+				</select></li>
+				<li class="page-item page"><a href="#" class="page-link" pageno="4">4</a></li>
+				<li class="page-item page"><a href="#" class="page-link" pageno="5">5</a></li>
+				<li class="page-item eright"><span class="page-link">…</span></li>
+				<li class="page-item next"><a href="#" class="page-link" pageno="2">&rsaquo;</a></li>
+				<li class="page-item last"><a href="#" class="page-link" pageno="8">&raquo;</a></li>
+			</ul>
+		</div>
+	</div>
+	<script src="../../html/jquery/jquery-1.12.4.min.js"></script>
+	<script src="../../html/bootstrap5/js/bootstrap.js"></script>
+	<script src="../../html/plugins/js/bootstrap.ui.pager.js"></script>
+	<script>
+		$(function() {
+			$('.ui-pager').on('goto.pager', function(evt, pno) {
+				alert('goto.pager: ' + pno);
+			});
+
+			$('.ui-pager select').on('change', function() {
+				alert('change.limits: ' + $(this).val());
+			});
+		});
+	</script>
+</body>
+
+</html>
