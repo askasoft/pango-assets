@@ -31,9 +31,6 @@
 .ui-sidenavi ul.nav > li > a:focus, .ui-sidenavi ul.nav > li > a:hover {
 	background-color: #eee;
 }
-[data-bs-theme=dark] .ui-sidenavi ul.nav > li > a:focus, [data-bs-theme=dark] .ui-sidenavi ul.nav > li > a:hover {
-	background-color: #393c3f;
-}
 .ui-sidenavi ul.nav > li > a > i {
 	display: inline-block;
 	text-align: center;
@@ -41,6 +38,13 @@
 }
 .ui-sidenavi ul.nav > li.active {
 	font-weight: bold;
+}
+
+[data-bs-theme=dark] .ui-sidenavi ul.nav > li {
+	border-bottom-color: #555;
+}
+[data-bs-theme=dark] .ui-sidenavi ul.nav > li > a:focus, [data-bs-theme=dark] .ui-sidenavi ul.nav > li > a:hover {
+	background-color: #393c3f;
 }
 
 /* mininav */

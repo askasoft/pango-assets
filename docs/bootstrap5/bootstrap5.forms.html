@@ -18,6 +18,12 @@
 		<h1 style="text-align: center; margin: 20px 0px;">Bootstrap5 Forms</h1>
 		<hr>
 
+		<div class="text-center">
+			<button id="light" class="btn btn-primary">Light</button>
+			<button id="dark" class="btn btn-secondary">Dark</button>
+		</div>
+		<hr>
+
 		<div class="ui-checks text-center">
 			<label><input type="checkbox" id="check_grey">Grey</label>
 			<label><input type="checkbox" id="check_lined">Lined</label>
@@ -172,6 +178,10 @@ The remaining 29.2% of Earth's crust is land, most of which is located in the fo
 	<script src="../../html/plugins/js/jquery.ui.fieldset.js"></script>
 	<script>
 		$(function() {
+			$('#light, #dark').click(function() {
+				$('body').attr('data-bs-theme', $(this).attr('id'));
+			});
+
 			$('#check_grey').click(function() {
 				$('#form')[$(this).prop('checked') ? 'addClass' : 'removeClass']('grey');
 			}).trigger('click');

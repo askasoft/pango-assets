@@ -2,7 +2,7 @@
 	display: block;
 	width: 16px;
 	height: 16px;
-	opacity: 0.3;
+	opacity: 0.5;
 }
 .ui-close:hover {
 	opacity: 1;
@@ -32,3 +32,10 @@
 	border-radius: 50%;
 }
 
+[data-bs-theme=dark] .ui-close:before, [data-bs-theme=dark] .ui-close:after {
+	background-color: #ccc;
+}
+[data-bs-theme=dark] .ui-close.circle {
+	background-color: #000;
+	border-color: #ccc;
+}

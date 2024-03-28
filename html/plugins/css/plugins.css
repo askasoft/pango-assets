@@ -2,7 +2,7 @@
 	display: block;
 	width: 16px;
 	height: 16px;
-	opacity: 0.3;
+	opacity: 0.5;
 }
 .ui-close:hover {
 	opacity: 1;
@@ -32,6 +32,13 @@
 	border-radius: 50%;
 }
 
+[data-bs-theme=dark] .ui-close:before, [data-bs-theme=dark] .ui-close:after {
+	background-color: #ccc;
+}
+[data-bs-theme=dark] .ui-close.circle {
+	background-color: #000;
+	border-color: #ccc;
+}
 fieldset.ui-fieldset {
 	border: solid 1px #ccc;
 	margin: 10px 0;
@@ -82,6 +89,12 @@ fieldset.ui-fieldset.collapsed > legend::before {
 	transform: rotate(45deg);
 }
 
+[data-bs-theme=dark] fieldset.ui-fieldset {
+	border-color: #555;
+}
+[data-bs-theme=dark] fieldset.ui-fieldset.collapsed {
+	border-color: #555 transparent transparent transparent;
+}
 /**
  * jQuery lightbox plugin
  * This jQuery plugin was inspired and based on 
@@ -1277,6 +1290,9 @@ form.lined .form-group, form.lined .row {
 form.lined .form-group:last-of-type, form.lined .row:last-of-type {
 	border-bottom: 0;
 }
+[data-bs-theme=dark] form.lined .form-group, form.lined .row {
+	border-bottom-color: #555;
+}
 /** navbar toogle */
 .navbar-default .navbar-toggle, .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
 	background: transparent;
@@ -1416,9 +1432,6 @@ form.lined .form-group:last-of-type, form.lined .row:last-of-type {
 .ui-sidenavi ul.nav > li > a:focus, .ui-sidenavi ul.nav > li > a:hover {
 	background-color: #eee;
 }
-[data-bs-theme=dark] .ui-sidenavi ul.nav > li > a:focus, [data-bs-theme=dark] .ui-sidenavi ul.nav > li > a:hover {
-	background-color: #393c3f;
-}
 .ui-sidenavi ul.nav > li > a > i {
 	display: inline-block;
 	text-align: center;
@@ -1426,6 +1439,13 @@ form.lined .form-group:last-of-type, form.lined .row:last-of-type {
 }
 .ui-sidenavi ul.nav > li.active {
 	font-weight: bold;
+}
+
+[data-bs-theme=dark] .ui-sidenavi ul.nav > li {
+	border-bottom-color: #555;
+}
+[data-bs-theme=dark] .ui-sidenavi ul.nav > li > a:focus, [data-bs-theme=dark] .ui-sidenavi ul.nav > li > a:hover {
+	background-color: #393c3f;
 }
 
 /* mininav */
