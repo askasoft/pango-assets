@@ -167,6 +167,15 @@
 	text-align: center;
 }
 
+[data-bs-theme=dark] .ui-popup-mask {
+	background-color: #fff;
+}
 [data-bs-theme=dark] .ui-popup-frame, [data-bs-theme=dark] .ui-popup-arrow {
 	background-color: var(--bs-body-bg);
+}
+[data-bs-theme=dark] .ui-popup-header {
+	border-bottom-color: #999;
+}
+[data-bs-theme=dark] .ui-popup-footer {
+	border-top-color: #999;
 }

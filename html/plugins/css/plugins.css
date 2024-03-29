@@ -733,8 +733,17 @@ fieldset.ui-fieldset.collapsed > legend::before {
 	text-align: center;
 }
 
+[data-bs-theme=dark] .ui-popup-mask {
+	background-color: #fff;
+}
 [data-bs-theme=dark] .ui-popup-frame, [data-bs-theme=dark] .ui-popup-arrow {
 	background-color: var(--bs-body-bg);
+}
+[data-bs-theme=dark] .ui-popup-header {
+	border-bottom-color: #999;
+}
+[data-bs-theme=dark] .ui-popup-footer {
+	border-top-color: #999;
 }
 div.ui-simple-color-picker {
 	background-color: #fff;
@@ -1300,10 +1309,6 @@ form.grey {
 	background-color: #f9f9f9;
 	padding: 15px;
 }
-[data-bs-theme=dark] form.grey {
-	background-color: #292c2f;
-}
-
 form.lined .form-group, form.lined .row {
 	border-bottom: 1px solid #ccc;
 	margin: 0;
@@ -1312,7 +1317,11 @@ form.lined .form-group, form.lined .row {
 form.lined .form-group:last-of-type, form.lined .row:last-of-type {
 	border-bottom: 0;
 }
-[data-bs-theme=dark] form.lined .form-group, form.lined .row {
+
+[data-bs-theme=dark] form.grey {
+	background-color: #292c2f;
+}
+[data-bs-theme=dark] form.lined .form-group, [data-bs-theme=dark] form.lined .row {
 	border-bottom-color: #555;
 }
 /** navbar toogle */
@@ -1661,9 +1670,15 @@ form.lined .form-group:last-of-type, form.lined .row:last-of-type {
 	word-break: break-all;
 }
 .ui-view.grey {
-	color: #333;
 	background-color: #f9f9f9;
 	padding: 15px 30px;
+}
+
+[data-bs-theme=dark] .ui-view.lined > .row {
+	border-bottom-color: #555;
+}
+[data-bs-theme=dark] .ui-view.grey {
+	background-color: #292c2f;
 }
 /*--------------------------------------------------
  * headline

@@ -97,14 +97,20 @@
 		$select.val(val).trigger('change');
 	}
 
+	// multiple only
 	function __dropdown_current_click() {
 		var $t = $(this), val = $t.attr('value'),
 			$dropdown = $t.closest('.ui-nice-select'),
 			$select = $dropdown.prev('select');
+
+		$t.remove();
 		
 		$dropdown.find('li').filter(function() { return $(this).attr('value') == val; }).removeClass('selected');
-		$select.find('option').filter(function() { return this.value == val; }).removeAttr('selected');
-		$t.remove();
+		var val = [];
+		$dropdown.find('.current').each(function() {
+			val.push($(this).attr('value'));
+		})
+		$select.val(val);
 		return false;
 	}
 

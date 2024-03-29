@@ -880,8 +880,8 @@
 		return this;
 	};
 
-	$.fn.formClear = function() {
-		this.find('textarea, select').val('');
+	$.fn.formClear = function(trigger) {
+		this.find('textarea, select')[trigger ? 'changeValue' : 'val']('');
 		this.find('input').each(function() {
 			var $i = $(this);
 			switch ($i.attr('type')) {
@@ -892,10 +892,14 @@
 				break;
 			case 'checkbox':
 			case 'radio':
+				var oc = $i.prop('checked');
 				$i.prop('checked', false);
+				if (oc && trigger) {
+					$i.trigger('change');
+				}
 				break;
 			default:
-				$i.val('');
+				$i[trigger ? 'changeValue' : 'val']('');
 			}
 		});
 		return this;
@@ -906,8 +910,8 @@
 			for (var n in vs) {
 				var v = vs[n];
 				this.find(':input').filter(function() { return this.name == n; }).each(function() {
-					var $t = $(this);
-					switch ($t.attr('type')) {
+					var $i = $(this);
+					switch ($i.attr('type')) {
 					case 'file':
 					case 'button':
 					case 'submit':
@@ -915,21 +919,21 @@
 						break;
 					case 'checkbox':
 						var va = $.isArray(v) ? v : [ v ];
-						var oc = $t.prop('checked'), nc = $.inArray($t.val(), va) >= 0;
-						$t.prop('checked', nc);
+						var oc = $i.prop('checked'), nc = $.inArray($i.val(), va) >= 0;
+						$i.prop('checked', nc);
 						if (trigger && nc != oc) {
-							$t.trigger('change');
+							$i.trigger('change');
 						}
 						break;
 					case 'radio':
-						var oc = $t.prop('checked'), nc = ($t.val() == v);
-						$t.prop('checked', nc);
+						var oc = $i.prop('checked'), nc = ($i.val() == v);
+						$i.prop('checked', nc);
 						if (trigger && nc && !oc) {
-							$t.trigger('change');
+							$i.trigger('change');
 						}
 						break;
 					default:
-						trigger ? $t.changeValue(v) : $t.val(v);
+						trigger ? $i.changeValue(v) : $i.val(v);
 						break;
 					}
 				});
@@ -1509,14 +1513,20 @@
 		$select.val(val).trigger('change');
 	}
 
+	// multiple only
 	function __dropdown_current_click() {
 		var $t = $(this), val = $t.attr('value'),
 			$dropdown = $t.closest('.ui-nice-select'),
 			$select = $dropdown.prev('select');
+
+		$t.remove();
 		
 		$dropdown.find('li').filter(function() { return $(this).attr('value') == val; }).removeClass('selected');
-		$select.find('option').filter(function() { return this.value == val; }).removeAttr('selected');
-		$t.remove();
+		var val = [];
+		$dropdown.find('.current').each(function() {
+			val.push($(this).attr('value'));
+		})
+		$select.val(val);
 		return false;
 	}
 
