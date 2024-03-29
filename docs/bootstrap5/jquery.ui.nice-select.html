@@ -5,8 +5,8 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 	<title>jQuery Nice Select</title>
-	<link href="../../html/bootstrap3/css/bootstrap.css" rel="stylesheet" type="text/css" />
-	<link href="../../html/fontawesome4/css/font-awesome.css" rel="stylesheet" type="text/css" />
+	<link href="../../html/bootstrap5/css/bootstrap.css" rel="stylesheet" type="text/css" />
+	<link href="../../html/fontawesome6/css/font-awesome.css" rel="stylesheet" type="text/css" />
 	<link href="../../html/plugins/css/jquery.ui.nice-select.css" rel="stylesheet">
 	<style>
 		/* Code blocks */
@@ -98,78 +98,8 @@
 			cursor: help;
 		}
 
-		body {
-			-webkit-font-smoothing: antialiased;
-			-moz-osx-font-smoothing: grayscale;
-			color: #445870;
-			font-family: 'Work Sans', sans-serif;
-			font-size: 14px;
-			font-weight: normal;
-			letter-spacing: -0.25px;
-			margin: 0;
-			padding: 0 18px;
-		}
-
-		p {
-			line-height: 1.6;
-			margin: 0 0 1.6em;
-		}
-
-		h1 {
-			font-size: 36px;
-			font-weight: 300;
-			letter-spacing: -2px;
-			margin: 0 0 24px;
-		}
-
-		h2 {
-			font-size: 22px;
-			font-weight: 400;
-			margin: 0 0 12px;
-			padding-top: 48px;
-		}
-
-		h3 {
-			font-size: 18px;
-			font-weight: 400;
-			margin: 0 0 12px;
-			padding-top: 12px;
-		}
-
-		ul {
-			margin: 0;
-			padding-left: 16px;
-		}
-
-		a:not(.button) {
-			color: #55a1fb;
-			outline: none;
-			text-decoration: none;
-			-webkit-transition: all 0.2s ease-in-out;
-			transition: all 0.2s ease-in-out;
-			border-bottom: 1px solid transparent;
-		}
-
-		a:not(.button):hover,
-		a:not(.button):focus {
-			border-bottom: 1px solid #88bfff;
-		}
-
-		::-moz-selection {
-			background: #f3f4f7;
-		}
-
-		::selection {
-			background: #f3f4f7;
-		}
-
-		.container {
-			margin: 96px auto 60px;
-			max-width: 40em;
-		}
-
 		.box {
-			background-color: #f6f7f9;
+			border: solid 1px #999;
 			border-radius: 2px;
 			margin-bottom: 30px;
 			padding: 24px 30px;
@@ -298,6 +228,13 @@
 
 			<p>A lightweight jQuery plugin that replaces native select elements with customizable dropdowns.</p>
 		</div>
+		<hr>
+
+		<div class="text-center">
+			<button id="light" class="btn btn-primary">Light</button>
+			<button id="dark" class="btn btn-secondary">Dark</button>
+		</div>
+		<hr>
 
 		<h2>Usage</h2>
 		<p><strong>1.</strong> Include jQuery and the plugin.</p>
@@ -380,7 +317,7 @@
 
 		<div class="box">
 			<label>Wide</label>
-			<select class="wide" id="sw">
+			<select class="wide">
 				<option display="Select">Nothing</option>
 				<option value="1">Some option</option>
 				<option value="2">Another option</option>
@@ -559,6 +496,10 @@
 
 	<script>
 		$(document).ready(function () {
+			$('#light, #dark').click(function() {
+				$('body').attr('data-bs-theme', $(this).attr('id'));
+			});
+
 			$('select').each(function() {
 				var $s = $(this);
 				for (var i = 100; i < 200; i++) {

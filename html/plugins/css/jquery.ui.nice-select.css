@@ -227,3 +227,25 @@
 .ui-nice-select-no-csspointerevents .ui-nice-select.open > ul {
 	display: block;
 }
+
+[data-bs-theme=dark] .ui-nice-select {
+	background-color: var(--bs-body-bg);
+	border-color: var(--bs-border-color);
+}
+[data-bs-theme=dark] .ui-nice-select > ul {
+	background-color: var(--bs-body-bg);
+}
+[data-bs-theme=dark] .ui-nice-select:hover {
+	border-color: #999;
+}
+[data-bs-theme=dark] .ui-nice-select.disabled {
+	background-color: #292c2f;
+}
+[data-bs-theme=dark] .ui-nice-select > ul > li.selected {
+	background-color: #292c2f;
+}
+[data-bs-theme=dark] .ui-nice-select > ul > li:hover,
+[data-bs-theme=dark] .ui-nice-select > ul > li.focus,
+[data-bs-theme=dark] .ui-nice-select > ul > li.selected.focus {
+	background-color: #393c3f;
+}
