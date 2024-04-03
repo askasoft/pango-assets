@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
-
 <head>
+	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title>corejs string</title>
 	<link href="../../html/bootstrap3/css/bootstrap.css" rel="stylesheet" type="text/css" />
@@ -35,13 +35,18 @@
 "あいうえお".left(1);
 "あいうえお".mid(2, 1);
 "あいうえお".right(1);
-"あいうえお".leftPad(4, '=');
-"あいうえお".rightPad(4, '=');
+"あいうえお".padLeft(4, '=');
+"あいうえお".padRight(4, '=');
 "start".capitalize();
 "Start".uncapitalize();
-"starts-with".snakeCase();
+"StartsWITH".camelCase();
 "starts-with".camelCase();
 "starts-with".pascalCase();
+"STARTSwith".snakeCase();
+"StartsWITH".snakeCase();
+"startsWITH".snakeCase();
+"starts_WITH".snakeCase();
+"starts-with".snakeCase();
 "{0}, {1}, {2}".format("s0", "s1", "s2");
 "あいうえお".substrAfter('う');
 "あいうえお".substrBefore('う');
