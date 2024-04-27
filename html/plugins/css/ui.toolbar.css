@@ -13,8 +13,10 @@
 .ui-toolbar > ul > li {
 	border-left: 1px solid #fff;
 	border-right: 1px solid #c6bcaa;
+	display: flex;
+	align-items: center;
 	margin: 0;
-	padding: 0 1em;
+	padding: 0 1.25em;
 }
 .ui-toolbar > ul > li:first-child {
 	border-left: none;
@@ -22,22 +24,19 @@
 .ui-toolbar > ul > li:last-child {
 	border-right: none;
 }
-.ui-toolbar > ul > li > * {
+.ui-toolbar > ul > li > a {
 	margin: -0.5em -1em;
 	padding: 0.5em 1em;
-	vertical-align: middle;
-}
-.ui-toolbar > ul > li > a {
-	white-space: nowrap;
 	text-decoration: none;
+	white-space: nowrap;
 }
 .ui-toolbar > ul > li > a:hover {
-	text-decoration: none;
 	background-color: #e5e5e5;
+	text-decoration: none;
 }
 .ui-toolbar > ul > li > a:focus {
-	text-decoration: none;
 	background-color: transparent;
+	text-decoration: none;
 }
 
 /* ui-toolbar styles */
