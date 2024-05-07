@@ -730,21 +730,17 @@
 	"use strict";
 
 	function _collapse($f, t) {
-		t = t || $f.data('fieldset').hideTransition || 'slideUp'; 
-		$f.addClass('collapsed')
-			.trigger('collapse.fieldset')
-			.children(':not(legend)')[t](function() {
-				$f.trigger('collapsed.fieldset');
-			});
+		t = t || $f.data('fieldset').hideTransition;
+		$f.trigger('collapse.fieldset').children(':not(legend)')[t](function() {
+			$f.addClass('collapsed').trigger('collapsed.fieldset');
+		});
 	}
 
 	function _expand($f, t) {
-		t = t || $f.data('fieldset').showTransition || 'slideDown';
-		$f.removeClass('collapsed')
-			.trigger('expand.fieldset')
-			.children(':not(legend)')[t](function() {
-				$f.trigger('expanded.fieldset');
-			});
+		t = t || $f.data('fieldset').showTransition;
+		$f.trigger('expand.fieldset').children(':not(legend)')[t](function() {
+			$f.removeClass('collapsed').trigger('expanded.fieldset');
+		});
 	}
 
 	function collapse($f, t) {
@@ -763,17 +759,17 @@
 		$f.hasClass('collapsed') ? _expand($f) : _collapse($f);
 	}
 
-	function _on_legend_click() {
+	function _click() {
 		toggle($(this).closest('fieldset'));
 	}
 
 	function _init($f, c) {
-		c = $.extend({}, $.fieldset.defaults, c);
+		c = $.extend({}, $f.data('fieldset') || $.fieldset.defaults, c);
 
-		var h = c.collapsed || $f.hasClass('collapsed');
+		var h = c.collapsed || $f.hasClass('collapsed'), e = 'click.fieldset';
 
 		$f.data('fieldset', c).addClass('ui-fieldset' + (h ? ' collapsed' : ''));
-		$f.children('legend').on('click', _on_legend_click);
+		$f.children('legend').off(e).on(e, _click);
 		$f.children(':not(legend)')[h ? 'hide' : 'show']();
 	}
 
@@ -795,7 +791,7 @@
 
 		return this.each(function() {
 			var $f = $(this);
-			if (typeof (c) == 'string') {
+			if (typeof(c) == 'string') {
 				if (!$f.data('fieldset')) {
 					_init($f);
 				}
