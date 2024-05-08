@@ -28,7 +28,17 @@
 	border-bottom: 0;
 }
 .ui-view > .row > .ui-label {
-	text-align: right;
+	white-space: pre-wrap;
+}
+@media (min-width: 768px) {
+	.ui-view > .row > .ui-label {
+		text-align: right;
+	}
+}
+@media (max-width: 767px) {
+	.ui-view > .row > .ui-label {
+		width: auto;
+	}
 }
 .ui-view > .row > .ui-value {
 	white-space: pre-wrap;
