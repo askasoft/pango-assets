@@ -764,13 +764,15 @@
 	}
 
 	function _init($f, c) {
-		c = $.extend({}, $f.data('fieldset') || $.fieldset.defaults, c);
+		if (!$f.data('fieldset')) {
+			c = $.extend({}, $.fieldset.defaults, c);
 
-		var h = c.collapsed || $f.hasClass('collapsed'), e = 'click.fieldset';
-
-		$f.data('fieldset', c).addClass('ui-fieldset' + (h ? ' collapsed' : ''));
-		$f.children('legend').off(e).on(e, _click);
-		$f.children(':not(legend)')[h ? 'hide' : 'show']();
+			var h = c.collapsed || $f.hasClass('collapsed'), e = 'click.fieldset';
+	
+			$f.data('fieldset', c).addClass('ui-fieldset' + (h ? ' collapsed' : ''));
+			$f.children('legend').off(e).on(e, _click);
+			$f.children(':not(legend)')[h ? 'hide' : 'show']();
+		}
 	}
 
 	var api = {
@@ -792,14 +794,11 @@
 		return this.each(function() {
 			var $f = $(this);
 			if (typeof(c) == 'string') {
-				if (!$f.data('fieldset')) {
-					_init($f);
-				}
+				_init($f);
 				args[0] = $f;
 				api[c].apply($f, args);
 				return;
 			}
-
 			_init($f, c);
 		});
 	};
