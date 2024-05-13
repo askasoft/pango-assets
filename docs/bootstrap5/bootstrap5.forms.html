@@ -138,11 +138,35 @@ The remaining 29.2% of Earth's crust is land, most of which is located in the fo
 				</div>
 			</div>
 			<div class="row py-3">
+				<label for="tags_ohcheckboxlist" class="col-md-3 col-form-label required">Ordered Checkbox List:</label>
+				<div class="col-md-9">
+					<div id="tags_ohcheckboxlist" class="ui-checks ordered">
+						<label><input type="checkbox" name="ohcheckboxlist" checked value="a">Abc</label>
+						<label><input type="checkbox" name="ohcheckboxlist" checked value="d">Def</label>
+						<hr>
+						<label><input type="checkbox" name="ohcheckboxlist" value="g">Ghi</label>
+						<label><input type="checkbox" name="ohcheckboxlist" value="b">Xyz</label>
+					</div>
+				</div>
+			</div>
+			<div class="row py-3">
 				<label for="tags_vcheckboxlist" class="col-md-3 col-form-label required">Vertical Checkbox List:</label>
 				<div class="col-md-9">
 					<div id="tags_vcheckboxlist" class="ui-checks vertical">
 						<label><input type="checkbox" name="vcheckboxlist" id="tags_vcheckboxlist_1" value="a">Abc</label>
 						<label><input type="checkbox" name="vcheckboxlist" id="tags_vcheckboxlist_2" value="b">Xyz</label>
+					</div>
+				</div>
+			</div>
+			<div class="row py-3">
+				<label for="tags_ovcheckboxlist" class="col-md-3 col-form-label required">Ordered Checkbox List:</label>
+				<div class="col-md-9">
+					<div id="tags_ovcheckboxlist" class="ui-checks vertical ordered">
+						<label><input type="checkbox" name="ovcheckboxlist" checked value="a">Abc</label>
+						<label><input type="checkbox" name="ovcheckboxlist" checked value="d">Def</label>
+						<hr>
+						<label><input type="checkbox" name="ovcheckboxlist" value="g">Ghi</label>
+						<label><input type="checkbox" name="ovcheckboxlist" value="b">Xyz</label>
 					</div>
 				</div>
 			</div>
@@ -176,6 +200,7 @@ The remaining 29.2% of Earth's crust is land, most of which is located in the fo
 	<script src="../../html/plugins/js/jquery.ui.textarea-enterfire.js"></script>
 	<script src="../../html/plugins/js/jquery.ui.textclear.js"></script>
 	<script src="../../html/plugins/js/jquery.ui.fieldset.js"></script>
+	<script src="../../html/plugins/js/jquery.ui.checkorder.js"></script>
 	<script>
 		$(function() {
 			$('#light, #dark').click(function() {

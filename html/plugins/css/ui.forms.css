@@ -16,6 +16,10 @@
 .form-horizontal .ui-checks, .form-horizontal .ui-radios, .row .ui-checks, .row .ui-radios {
 	padding-top: 7px;
 }
+.ui-checks hr {
+	margin: 5px 0;
+	border-style: dashed;
+}
 
 /** form view */
 .ui-view > .row {
