@@ -1643,10 +1643,22 @@ form.lined .form-group:last-of-type, form.lined .row:last-of-type {
 .form-horizontal .ui-checks, .form-horizontal .ui-radios, .row .ui-checks, .row .ui-radios {
 	padding-top: 7px;
 }
+
+/** ordered checks */
 .ui-checks hr {
 	margin: 5px 0;
 	border-style: dashed;
 }
+.ui-checks > label.dragover {
+	border-left: dotted 1px #aaa;
+	padding-left: 7px;
+}
+.ui-checks.vertical > label.dragover {
+	border-left: none;
+	padding-left: 21px;
+	border-top: dotted 1px #aaa;
+}
+
 
 /** form view */
 .ui-view > .row {
