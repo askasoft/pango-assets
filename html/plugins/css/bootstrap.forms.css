@@ -12,7 +12,7 @@ label {
 	right: -2px;
 }
 
-.form-control {
+.form-control, .form-select {
 	display: inline-block;
 }
 
