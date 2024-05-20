@@ -883,16 +883,12 @@
 	$.fn.focusme = function() {
 		var f = false;
 		$(this).each(function() {
-			var $i = $(this);
 			if (f) {
-				$i.removeAttr('focusme');
 				return;
 			}
 
-			var a = $i.attr('focusme');
-			$i.removeAttr('focusme');
+			var $i = $(this), a = $i.attr('focusme') || 'true', $a;
 
-			var $a;
 			if (a == 'true') {
 				$a = $i.find('input,select,textarea,button').not(':hidden,:disabled,[readonly]').eq(0);
 				if ($a.length < 1) {
@@ -901,7 +897,7 @@
 						$a = $i;
 					}
 				}
-			} else if (a != '' && a != 'false') {
+			} else if (a != 'false') {
 				$a = $i.find(a).eq(0);
 			}
 			
@@ -915,7 +911,7 @@
 	};
 
 	$(window).on('load', function() {
-		$('[focusme="true"]').focusme();
+		$('[focusme]').focusme();
 	});
 
 })(jQuery);
@@ -2562,7 +2558,7 @@
 (function($) {
 	"use strict";
 
-	var re = /^[\s\u3000]+|[\s\u3000]+$/g;
+	var E = 'blur.textstrip', re = /^[\s\u3000]+|[\s\u3000]+$/g;
 
 	function _textstrip() {
 		var $t = $(this), a = $t.attr('textstrip') || '';
@@ -2572,7 +2568,7 @@
 	}
 
 	$.fn.textstrip = function() {
-		$(this).off('blur.textstrip').on('blur.textstrip', _textstrip);
+		$(this).off(E).on(E, _textstrip);
 	};
 	
 	// ==================
@@ -2947,7 +2943,7 @@
 	};
 
 	$(window).on('load', function() {
-		$('[totop="true"]').totop();
+		$('[totop]').totop();
 	});
 
 })(jQuery);
