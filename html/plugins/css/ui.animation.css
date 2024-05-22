@@ -1,9 +1,21 @@
 /* blink */
+.ui-blink-1s {
+	animation: ui-blink-frames 1s infinite linear;
+}
+.ui-blink-1s1 {
+	animation: ui-blink-frames 1s 1 linear;
+}
 .ui-blink-1s2 {
-	animation: ui-blink-frames 1s 2;
+	animation: ui-blink-frames 1s 2 linear;
+}
+.ui-blink-2s {
+	animation: ui-blink-frames 2s infinite linear;
+}
+.ui-blink-2s1 {
+	animation: ui-blink-frames 2s 1 linear;
 }
 .ui-blink-2s2 {
-	animation: ui-blink-frames 2s 2;
+	animation: ui-blink-frames 2s 2 linear;
 }
 @keyframes ui-blink-frames {
 	0%   { background-color: #fff; }
@@ -19,11 +31,23 @@
 	100% { background-color: #fff; }
 }
 
+[data-bs-theme=dark] .ui-blink-1s {
+	animation: ui-blink-dark-frames 1s infinite linear;
+}
+[data-bs-theme=dark] .ui-blink-1s1 {
+	animation: ui-blink-dark-frames 1s 1 linear;
+}
 [data-bs-theme=dark] .ui-blink-1s2 {
-	animation: ui-blink-dark-frames 1s 2;
+	animation: ui-blink-dark-frames 1s 2 linear;
+}
+[data-bs-theme=dark] .ui-blink-2s {
+	animation: ui-blink-dark-frames 2s infinite linear;
+}
+[data-bs-theme=dark] .ui-blink-2s1 {
+	animation: ui-blink-dark-frames 2s 1 linear;
 }
 [data-bs-theme=dark] .ui-blink-2s2 {
-	animation: ui-blink-dark-frames 2s 2;
+	animation: ui-blink-dark-frames 2s 2 linear;
 }
 @keyframes ui-blink-dark-frames {
 	0%   { background-color: #111; }
