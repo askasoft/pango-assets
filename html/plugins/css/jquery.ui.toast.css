@@ -27,7 +27,6 @@
 }
 .ui-toast-single:hover {
 	opacity: 1;
-	-webkit-box-shadow: 0 0 10px #000;
 	box-shadow: 0 0 10px #000;
 }
 

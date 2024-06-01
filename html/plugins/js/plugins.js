@@ -2683,18 +2683,18 @@
 				op.left = 20;
 				op.right = 20;
 				break;
-			case 'top center':
+			case 'top right':
 				op.top = 5;
-				op.left = ($(window).outerWidth() / 2) - $c.outerWidth() / 2;
+				op.right = 20;
 				break;
 			case 'top left':
 				op.top = 5;
 				op.left = 20;
 				break;
-			//case 'top right':
+			// case 'top center':
 			default:
 				op.top = 5;
-				op.right = 20;
+				op.left = ($(window).outerWidth() / 2) - $c.outerWidth() / 2;
 				break;
 			}
 		}
@@ -2789,7 +2789,6 @@
 
 			$t.find('.ui-toast-loader').css({
 				'width': '100%',
-				'-webkit-transition': transition,
 				'transition': transition,
 				'background-color': os.loaderBg
 			});
@@ -2800,7 +2799,6 @@
 		if (os.loader) {
 			$t.find('.ui-toast-loader').css({
 				'width': '0%',
-				'-webkit-transition': 'none',
 				'transition': 'none'
 			});
 		}
@@ -2917,7 +2915,7 @@
 		hideAfter: 5000,
 		stopHideOnHover: true,
 		stack: 5,
-		position: 'top right',
+		position: 'top center',
 		bgColor: false,
 		textColor: false,
 		textAlign: 'left',
