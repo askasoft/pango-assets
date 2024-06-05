@@ -1279,14 +1279,24 @@ select.form-control, select.form-select {
 	position: relative;
 	white-space: pre-wrap;
 }
+@media (max-width: 767px) {
+	.form-horizontal .col-form-label {
+		width: auto;
+	}
+}
 @media (min-width: 768px) {
 	.form-horizontal .col-form-label {
 		text-align: right;
 	}
 }
-@media (max-width: 767px) {
-	.form-horizontal .col-form-label {
-		width: auto;
+
+/** label align **/
+@media (min-width: 768px) {
+	.form-horizontal.label-left .col-form-label, .form-horizontal.label-left .control-label {
+		text-align: left;
+	}
+	.form-horizontal.label-right .col-form-label, .form-horizontal.label-right .control-label {
+		text-align: right;
 	}
 }
 
