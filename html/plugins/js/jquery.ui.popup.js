@@ -241,13 +241,13 @@
 
 		_align($p, c.trigger, c.position);
 
-		$p.children('.ui-popup-frame').hide()[c.transition](function() {
+		$p.focus().children('.ui-popup-frame').hide()[c.transition](function() {
 			_bind(c);
 			if (c.focus) {
 				$(c.focus).focus();
 			}
 			$c.trigger('shown.popup');
-		}).focus();
+		});
 	}
 
 	function __doc_click(evt) {
@@ -489,10 +489,12 @@
 	// ==================
 	$(window).on('load', function() {
 		$('[data-spy="popup"]').popup();
+
 		$('body').on('click.popup', '[popup-target]', function(evt) {
 			evt.stopPropagation();
 			var $t = $(this), c = _options($t);
 			$($t.attr('popup-target')).popup(c).popup('toggle', this);
+			return false;
 		});
 	});
 
