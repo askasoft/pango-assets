@@ -1,15 +1,17 @@
 /* SIDENAVI */
 .ui-sidenavi > .panel, .ui-sidenavi > .card {
+	background-color: transparent;
+	border: none;
 	margin-bottom: 20px;
 }
 .ui-sidenavi > .panel > .panel-heading, .ui-sidenavi > .card > .card-header {
+	background-color: transparent;
+	padding: 10px;
 	position: relative;
 }
-.ui-sidenavi > .panel > .panel-heading > i, .ui-sidenavi > .card > .card-header > i {
-	font-size: 120%;
-}
 .ui-sidenavi > .panel > .panel-body, .ui-sidenavi > .card > .card-body {
-	padding: 2px 5px;
+	background-color: transparent;
+	padding: 2px 0;
 }
 
 .ui-sidenavi > .panel > .panel-heading > span, .ui-sidenavi .card-header > span,
@@ -17,16 +19,10 @@
 	margin: 0 0 0 8px;
 }
 
-.ui-sidenavi ul.nav > li {
-	border-bottom: solid 1px #ccc;
-}
-.ui-sidenavi ul.nav > li:last-child {
-	border-bottom: none;
-}
 .ui-sidenavi ul.nav > li > a {
 	align-items: center;
 	display: flex;
-	padding: 5px 8px;
+	padding: 5px 10px;
 }
 .ui-sidenavi ul.nav > li > a:focus, .ui-sidenavi ul.nav > li > a:hover {
 	background-color: #eee;
@@ -34,15 +30,11 @@
 .ui-sidenavi ul.nav > li > a > i {
 	display: inline-block;
 	text-align: center;
-	width: 20px;
 }
 .ui-sidenavi ul.nav > li.active {
 	font-weight: bold;
 }
 
-[data-bs-theme=dark] .ui-sidenavi ul.nav > li {
-	border-bottom-color: #555;
-}
 [data-bs-theme=dark] .ui-sidenavi ul.nav > li > a:focus, [data-bs-theme=dark] .ui-sidenavi ul.nav > li > a:hover {
 	background-color: #393c3f;
 }
@@ -53,7 +45,6 @@
 }
 .ui-sidenavi.mininav > .panel, .ui-sidenavi.mininav > .card {
 	text-align: center;
-	width: 45px;
 }
 .ui-sidenavi.mininav > .panel > .panel-heading, .ui-sidenavi.mininav > .card > .card-header {
 	padding: 10px 5px;
@@ -70,7 +61,6 @@
 	}
 	.ui-sidenavi.minimal > .panel, .ui-sidenavi.minimal > .card {
 		text-align: center;
-		width: 45px;
 	}
 	.ui-sidenavi.minimal > .panel > .panel-heading, .ui-sidenavi.minimal > .card > .card-header {
 		padding: 10px 5px;
@@ -98,9 +88,6 @@
 .ui-sidenavi.flatbar > .card-body,  .ui-sidenavi.flatbar > .card ul.nav,  .ui-sidenavi.flatbar > .card ul.nav > li {
 	display: inline-block;
 }
-.ui-sidenavi.flatbar ul.nav > li, .ui-sidenavi.flatbar ul.nav > li:last-child {
-	border-bottom: none;
-}
 
 /* barable */
 @media (max-width: 767px) {
@@ -119,8 +106,5 @@
 	.ui-sidenavi.barable > .panel-body, .ui-sidenavi.barable > .panel ul.nav, .ui-sidenavi.barable > .panel ul.nav > li,
 	.ui-sidenavi.barable > .card-body,  .ui-sidenavi.barable > .card ul.nav,  .ui-sidenavi.barable > .card ul.nav > li {
 		display: inline-block;
-	}
-	.ui-sidenavi.barable ul.nav > li, .ui-sidenavi.barable ul.nav > li:last-child {
-		border-bottom: none;
 	}
 }
