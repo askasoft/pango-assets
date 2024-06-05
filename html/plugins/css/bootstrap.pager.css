@@ -14,10 +14,20 @@
 	display: inline-flex;
 	margin: 0;
 }
-.ui-pager > .pagination > li.limits > select {
-	display: inline;
-	float: left;
-	width: auto;
+
+.ui-pager.center {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+.ui-pager.center > div.infos {
+	float: none;
+	padding: 8px 30px;
+	white-space: nowrap;
+}
+.ui-pager.center > div.limits {
+	float: none;
+	padding: 0 30px;	
 }
 
 .ui-pager.lined > .pagination > li > a,
