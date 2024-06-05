@@ -41,7 +41,7 @@
 }
 
 [data-bs-theme=dark] .ui-sortable .sortable:hover {
-	background-color: #292c2f;
+	background-color: #303841;
 }
 [data-bs-theme=dark] .ui-sortable .sorted.asc:before {
 	border-bottom-color: #ddd;
