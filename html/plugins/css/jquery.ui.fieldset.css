@@ -1,10 +1,10 @@
-fieldset.ui-fieldset {
+.ui-fieldset {
 	border: solid 1px #ccc;
 	margin: 10px 0;
 	padding: 10px;
 }
 
-fieldset.ui-fieldset > legend {
+.ui-fieldset > legend {
 	border: 0;
 	cursor: pointer;
 	float: none;
@@ -14,7 +14,13 @@ fieldset.ui-fieldset > legend {
 	position: relative;
 	width: auto;
 }
-fieldset.ui-fieldset > legend::before {
+.ui-fieldset > legend.circle {
+	border: solid 1px #ccc;
+	border-radius: 16px;
+	padding: 3px 20px 3px 25px;
+}
+
+.ui-fieldset > legend::before {
 	border-top: 2px solid #999;
 	border-right: 2px solid #999;
 	content: "";
@@ -30,24 +36,24 @@ fieldset.ui-fieldset > legend::before {
 	transition: all 0.2s ease-in-out;
 }
 
-fieldset.ui-fieldset.collapsed {
+.ui-fieldset.collapsed {
 	border-color: #ccc transparent transparent transparent;
 	border-radius: 0;
 }
-fieldset.ui-fieldset.collapsed > * {
+.ui-fieldset.collapsed > * {
 	display: none;
 }
-fieldset.ui-fieldset.collapsed > legend {
+.ui-fieldset.collapsed > legend {
 	display: block;
 }
-fieldset.ui-fieldset.collapsed > legend::before {
+.ui-fieldset.collapsed > legend::before {
 	margin-top: -2px;
 	transform: rotate(45deg);
 }
 
-[data-bs-theme=dark] fieldset.ui-fieldset {
+[data-bs-theme=dark] .ui-fieldset, [data-bs-theme=dark] .ui-fieldset > legend.circle {
 	border-color: #555;
 }
-[data-bs-theme=dark] fieldset.ui-fieldset.collapsed {
+[data-bs-theme=dark] .ui-fieldset.collapsed {
 	border-color: #555 transparent transparent transparent;
 }
