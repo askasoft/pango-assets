@@ -63,14 +63,7 @@
 	white-space: pre-wrap;
 	word-break: break-all;
 }
-.ui-view.grey {
-	background-color: #f9f9f9;
-	padding: 15px 30px;
-}
 
 [data-bs-theme=dark] .ui-view.lined > .row {
 	border-bottom-color: #555;
-}
-[data-bs-theme=dark] .ui-view.grey {
-	background-color: #292c2f;
 }

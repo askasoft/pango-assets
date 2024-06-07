@@ -1312,10 +1312,6 @@ select.form-control, select.form-select {
 }
 
 /** bootstrap form layout */
-form.grey {
-	background-color: #f9f9f9;
-	padding: 15px;
-}
 form.lined .form-group, form.lined .row {
 	border-bottom: 1px solid #ccc;
 	margin: 0;
@@ -1325,9 +1321,6 @@ form.lined .form-group:last-of-type, form.lined .row:last-of-type {
 	border-bottom: 0;
 }
 
-[data-bs-theme=dark] form.grey {
-	background-color: #292c2f;
-}
 [data-bs-theme=dark] form.lined .form-group, [data-bs-theme=dark] form.lined .row {
 	border-bottom-color: #555;
 }
@@ -1695,14 +1688,7 @@ form.lined .form-group:last-of-type, form.lined .row:last-of-type {
 	white-space: pre-wrap;
 	word-break: break-all;
 }
-.ui-view.grey {
-	background-color: #f9f9f9;
-	padding: 15px 30px;
-}
 
 [data-bs-theme=dark] .ui-view.lined > .row {
 	border-bottom-color: #555;
-}
-[data-bs-theme=dark] .ui-view.grey {
-	background-color: #292c2f;
 }
