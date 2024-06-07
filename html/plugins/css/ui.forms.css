@@ -47,8 +47,11 @@
 	white-space: pre-wrap;
 }
 @media (min-width: 768px) {
-	.ui-view > .row > .ui-label {
+	.ui-view > .row > .ui-label, .ui-view.label-right > .row > .ui-label {
 		text-align: right;
+	}
+	.ui-view.label-left > .row > .ui-label {
+		text-align: left;
 	}
 }
 @media (max-width: 767px) {
