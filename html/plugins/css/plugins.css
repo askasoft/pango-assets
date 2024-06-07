@@ -1438,19 +1438,12 @@ form.lined .form-group:last-of-type, form.lined .row:last-of-type {
 	display: flex;
 	padding: 5px 10px;
 }
-.ui-sidenavi ul.nav > li > a:focus, .ui-sidenavi ul.nav > li > a:hover {
-	background-color: #eee;
-}
 .ui-sidenavi ul.nav > li > a > i {
 	display: inline-block;
 	text-align: center;
 }
 .ui-sidenavi ul.nav > li.active {
 	font-weight: bold;
-}
-
-[data-bs-theme=dark] .ui-sidenavi ul.nav > li > a:focus, [data-bs-theme=dark] .ui-sidenavi ul.nav > li > a:hover {
-	background-color: #393c3f;
 }
 
 /* mininav */
