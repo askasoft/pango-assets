@@ -1385,36 +1385,39 @@ form.lined .form-group:last-of-type, form.lined .row:last-of-type {
 }
 /** pagination **/
 .ui-pager {
-	margin: 20px 0;
-	text-align: center;
-}
-.ui-pager > div.infos {
-	float: left;
-	padding: 8px;
-}
-.ui-pager > div.limits {
-	float: right;
-}
-.ui-pager > .pagination {
-	display: inline-flex;
-	margin: 0;
-}
-
-.ui-pager.center {
 	display: flex;
+	align-items: center;
 	flex-wrap: wrap;
-	justify-content: center;
+	margin: 20px 0;
 }
-.ui-pager.center > div.infos {
-	float: none;
-	padding: 8px 30px;
+.ui-pager > * {
+	margin-bottom: 5px;
 	white-space: nowrap;
 }
-.ui-pager.center > div.limits {
-	float: none;
-	padding: 0 30px;	
+.ui-pager > div.infos {
+	margin-right: auto;
+}
+.ui-pager > div.limits {
+	margin-left: auto;
+}
+.ui-pager > .pagination {
+	display: flex;
+	margin-top: 0;
+	margin-left: 10px;
+	margin-right: 10px;
 }
 
+/** center **/
+.ui-pager.center > div.infos {
+	margin-left: auto;
+	margin-right: 10px;
+}
+.ui-pager.center > div.limits {
+	margin-left: 10px;
+	margin-right: auto;
+}
+
+/** lined **/
 .ui-pager.lined > .pagination > li > a,
 .ui-pager.lined > .pagination > li > span {
 	background-color: #fff;
