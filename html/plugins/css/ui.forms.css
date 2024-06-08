@@ -46,14 +46,6 @@
 .ui-view > .row > .ui-label {
 	white-space: pre-wrap;
 }
-@media (min-width: 768px) {
-	.ui-view > .row > .ui-label, .ui-view.label-right > .row > .ui-label {
-		text-align: right;
-	}
-	.ui-view.label-left > .row > .ui-label {
-		text-align: left;
-	}
-}
 @media (max-width: 767px) {
 	.ui-view > .row > .ui-label {
 		width: auto;
@@ -66,4 +58,22 @@
 
 [data-bs-theme=dark] .ui-view.lined > .row {
 	border-bottom-color: #555;
+}
+
+/** label weight **/
+.label-bold .ui-label {
+	font-weight: bold;
+}
+.label-normal .ui-label {
+	font-weight: normal;
+}
+
+/** label align **/
+@media (min-width: 768px) {
+	.ui-view > .row > .ui-label, .ui-view.label-right > .row > .ui-label {
+		text-align: right;
+	}
+	.ui-view.label-left > .row > .ui-label {
+		text-align: left;
+	}
 }
