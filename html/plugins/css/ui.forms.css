@@ -1,17 +1,16 @@
 /** checks, radios */
 .ui-checks > label, .ui-radios > label {
-	padding: 0 20px 0 0;
+	padding: 0 1.5em;
 }
 .ui-checks > label > input, .ui-radios > label > input {
-	margin: 0 7px 0 0;
-	vertical-align: middle;
+	float: left;
+	height: 1em;
+	width: 1em;
+	margin-left: -1.5em;
+	margin-top: 0.25em;
 }
 .ui-checks.vertical > label, .ui-radios.vertical > label {
 	display: block;
-	padding-left: 21px;
-}
-.ui-checks.vertical > label > input, .ui-radios.vertical > label > input {
-	margin-left: -21px;
 }
 .form-horizontal .ui-checks, .form-horizontal .ui-radios, .row .ui-checks, .row .ui-radios {
 	padding-top: 7px;
@@ -24,12 +23,11 @@
 }
 .ui-checks > label.dragover {
 	border-left: dotted 1px #aaa;
-	padding-left: 7px;
+	padding-left: 1.7em;
 }
 .ui-checks.vertical > label.dragover {
-	border-left: none;
-	padding-left: 21px;
 	border-top: dotted 1px #aaa;
+	border-left: none;
 }
 
 
