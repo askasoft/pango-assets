@@ -1,7 +1,15 @@
+:root {
+	--ui-border-color: #ccc;
+}
+[data-bs-theme=dark] {
+	--ui-border-color: #555;
+}
+
 .ui-fieldset {
-	border: solid 1px #ccc;
-	margin: 10px 0;
-	padding: 10px;
+	--ui-arrow-color: #999;
+	border: solid 1px var(--ui-border-color);
+	margin: 0 0 1rem 0;
+	padding: 1rem;
 }
 
 .ui-fieldset > legend {
@@ -15,14 +23,14 @@
 	width: auto;
 }
 .ui-fieldset > legend.circle {
-	border: solid 1px #ccc;
+	border: solid 1px var(--ui-border-color);
 	border-radius: 16px;
 	padding: 3px 20px 3px 25px;
 }
 
 .ui-fieldset > legend::before {
-	border-top: 2px solid #999;
-	border-right: 2px solid #999;
+	border-top: 2px solid var(--ui-arrow-color);
+	border-right: 2px solid var(--ui-arrow-color);
 	content: "";
 	display: block;
 	position: absolute;
@@ -37,7 +45,7 @@
 }
 
 .ui-fieldset.collapsed {
-	border-color: #ccc transparent transparent transparent;
+	border-color: var(--ui-border-color) transparent transparent transparent;
 	border-radius: 0;
 }
 .ui-fieldset.collapsed > * {
@@ -51,9 +59,3 @@
 	transform: rotate(45deg);
 }
 
-[data-bs-theme=dark] .ui-fieldset, [data-bs-theme=dark] .ui-fieldset > legend.circle {
-	border-color: #555;
-}
-[data-bs-theme=dark] .ui-fieldset.collapsed {
-	border-color: #555 transparent transparent transparent;
-}

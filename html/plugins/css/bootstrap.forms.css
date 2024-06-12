@@ -1,3 +1,14 @@
+:root {
+	--ui-lined-color: #ccc;
+	--ui-input-py: calc(0.375rem + var(--bs-border-width, 1px));
+	--ui-row-py1: 0.25rem;
+	--ui-row-py2: 0.5rem;
+	--ui-row-py3: 1rem;
+}
+[data-bs-theme=dark] {
+	--ui-lined-color: #555;
+}
+
 /** label weight **/
 label {
 	font-weight: normal;
@@ -71,8 +82,8 @@ select.form-control, select.form-select {
 
 /** view only control value */
 .control-value, .col-form-value {
-	padding-top: 7px;
-	padding-bottom: 7px;
+	padding-top: var(--ui-input-py);
+	padding-bottom: var(--ui-input-py);
 }
 
 /** disable bootstrap not-allowed cursor */
@@ -81,15 +92,29 @@ select.form-control, select.form-select {
 }
 
 /** bootstrap form layout */
+.form-horizontal .form-group {
+	margin-top: 0;
+	margin-bottom: 0;
+	padding: var(--ui-row-py2) 0;
+}
+.form-horizontal .row {
+	margin-top: 0;
+	margin-bottom: 0;
+	padding: var(--ui-row-py1) 0;
+}
+.form-horizontal.ui-row-py2 .row {
+	padding: var(--ui-row-py2) 0;
+}
+.form-horizontal.ui-row-py3 .row {
+	padding: var(--ui-row-py3) 0;
+}
+
 form.lined .form-group, form.lined .row {
-	border-bottom: 1px solid #ccc;
+	border-bottom: 1px solid var(--ui-lined-color);
 	margin: 0;
-	padding: 7px;
+	padding: var(--ui-row-py3) 0;
 }
 form.lined .form-group:last-of-type, form.lined .row:last-of-type {
 	border-bottom: 0;
 }
 
-[data-bs-theme=dark] form.lined .form-group, [data-bs-theme=dark] form.lined .row {
-	border-bottom-color: #555;
-}
