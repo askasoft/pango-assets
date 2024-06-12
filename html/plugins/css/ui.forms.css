@@ -12,8 +12,13 @@
 .ui-checks.vertical > label, .ui-radios.vertical > label {
 	display: block;
 }
-.form-horizontal .ui-checks, .form-horizontal .ui-radios, .row .ui-checks, .row .ui-radios {
+/* bootstrap3 */
+.form-horizontal .ui-checks, .form-horizontal .ui-radios {
 	padding-top: 7px;
+}
+/* bootstrap4/5 */
+.row > .ui-checks, .row > .ui-radios {
+	padding: calc(.375rem + var(--bs-border-width,1)) 0;
 }
 
 /** ordered checks */
