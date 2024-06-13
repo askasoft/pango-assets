@@ -17,7 +17,7 @@
 	padding-top: var(--ui-input-py);
 }
 /* bootstrap4/5 */
-.row > .ui-checks, .row > .ui-radios {
+.row .ui-checks, .row .ui-radios {
 	padding: var(--ui-input-py) 0;
 }
 
@@ -38,15 +38,27 @@
 	border-left: none;
 }
 
-
-/** form view */
-.ui-view > .row {
+/* bootstrap4/5 form row */
+.ui-form .row {
+	margin-top: 0;
+	margin-bottom: 0;
 	padding: var(--ui-row-py1) 0;
 }
-.ui-view.ui-row-py2 > .row {
+.ui-form.ui-row-py2 .row {
 	padding: var(--ui-row-py2) 0;
 }
-.ui-view.ui-row-py3 > .row {
+.ui-form.ui-row-py3 .row {
+	padding: var(--ui-row-py3) 0;
+}
+
+/** form view */
+.ui-view .row {
+	padding: var(--ui-row-py1) 0;
+}
+.ui-view.ui-row-py2 .row {
+	padding: var(--ui-row-py2) 0;
+}
+.ui-view.ui-row-py3 .row {
 	padding: var(--ui-row-py3) 0;
 }
 .ui-view.lined > .row {
@@ -56,15 +68,15 @@
 .ui-view.lined > .row:last-of-type {
 	border-bottom: 0;
 }
-.ui-view > .row > .ui-label {
+.ui-view .ui-label {
 	white-space: pre-wrap;
 }
 @media (max-width: 767px) {
-	.ui-view > .row > .ui-label {
+	.ui-label {
 		width: auto;
 	}
 }
-.ui-view > .row > .ui-value {
+.ui-view .ui-value {
 	white-space: pre-wrap;
 	word-break: break-all;
 }
@@ -79,10 +91,10 @@
 
 /** label align **/
 @media (min-width: 768px) {
-	.ui-view > .row > .ui-label, .ui-view.label-right > .row > .ui-label {
+	.ui-label, .label-right .ui-label {
 		text-align: right;
 	}
-	.ui-view.label-left > .row > .ui-label {
+	.label-left .ui-label {
 		text-align: left;
 	}
 }
