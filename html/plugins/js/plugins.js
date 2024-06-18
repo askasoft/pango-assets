@@ -583,8 +583,8 @@
 (function($) {
 	"use strict";
 
-	$.queryArrays = function(s, f) {
-		var qs = [], i = s.indexOf('#');
+	function get_search(s) {
+		var i = s.indexOf('#');
 		if (i >= 0) {
 			s = s.substring(0, i);
 		}
@@ -593,53 +593,44 @@
 		if (i >= 0) {
 			s = s.substring(i + 1);
 		}
+		return s;
+	}
 
-		var ss = s.split('&');
-		for (i = 0; i < ss.length; i++) {
-			var pv = ss[i].split('=');
-			var n = decodeURIComponent(pv[0]);
-			if (f == null || f == n) {
-				qs.push({
-					name: n,
-					value: pv.length > 1 ? decodeURIComponent(pv[1]) : ''
+	$.queryArrays = function(s, f) {
+		var qa = [], ss = get_search(s).split('&');
+
+		for (var i = 0; i < ss.length; i++) {
+			var p = ss[i].split('='),
+				k = decodeURIComponent(p[0]),
+				v = p.length > 1 ? decodeURIComponent(p[1]) : '';
+
+			if (!f || f == k) {
+				qa.push({
+					name: k,
+					value: v
 				});
 			}
 		}
-		return qs;
+		return qa;
 	};
 
 	$.queryParams = function(s) {
-		var qs = {}, i = s.indexOf('#');
-		if (i >= 0) {
-			s = s.substring(0, i);
-		}
+		var qs = {}, ss = get_search(s).split('&');
 
-		i = s.indexOf('?');
-		if (i >= 0) {
-			s = s.substring(i + 1);
-		}
-
-		var ss = s.split('&');
-		for (i = 0; i < ss.length; i++) {
-			var pv = ss[i].split('=');
-			var n = decodeURIComponent(pv[0]);
-			qs[n] = pv.length > 1 ? decodeURIComponent(pv[1]) : '';
+		for (var i = 0; i < ss.length; i++) {
+			var p = ss[i].split('='),
+				k = decodeURIComponent(p[0]),
+				v = p.length > 1 ? decodeURIComponent(p[1]) : '';
+			if (k in qs) {
+				if (!$.isArray(qs[k])) {
+					qs[k] = [ qs[k] ];
+				}
+				qs[k].push(v);
+			} else {
+				qs[k] = v;
+			}
 		}
 		return qs;
-	};
-
-	$.addQueryParams = function(u, p) {
-		var i = u.indexOf('#');
-		if (i >= 0) {
-			u = u.substring(0, i);
-		}
-
-		i = u.indexOf('?');
-		if (i >= 0) {
-			p = $.extend($.queryParams(u), p);
-			u = u.substring(0, i);
-		}
-		return u + '?' + $.param(p);
 	};
 
 })(jQuery);
