@@ -597,8 +597,8 @@
 	border-radius: 5px;
 	-webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
 	box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
-	min-width: 100px;
-	min-height: 100px;
+	min-width: 60px;
+	min-height: 60px;
 }
 
 .ui-popup-wrap.loading .ui-popup-frame {
@@ -655,7 +655,7 @@
 
 .ui-popup-arrow.hc {
 	left: 50%;
-	margin-left: -10px;
+	margin-left: -6px;
 }
 
 .ui-popup-arrow.vt {
@@ -668,7 +668,7 @@
 
 .ui-popup-arrow.vm {
 	top: 50%;
-	margin-top: -10px;
+	margin-top: -6px;
 }
 
 .ui-popup-arrow.vb1 {
