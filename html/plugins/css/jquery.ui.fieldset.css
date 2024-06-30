@@ -8,7 +8,7 @@
 .ui-fieldset {
 	--ui-arrow-color: #999;
 	border: solid 1px var(--ui-border-color);
-	margin: 0 0 1rem 0;
+	margin: 0 0 1.5rem 0;
 	padding: 1rem;
 }
 
