@@ -16,16 +16,16 @@
 		var $dropdown = $(this);
 		var $focused = ($dropdown.find('.focus') || $dropdown.find('.selected')).first();
 
-		switch (evt.keyCode) {
-		case 32: // Space
-		case 13: // Enter
+		switch (evt.key) {
+		case ' ': // Space
+		case 'Enter':
 			if ($dropdown.hasClass('open')) {
 				$focused.trigger('click');
 			} else {
 				$dropdown.trigger('click');
 			}
 			return false;
-		case 40: // Down
+		case 'ArrowDown':
 			if (!$dropdown.hasClass('open')) {
 				$dropdown.trigger('click');
 			} else {
@@ -36,7 +36,7 @@
 				}
 			}
 			return false;
-		case 38: // Up
+		case 'ArrowUp':
 			if (!$dropdown.hasClass('open')) {
 				$dropdown.trigger('click');
 			} else {
@@ -47,12 +47,12 @@
 				}
 			}
 			return false;
-		case 27: // Esc
+		case 'Escape':
 			if ($dropdown.hasClass('open')) {
 				$dropdown.trigger('click');
 			}
 			break;
-		case 9: // Tab
+		case 'Tab':
 			if ($dropdown.hasClass('open')) {
 				return false;
 			}

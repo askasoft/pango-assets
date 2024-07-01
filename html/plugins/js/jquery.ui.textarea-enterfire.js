@@ -2,7 +2,7 @@
 	"use strict";
 
 	function _enterfire(evt) {
-		if (evt.ctrlKey && evt.which == 13) {
+		if (evt.ctrlKey && evt.key == 'Enter') {
 			var $t = $(this), ef = $t.attr('enterfire') || 'true';
 			if (ef == 'true' || ef == 'form' || ef == 'submit') {
 				$t.closest('form').submit();
