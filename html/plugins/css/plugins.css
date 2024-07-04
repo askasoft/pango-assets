@@ -1034,7 +1034,7 @@ ul.ui-tree li:before {
 	line-height: 1em;
 	z-index: -1;
 }
-ul.ui-tree li.node>.item {
+ul.ui-tree li.node > .item {
 	cursor: pointer;
 }
 
@@ -1044,15 +1044,12 @@ ul.ui-tree.arrow ul {
 }
 ul.ui-tree.arrow li:before {
 	content: ">";
-	-webkit-transform: rotate(90deg);
 	transform: rotate(90deg);
-	-webkit-transition: all 0.2s;
 	transition: all 0.2s;
 }
 ul.ui-tree.arrow li.collapsed:before, ul.ui-tree.arrow li.leaf:before {
 	left: 0.2em;
 	top: 0.25em;
-	-webkit-transform: rotate(0deg);
 	transform: rotate(0deg);
 }
 ul.ui-tree.arrow li.leaf:before {
@@ -1126,13 +1123,12 @@ ul.ui-tree.arrow.boxed > li, ul.ui-tree.arrow.boxed ul > li {
 ul.ui-tree.sticky ul {
 	margin: 0 0 0 14em;
 }
-ul.ui-tree.sticky li>.item {
+ul.ui-tree.sticky li > .item {
 	position: sticky;
-	top: 0px;
+	top: 0;
 	width: 100%;
 	max-width: 15em;
 }
-
 .ui-uploader-btn {
 	margin-right: 20px;
 }

@@ -2995,7 +2995,7 @@
 	$.fn.treeview = function(method, target) {
 		// Methods
 		if (typeof method == 'string') {
-			api[method].call(this, target);
+			api[method](this, target);
 			return this;
 		}
 
