@@ -69,11 +69,6 @@ select.form-control, select.form-select {
 	position: relative;
 	white-space: pre-wrap;
 }
-@media (max-width: 767px) {
-	.col-form-label {
-		width: auto;
-	}
-}
 @media (min-width: 768px) {
 	.col-form-label {
 		text-align: right;
