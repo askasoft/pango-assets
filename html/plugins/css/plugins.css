@@ -1455,7 +1455,7 @@ form.lined > .form-group:last-of-type, form.lined > .row:last-of-type {
 }
 .ui-sidenavi > .panel > .panel-heading, .ui-sidenavi > .card > .card-header {
 	background-color: transparent;
-	padding: 10px;
+	padding: 8px 10px;
 	position: relative;
 }
 .ui-sidenavi > .panel > .panel-body, .ui-sidenavi > .card > .card-body {
