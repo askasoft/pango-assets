@@ -244,7 +244,7 @@
 		$p.focus().children('.ui-popup-frame').hide()[c.transition](function() {
 			_bind(c);
 			if (c.focus) {
-				$(c.focus).focus();
+				$p.find(c.focus).eq(0).focus();
 			}
 			$c.trigger('shown.popup');
 		});
