@@ -127,12 +127,14 @@
 	function _ajaxFail(xhr, status, err) {
 		var $e = $('<div class="ui-uploader-error">');
 
-		if (xhr.responseJSON) {
-			$e.addClass('json').text(JSON.stringify(xhr.responseJSON, null, 4));
-		} else if (xhr.responseText) {
-			$e.html(xhr.responseText);
+		var j = xhr.responseJSON, t = xhr.responseText;
+		if (j) {
+			var e = j.error;
+			$e.addClass('text').text(typeof(e) == 'string' ? e : JSON.stringify(j, null, 4));
+		} else if (t) {
+			$e.html(t);
 		} else {
-			$e.text(err || status || 'Server error!');
+			$e.addClass('text').text((xhr.status ? (xhr.status + ' ') : '')  + (err || status || 'error'));
 		}
 
 		$(this).append($e);

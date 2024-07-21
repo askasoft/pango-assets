@@ -54,7 +54,7 @@
 	margin: 5px 0;
 	padding: 15px;
 }
-.ui-uploader-error.json {
+.ui-uploader-error.text {
 	white-space: pre-wrap;
 }
 

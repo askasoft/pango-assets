@@ -233,11 +233,11 @@
 	}
 
 	function _show($p, $c, c, trigger) {
-		$c.trigger('show.popup');
+		c.trigger = trigger || window;
+
+		$c.trigger('show.popup', c.trigger);
 
 		$p.find('.ui-popup-closer').toggle(c.closer);
-
-		c.trigger = trigger || window;
 
 		_align($p, c.trigger, c.position);
 
@@ -246,7 +246,7 @@
 			if (c.focus) {
 				$p.find(c.focus).eq(0).focus();
 			}
-			$c.trigger('shown.popup');
+			$c.trigger('shown.popup', c.trigger);
 		});
 	}
 
@@ -297,13 +297,13 @@
 						return false;
 					});
 					c.loaded = true;
-					$c.trigger('loaded.popup', data);
+					$c.trigger('loaded.popup', [ data, status, xhr ]);
 				}
 			},
 			error: function(xhr, status, err) {
 				if (seq == c.sequence) {
 					c.ajaxFail.call($c, xhr, status, err);
-					$c.trigger('failed.popup');
+					$c.trigger('failed.popup', [ xhr, status, err ]);
 				}
 			},
 			complete: function() {
@@ -319,12 +319,14 @@
 	function _ajaxFail(xhr, status, err) {
 		var $c = $(this), $e = $('<div class="ui-popup-error">');
 
-		if (xhr.responseJSON) {
-			$e.addClass('json').text(JSON.stringify(xhr.responseJSON, null, 4));
-		} else if (xhr.responseText) {
-			$e.html(xhr.responseText);
+		var j = xhr.responseJSON, t = xhr.responseText;
+		if (j) {
+			var e = j.error;
+			$e.addClass('text').text(typeof(e) == 'string' ? e : JSON.stringify(j, null, 4));
+		} else if (t) {
+			$e.html(t);
 		} else {
-			$e.text(err || status || 'Server error!');
+			$e.addClass('text').text((xhr.status ? (xhr.status + ' ') : '')  + (err || status || 'error'));
 		}
 
 		$c.empty().append($e);

@@ -742,7 +742,7 @@
 	margin: 15px;
 	padding: 15px;
 }
-.ui-popup-error.json {
+.ui-popup-error.text {
 	white-space: pre-wrap;
 }
 
@@ -1195,7 +1195,7 @@ ul.ui-tree.sticky li > .item {
 	margin: 5px 0;
 	padding: 15px;
 }
-.ui-uploader-error.json {
+.ui-uploader-error.text {
 	white-space: pre-wrap;
 }
 
