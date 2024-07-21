@@ -1308,13 +1308,12 @@ label {
 
 /** required **/
 .required {
-	padding-right: 15px;
+	padding-right: 1em;
 }
 .required:after {
 	color: #f00;
 	content: '\ff0a';
 	position: absolute;
-	right: -2px;
 }
 
 /** controls **/
@@ -1333,6 +1332,7 @@ select.form-control, select.form-select {
 
 /** bootstrap3 */
 .control-label, .control-value {
+	padding-right: 1em;
 	white-space: pre-wrap;
 	word-break: break-all;
 }
@@ -1342,6 +1342,7 @@ select.form-control, select.form-select {
 	display: none !important;
 }
 .col-form-label {
+	padding-right: 1em;
 	position: relative;
 	white-space: pre-wrap;
 }
