@@ -68,18 +68,6 @@
 .ui-view.lined > .row:last-of-type {
 	border-bottom: 0;
 }
-.ui-view .ui-label {
-	white-space: pre-wrap;
-}
-@media (max-width: 767px) {
-	.ui-label {
-		width: auto;
-	}
-}
-.ui-view .ui-value {
-	white-space: pre-wrap;
-	word-break: break-all;
-}
 
 /** label weight **/
 .label-bold .ui-label {
@@ -98,3 +86,23 @@
 		text-align: left;
 	}
 }
+
+/** text **/
+.ui-label, .ui-value {
+	word-break: break-all;
+}
+
+.ui-label > pre, .ui-value > pre {
+	border: 0;
+	font-size: 1em;
+	margin: 0;
+	padding: 0;
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.text-prewrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+

@@ -54,21 +54,9 @@ select.form-control, select.form-select {
 	width: auto;
 }
 
-/** bootstrap3 */
-.control-label, .control-value {
-	padding-right: 1em;
-	white-space: pre-wrap;
-	word-break: break-all;
-}
-
 /** bootstrap4/5 */
 .hidden {
 	display: none !important;
-}
-.col-form-label {
-	padding-right: 1em;
-	position: relative;
-	white-space: pre-wrap;
 }
 @media (min-width: 768px) {
 	.col-form-label {
@@ -76,10 +64,29 @@ select.form-control, select.form-select {
 	}
 }
 
+/** label */
+.control-label, .col-form-label {
+	padding-right: 1em;
+	position: relative;
+	word-break: break-all;
+}
+
 /** view only control value */
 .control-value, .col-form-value {
 	padding-top: var(--ui-input-py);
 	padding-bottom: var(--ui-input-py);
+	word-break: break-all;
+}
+
+/** text */
+.control-label > pre, .control-value > pre,
+.col-form-label > pre, .col-form-value > pre {
+	border: 0;
+	font-size: 1em;
+	margin: 0;
+	padding: 0;
+	white-space: pre-wrap;
+	word-break: break-all;
 }
 
 /** disable bootstrap not-allowed cursor */
