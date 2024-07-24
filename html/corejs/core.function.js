@@ -7,31 +7,29 @@
 		 * Call directly on any function. Example: <code>myFunction.callback(arg1, arg2)</code>
 		 * Will create a function that is bound to those 2 args. <b>If a specific scope is required in the
 		 * callback, use {@link #delegate} instead.</b> The function returned by callback always
-		 * executes in the window scope.
+		 * executes in the this or window scope.
 		 * <p>This method is required when you want to pass arguments to a callback function.  If no arguments
 		 * are needed, you can simply pass a reference to the function as a callback (e.g., callback: myFn).
 		 * However, if you tried to pass a function with arguments (e.g., callback: myFn(arg1, arg2)) the function
 		 * would simply execute immediately when the code is parsed. Example usage:
 		 * <pre><code>
-			var sayHi = function(name){
-				alert('Hi, ' + name);
+			var sayHi = function(hi, name) {
+				alert(hi + ', ' + name);
 			}
 			
-			// clicking the button alerts "Hi, Fred"
-			new Ext.Button({
-				text: 'Say Hi',
-				renderTo: Ext.getBody(),
-				handler: sayHi.callback('Fred')
+			$.ajax({
+				url: '/sayhi',
+				success: sayHi.callback('hi')
 			});
 			</code></pre>
 		 * @return {Function} The new function
 		 */
 		Function.prototype.callback = function(/*args...*/) {
 			// make args available, in function below
-			var args = arguments;
 			var method = this;
+			var args = [].slice.call(arguments, 0);
 			return function() {
-				return method.apply(window, args);
+				return method.apply(this || window, args.concat([].slice.call(arguments, 0)));
 			};
 		};
 	}
@@ -48,9 +46,9 @@
 		 */
 		Function.prototype.bind = function(/*args...*/) {
 			// make args available, in function below
-			var scope = arguments[0] || window;
-			var args = Array.prototype.slice.call(arguments, 1);
 			var method = this;
+			var scope = arguments[0] || window;
+			var args = [].slice.call(arguments, 1);
 			return function() {
 				return method.apply(scope, args);
 			};
@@ -59,42 +57,33 @@
 
 	if (typeof Function.prototype.delegate != "function") {
 		/**
-		 * Creates a delegate (callback) that sets the scope to obj.
-		 * Call directly on any function. Example: <code>this.myFunction.delegate(this, [arg1, arg2])</code>
+		 * Creates a delegate (callback) that sets the scope to arguments[0].
+		 * Call directly on any function. Example: <code>this.myFunction.delegate(this, arg1, arg2)</code>
 		 * Will create a function that is automatically scoped to obj so that the <tt>this</tt> variable inside the
 		 * callback points to obj. Example usage:
 		 * <pre><code>
-			var sayHi = function(name){
-				// Note this use of "this.text" here.  This function expects to
-				// execute within a scope that contains a text property.  In this
-				// example, the "this" variable is pointing to the btn object that
-				// was passed in delegate below.
-				alert('Hi, ' + name + '. You clicked the "' + this.text + '" button.');
+			var sayHi = function(name, event) {
+				// Note this use of "this.text()" here.
+				// This function expects to execute within a scope that contains a text() method.
+				// In this example, the "this" variable is pointing to the btn object that was passed in delegate below.
+				alert('Hi, ' + name + '. You clicked the "' + this.text() + '" button.');
 			}
 	
-			var btn = new Button({
-				text: 'Say Hi'
-			});
+			var btn = $('<button>').text('Say Hi');
 	
 			// This callback will execute in the scope of the
 			// button instance. Clicking the button alerts
 			// "Hi, Fred. You clicked the "Say Hi" button."
-			btn.on('click', sayHi.delegate(btn, ['Fred']));
+			btn.on('click', sayHi.delegate(btn, 'Fred'));
 			</code></pre>
-		 * @param {Object} obj (optional) The object for which the scope is set
-		 * @param {Array} args (optional) Overrides arguments for the call. (Defaults to the arguments passed by the caller)
-		 * @param {Boolean} appendArgs (optional) if True args are appended to call args instead of overriding
 		 * @return {Function} The new function
 		 */
-		Function.prototype.delegate = function(obj, args, appendArgs) {
+		Function.prototype.delegate = function(/*args...*/) {
 			var method = this;
+			var scope = arguments[0] || window;
+			var args = [].slice.call(arguments, 1);
 			return function() {
-				var callArgs = args || arguments;
-				if (appendArgs === true) {
-					callArgs = Array.prototype.slice.call(arguments, 0);
-					callArgs = callArgs.concat(args);
-				}
-				return method.apply(obj || window, callArgs);
+				return method.apply(scope, args.concat([].slice.call(arguments, 0)));
 			};
 		};
 	}
@@ -163,6 +152,7 @@
 			if (typeof fcn != "function") {
 				return this;
 			}
+
 			var method = this;
 			return function() {
 				fcn.target = this;
@@ -201,6 +191,7 @@
 			if (typeof fcn != "function") {
 				return this;
 			}
+
 			var method = this;
 			return function() {
 				var retval = method.apply(this || window, arguments);
