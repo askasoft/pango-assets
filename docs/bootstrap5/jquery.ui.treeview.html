@@ -7,14 +7,6 @@
 	<link href="../../html/bootstrap5/css/bootstrap.css" rel="stylesheet" type="text/css" />
 	<link href="../../html/fontawesome6/css/all.css" rel="stylesheet" type="text/css" />
 	<link href="../../html/plugins/css/jquery.ui.treeview.css" rel="stylesheet" type="text/css" />
-	<style>
-		.row .col-md-4 {
-			border: solid 1px #00f;
-		}
-		.card {
-			background-color: transparent;
-		}
-	</style>
 </head>
 
 <body>
@@ -22,826 +14,30 @@
 		<h1 style="text-align: center; margin: 20px 0px;">JQuery TreeView Plugin</h1>
 		<hr>
 
-		<div class="text-center">
+		<div id="themes" class="text-center">
+			Theme:
 			<button id="light" class="btn btn-primary">Light</button>
 			<button id="dark" class="btn btn-secondary">Dark</button>
 		</div>
 		<hr>
 
-
-		<div class="row">
-			<div class="col-md-4">
-				<p>default</p>
-				<ul id="t1" class="ui-tree" data-spy="treeview">
-					<li>
-						<div class="item"><b>Animals</b></div>
-						<ul>
-							<li>
-								<div class="item">Birds</div>
-							</li>
-							<li>
-								<div class="item">Mammals</div>
-								<ul>
-									<li>
-										<div class="item">Elephant</div>
-										<ul>
-											<li>
-												<div class="item">List item 1</div>
-											</li>
-											<li>
-												<div class="item">List item 2</div>
-											</li>
-										</ul>
-									</li>
-									<li>
-										<div class="item">Mouse</div>
-										<ul>
-											<li>
-												<div class="item">List item 1</div>
-											</li>
-											<li>
-												<div class="item">List item 2</div>
-											</li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<div class="item">Reptiles</div>
-							</li>
-							<li>
-								<div class="item">Birds</div>
-							</li>
-							<li>
-								<div class="item">Mammals</div>
-								<ul>
-									<li>
-										<div class="item">Elephant</div>
-										<ul>
-											<li>
-												<div class="item">List item 1</div>
-											</li>
-											<li>
-												<div class="item">List item 2</div>
-											</li>
-											<li>
-												<div class="item">List item 3</div>
-											</li>
-											<li>
-												<div class="item">List item 4</div>
-											</li>
-										</ul>
-									</li>
-									<li>
-										<div class="item">Mouse</div>
-										<ul>
-											<li>
-												<div class="item">List item 1</div>
-											</li>
-											<li>
-												<div class="item">List item 2</div>
-											</li>
-											<li>
-												<div class="item">List item 3</div>
-											</li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<div class="item">Reptiles</div>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<div class="item">Plants</div>
-						<ul>
-							<li>
-								<div class="item">Flowers</div>
-								<ul>
-									<li>
-										<div class="item">Rose</div>
-										<ul>
-											<li>
-												<div class="item">List item 1</div>
-											</li>
-											<li>
-												<div class="item">List item 2</div>
-											</li>
-										</ul>
-									</li>
-									<li>
-										<div class="item">Tulip</div>
-										<ul>
-											<li>
-												<div class="item">List item 1</div>
-											</li>
-											<li>
-												<div class="item">List item 2</div>
-											</li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<div class="item">Trees</div>
-							</li>
-							<li>
-								<div class="item">Flowers</div>
-								<ul>
-									<li>
-										<div class="item">Rose</div>
-									</li>
-									<li>
-										<div class="item">Tulip</div>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<div class="item">Trees</div>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</div>
-			<div class="col-md-4">
-				<p>arrow</p>
-				<ul id="t2" class="ui-tree arrow" data-spy="treeview">
-					<li>
-						<div class="item"><b>Animals</b></div>
-						<ul>
-							<li>
-								<div class="item">Birds</div>
-							</li>
-							<li>
-								<div class="item">Mammals</div>
-								<ul>
-									<li>
-										<div class="item">Elephant</div>
-										<ul>
-											<li>
-												<div class="item">List item 1</div>
-											</li>
-											<li>
-												<div class="item">List item 2</div>
-											</li>
-										</ul>
-									</li>
-									<li>
-										<div class="item">Mouse</div>
-										<ul>
-											<li>
-												<div class="item">List item 1</div>
-											</li>
-											<li>
-												<div class="item">List item 2</div>
-											</li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<div class="item">Reptiles</div>
-							</li>
-							<li>
-								<div class="item">Birds</div>
-							</li>
-							<li>
-								<div class="item">Mammals</div>
-								<ul>
-									<li>
-										<div class="item">Elephant</div>
-										<ul>
-											<li>
-												<div class="item">List item 1</div>
-											</li>
-											<li>
-												<div class="item">List item 2</div>
-											</li>
-											<li>
-												<div class="item">List item 3</div>
-											</li>
-											<li>
-												<div class="item">List item 4</div>
-											</li>
-										</ul>
-									</li>
-									<li>
-										<div class="item">Mouse</div>
-										<ul>
-											<li>
-												<div class="item">List item 1</div>
-											</li>
-											<li>
-												<div class="item">List item 2</div>
-											</li>
-											<li>
-												<div class="item">List item 3</div>
-											</li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<div class="item">Reptiles</div>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<div class="item">Plants</div>
-						<ul>
-							<li>
-								<div class="item">Flowers</div>
-								<ul>
-									<li>
-										<div class="item">Rose</div>
-										<ul>
-											<li>
-												<div class="item">List item 1</div>
-											</li>
-											<li>
-												<div class="item">List item 2</div>
-											</li>
-										</ul>
-									</li>
-									<li>
-										<div class="item">Tulip</div>
-										<ul>
-											<li>
-												<div class="item">List item 1</div>
-											</li>
-											<li>
-												<div class="item">List item 2</div>
-											</li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<div class="item">Trees</div>
-							</li>
-							<li>
-								<div class="item">Flowers</div>
-								<ul>
-									<li>
-										<div class="item">Rose</div>
-									</li>
-									<li>
-										<div class="item">Tulip</div>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<div class="item">Trees</div>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</div>
-			<div class="col-md-4">
-				<p>lined</p>
-				<ul id="t3" class="ui-tree lined" data-spy="treeview">
-					<li>
-						<div class="item"><b>Animals</b></div>
-						<ul>
-							<li>
-								<div class="item">Birds</div>
-							</li>
-							<li>
-								<div class="item">Mammals</div>
-								<ul>
-									<li>
-										<div class="item">Elephant</div>
-										<ul>
-											<li>
-												<div class="item">List item 1</div>
-											</li>
-											<li>
-												<div class="item">List item 2</div>
-											</li>
-										</ul>
-									</li>
-									<li>
-										<div class="item">Mouse</div>
-										<ul>
-											<li>
-												<div class="item">List item 1</div>
-											</li>
-											<li>
-												<div class="item">List item 2</div>
-											</li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<div class="item">Reptiles</div>
-							</li>
-							<li>
-								<div class="item">Birds</div>
-							</li>
-							<li>
-								<div class="item">Mammals</div>
-								<ul>
-									<li>
-										<div class="item">Elephant</div>
-										<ul>
-											<li>
-												<div class="item">List item 1</div>
-											</li>
-											<li>
-												<div class="item">List item 2</div>
-											</li>
-											<li>
-												<div class="item">List item 3</div>
-											</li>
-											<li>
-												<div class="item">List item 4</div>
-											</li>
-										</ul>
-									</li>
-									<li>
-										<div class="item">Mouse</div>
-										<ul>
-											<li>
-												<div class="item">List item 1</div>
-											</li>
-											<li>
-												<div class="item">List item 2</div>
-											</li>
-											<li>
-												<div class="item">List item 3</div>
-											</li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<div class="item">Reptiles</div>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<div class="item">Plants</div>
-						<ul>
-							<li>
-								<div class="item">Flowers</div>
-								<ul>
-									<li>
-										<div class="item">Rose</div>
-										<ul>
-											<li>
-												<div class="item">List item 1</div>
-											</li>
-											<li>
-												<div class="item">List item 2</div>
-											</li>
-										</ul>
-									</li>
-									<li>
-										<div class="item">Tulip</div>
-										<ul>
-											<li>
-												<div class="item">List item 1</div>
-											</li>
-											<li>
-												<div class="item">List item 2</div>
-											</li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<div class="item">Trees</div>
-							</li>
-							<li>
-								<div class="item">Flowers</div>
-								<ul>
-									<li>
-										<div class="item">Rose</div>
-									</li>
-									<li>
-										<div class="item">Tulip</div>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<div class="item">Trees</div>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</div>
+		<div id="styles" class="text-center">
+			Style:
+			&nbsp;&nbsp;<label><input value="lined"  type="checkbox"> lined </label>
+			&nbsp;&nbsp;<label><input value="arrow"  type="checkbox"> arrow </label>
+			&nbsp;&nbsp;<label><input value="boxed"  type="checkbox"> boxed </label>
+			&nbsp;&nbsp;<label><input value="sticky" type="checkbox"> sticky</label>
 		</div>
 		<hr>
 
-		<div class="row">
-			<div class="col-md-4">
-				<p>boxed</p>
-				<ul id="t4" class="ui-tree boxed" data-spy="treeview">
-					<li>
-						<div class="item"><b>Animals</b></div>
-						<ul>
-							<li>
-								<div class="item">Birds</div>
-							</li>
-							<li>
-								<div class="item">Mammals</div>
-								<ul>
-									<li>
-										<div class="item">Elephant</div>
-										<ul>
-											<li>
-												<div class="item">List item 1</div>
-											</li>
-											<li>
-												<div class="item">List item 2</div>
-											</li>
-										</ul>
-									</li>
-									<li>
-										<div class="item">Mouse</div>
-										<ul>
-											<li>
-												<div class="item">List item 1</div>
-											</li>
-											<li>
-												<div class="item">List item 2</div>
-											</li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<div class="item">Reptiles</div>
-							</li>
-							<li>
-								<div class="item">Birds</div>
-							</li>
-							<li>
-								<div class="item">Mammals</div>
-								<ul>
-									<li>
-										<div class="item">Elephant</div>
-										<ul>
-											<li>
-												<div class="item">List item 1</div>
-											</li>
-											<li>
-												<div class="item">List item 2</div>
-											</li>
-											<li>
-												<div class="item">List item 3</div>
-											</li>
-											<li>
-												<div class="item">List item 4</div>
-											</li>
-										</ul>
-									</li>
-									<li>
-										<div class="item">Mouse</div>
-										<ul>
-											<li>
-												<div class="item">List item 1</div>
-											</li>
-											<li>
-												<div class="item">List item 2</div>
-											</li>
-											<li>
-												<div class="item">List item 3</div>
-											</li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<div class="item">Reptiles</div>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<div class="item">Plants</div>
-						<ul>
-							<li>
-								<div class="item">Flowers</div>
-								<ul>
-									<li>
-										<div class="item">Rose</div>
-										<ul>
-											<li>
-												<div class="item">List item 1</div>
-											</li>
-											<li>
-												<div class="item">List item 2</div>
-											</li>
-										</ul>
-									</li>
-									<li>
-										<div class="item">Tulip</div>
-										<ul>
-											<li>
-												<div class="item">List item 1</div>
-											</li>
-											<li>
-												<div class="item">List item 2</div>
-											</li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<div class="item">Trees</div>
-							</li>
-							<li>
-								<div class="item">Flowers</div>
-								<ul>
-									<li>
-										<div class="item">Rose</div>
-									</li>
-									<li>
-										<div class="item">Tulip</div>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<div class="item">Trees</div>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</div>
-			<div class="col-md-4">
-				<p>arrow boxed</p>
-				<ul id="t5" class="ui-tree arrow boxed" data-spy="treeview">
-					<li>
-						<div class="item"><b>Animals</b></div>
-						<ul>
-							<li>
-								<div class="item">Birds</div>
-							</li>
-							<li>
-								<div class="item">Mammals</div>
-								<ul>
-									<li>
-										<div class="item">Elephant</div>
-										<ul>
-											<li>
-												<div class="item">List item 1</div>
-											</li>
-											<li>
-												<div class="item">List item 2</div>
-											</li>
-										</ul>
-									</li>
-									<li>
-										<div class="item">Mouse</div>
-										<ul>
-											<li>
-												<div class="item">List item 1</div>
-											</li>
-											<li>
-												<div class="item">List item 2</div>
-											</li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<div class="item">Reptiles</div>
-							</li>
-							<li>
-								<div class="item">Birds</div>
-							</li>
-							<li>
-								<div class="item">Mammals</div>
-								<ul>
-									<li>
-										<div class="item">Elephant</div>
-										<ul>
-											<li>
-												<div class="item">List item 1</div>
-											</li>
-											<li>
-												<div class="item">List item 2</div>
-											</li>
-											<li>
-												<div class="item">List item 3</div>
-											</li>
-											<li>
-												<div class="item">List item 4</div>
-											</li>
-										</ul>
-									</li>
-									<li>
-										<div class="item">Mouse</div>
-										<ul>
-											<li>
-												<div class="item">List item 1</div>
-											</li>
-											<li>
-												<div class="item">List item 2</div>
-											</li>
-											<li>
-												<div class="item">List item 3</div>
-											</li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<div class="item">Reptiles</div>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<div class="item">Plants</div>
-						<ul>
-							<li>
-								<div class="item">Flowers</div>
-								<ul>
-									<li>
-										<div class="item">Rose</div>
-										<ul>
-											<li>
-												<div class="item">List item 1</div>
-											</li>
-											<li>
-												<div class="item">List item 2</div>
-											</li>
-										</ul>
-									</li>
-									<li>
-										<div class="item">Tulip</div>
-										<ul>
-											<li>
-												<div class="item">List item 1</div>
-											</li>
-											<li>
-												<div class="item">List item 2</div>
-											</li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<div class="item">Trees</div>
-							</li>
-							<li>
-								<div class="item">Flowers</div>
-								<ul>
-									<li>
-										<div class="item">Rose</div>
-									</li>
-									<li>
-										<div class="item">Tulip</div>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<div class="item">Trees</div>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</div>
-			<div class="col-md-4">
-				<p>lined boxed</p>
-				<ul id="t6" class="ui-tree lined boxed" data-spy="treeview">
-					<li>
-						<div class="item"><b>Animals</b></div>
-						<ul>
-							<li>
-								<div class="item">Birds</div>
-							</li>
-							<li>
-								<div class="item">Mammals</div>
-								<ul>
-									<li>
-										<div class="item">Elephant</div>
-										<ul>
-											<li>
-												<div class="item">List item 1</div>
-											</li>
-											<li>
-												<div class="item">List item 2</div>
-											</li>
-										</ul>
-									</li>
-									<li>
-										<div class="item">Mouse</div>
-										<ul>
-											<li>
-												<div class="item">List item 1</div>
-											</li>
-											<li>
-												<div class="item">List item 2</div>
-											</li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<div class="item">Reptiles</div>
-							</li>
-							<li>
-								<div class="item">Birds</div>
-							</li>
-							<li>
-								<div class="item">Mammals</div>
-								<ul>
-									<li>
-										<div class="item">Elephant</div>
-										<ul>
-											<li>
-												<div class="item">List item 1</div>
-											</li>
-											<li>
-												<div class="item">List item 2</div>
-											</li>
-											<li>
-												<div class="item">List item 3</div>
-											</li>
-											<li>
-												<div class="item">List item 4</div>
-											</li>
-										</ul>
-									</li>
-									<li>
-										<div class="item">Mouse</div>
-										<ul>
-											<li>
-												<div class="item">List item 1</div>
-											</li>
-											<li>
-												<div class="item">List item 2</div>
-											</li>
-											<li>
-												<div class="item">List item 3</div>
-											</li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<div class="item">Reptiles</div>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<div class="item">Plants</div>
-						<ul>
-							<li>
-								<div class="item">Flowers</div>
-								<ul>
-									<li>
-										<div class="item">Rose</div>
-										<ul>
-											<li>
-												<div class="item">List item 1</div>
-											</li>
-											<li>
-												<div class="item">List item 2</div>
-											</li>
-										</ul>
-									</li>
-									<li>
-										<div class="item">Tulip</div>
-										<ul>
-											<li>
-												<div class="item">List item 1</div>
-											</li>
-											<li>
-												<div class="item">List item 2</div>
-											</li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<div class="item">Trees</div>
-							</li>
-							<li>
-								<div class="item">Flowers</div>
-								<ul>
-									<li>
-										<div class="item">Rose</div>
-									</li>
-									<li>
-										<div class="item">Tulip</div>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<div class="item">Trees</div>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</div>
+		<div id="methods" class="text-center">
+			Method:
+			<button id="expand" class="btn btn-primary">expand</button>
+			<button id="collapse" class="btn btn-secondary">collapse</button>
 		</div>
 		<hr>
 
-		<ul id="t7" class="ui-tree lined boxed sticky" data-spy="treeview">
+		<ul id="treeview" class="ui-tree" data-spy="treeview">
 			<li>
 				<div class="item"><b>Animals</b></div>
 				<ul>
@@ -853,64 +49,31 @@
 						<ul>
 							<li>
 								<div class="item">Elephant</div>
+								<ul>
+									<li>
+										<div class="item">List item 1</div>
+									</li>
+									<li>
+										<div class="item">List item 2</div>
+									</li>
+								</ul>
 							</li>
 							<li>
 								<div class="item">Mouse</div>
+								<ul>
+									<li>
+										<div class="item">List item 1</div>
+									</li>
+									<li>
+										<div class="item">List item 2</div>
+									</li>
+								</ul>
 							</li>
 						</ul>
 					</li>
 					<li>
 						<div class="item">Reptiles</div>
 					</li>
-				</ul>
-			</li>
-			<li>
-				<div class="item">Plants</div>
-				<ul>
-					<li>
-						<div class="item">Flowers</div>
-						<ul>
-							<li>
-								<div class="item">Rose</div>
-								<ul>
-									<li>
-										<div class="item">List item 1</div>
-									</li>
-									<li>
-										<div class="item">List item 2</div>
-									</li>
-									<li>
-										<div class="item">List item 3</div>
-									</li>
-									<li>
-										<div class="item">List item 4</div>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<div class="item">Tulip</div>
-								<ul>
-									<li>
-										<div class="item">List item 1</div>
-									</li>
-									<li>
-										<div class="item">List item 2</div>
-									</li>
-									<li>
-										<div class="item">List item 3</div>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<div class="item">Trees
-					</li>
-				</ul>
-			</li>
-			<li>
-				<div class="item"><b>Animals</b></div>
-				<ul>
 					<li>
 						<div class="item">Birds</div>
 					</li>
@@ -929,6 +92,9 @@
 									<li>
 										<div class="item">List item 3</div>
 									</li>
+									<li>
+										<div class="item">List item 4</div>
+									</li>
 								</ul>
 							</li>
 							<li>
@@ -942,9 +108,6 @@
 									</li>
 									<li>
 										<div class="item">List item 3</div>
-									</li>
-									<li>
-										<div class="item">List item 4</div>
 									</li>
 								</ul>
 							</li>
@@ -970,9 +133,6 @@
 									<li>
 										<div class="item">List item 2</div>
 									</li>
-									<li>
-										<div class="item">List item 3</div>
-									</li>
 								</ul>
 							</li>
 							<li>
@@ -984,197 +144,50 @@
 									<li>
 										<div class="item">List item 2</div>
 									</li>
-									<li>
-										<div class="item">List item 3</div>
-									</li>
-									<li>
-										<div class="item">List item 4</div>
-									</li>
 								</ul>
 							</li>
 						</ul>
 					</li>
 					<li>
-						<div class="item">Trees
+						<div class="item">Trees</div>
+					</li>
+					<li>
+						<div class="item">Flowers</div>
+						<ul>
+							<li>
+								<div class="item">Rose</div>
+							</li>
+							<li>
+								<div class="item">Tulip</div>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<div class="item">Trees</div>
 					</li>
 				</ul>
 			</li>
 		</ul>
-		<hr>
 
-		<ul id="t8" class="ui-tree arrow sticky" data-spy="treeview">
-			<li>
-				<div class="item"><b>Animals</b></div>
-				<ul>
-					<li>
-						<div class="item">Birds</div>
-					</li>
-					<li>
-						<div class="item">Mammals</div>
-						<ul>
-							<li>
-								<div class="item">Elephant</div>
-							</li>
-							<li>
-								<div class="item">Mouse</div>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<div class="item">Reptiles</div>
-					</li>
-				</ul>
-			</li>
-			<li>
-				<div class="item">Plants</div>
-				<ul>
-					<li>
-						<div class="item">Flowers</div>
-						<ul>
-							<li>
-								<div class="item">Rose</div>
-								<ul>
-									<li>
-										<div class="item">List item 1</div>
-									</li>
-									<li>
-										<div class="item">List item 2</div>
-									</li>
-									<li>
-										<div class="item">List item 3</div>
-									</li>
-									<li>
-										<div class="item">List item 4</div>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<div class="item">Tulip</div>
-								<ul>
-									<li>
-										<div class="item">List item 1</div>
-									</li>
-									<li>
-										<div class="item">List item 2</div>
-									</li>
-									<li>
-										<div class="item">List item 3</div>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<div class="item">Trees
-					</li>
-				</ul>
-			</li>
-			<li>
-				<div class="item"><b>Animals</b></div>
-				<ul>
-					<li>
-						<div class="item">Birds</div>
-					</li>
-					<li>
-						<div class="item">Mammals</div>
-						<ul>
-							<li>
-								<div class="item">Elephant</div>
-								<ul>
-									<li>
-										<div class="item">List item 1</div>
-									</li>
-									<li>
-										<div class="item">List item 2</div>
-									</li>
-									<li>
-										<div class="item">List item 3</div>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<div class="item">Mouse</div>
-								<ul>
-									<li>
-										<div class="item">List item 1</div>
-									</li>
-									<li>
-										<div class="item">List item 2</div>
-									</li>
-									<li>
-										<div class="item">List item 3</div>
-									</li>
-									<li>
-										<div class="item">List item 4</div>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<div class="item">Reptiles</div>
-					</li>
-				</ul>
-			</li>
-			<li>
-				<div class="item">Plants</div>
-				<ul>
-					<li>
-						<div class="item">Flowers</div>
-						<ul>
-							<li>
-								<div class="item">Rose</div>
-								<ul>
-									<li>
-										<div class="item">List item 1</div>
-									</li>
-									<li>
-										<div class="item">List item 2</div>
-									</li>
-									<li>
-										<div class="item">List item 3</div>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<div class="item">Tulip</div>
-								<ul>
-									<li>
-										<div class="item">List item 1</div>
-									</li>
-									<li>
-										<div class="item">List item 2</div>
-									</li>
-									<li>
-										<div class="item">List item 3</div>
-									</li>
-									<li>
-										<div class="item">List item 4</div>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<div class="item">Trees
-					</li>
-				</ul>
-			</li>
-		</ul>
 		<hr>
 		<br><br><br><br><br><br><br><br><br><br><br><br>
 		<br><br><br><br><br><br><br><br><br><br><br><br>
 		<br><br><br><br><br><br><br><br><br><br><br><br>
 		<br><br><br><br><br><br><br><br><br><br><br><br>
-
 	</div>
+
 	<script src="../../html/jquery/jquery-3.7.1.js"></script>
 	<script src="../../html/bootstrap5/js/bootstrap.bundle.js"></script>
 	<script src="../../html/plugins/js/jquery.ui.treeview.js"></script>
 	<script>
-		$('#t8').treeview('collapse');
 		$('#light, #dark').click(function() {
 			$('body').attr('data-bs-theme', $(this).attr('id'));
+		});
+		$('#styles input').change(function() {
+			$('#treeview')[$(this).prop('checked') ? 'addClass' : 'removeClass']($(this).val());
+		});
+		$('#expand, #collapse').click(function() {
+			$('#treeview').treeview($(this).attr('id'));
 		});
 	</script>
 </body>

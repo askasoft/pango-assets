@@ -1010,14 +1010,58 @@ ul.ui-tree {
 
 ul.ui-tree, ul.ui-tree ul {
 	list-style: none;
+	position: relative;
 }
 ul.ui-tree ul {
 	margin: 0 0 0 1em;
+	padding: 0 0 0 1em;
+}
+ul.ui-tree li {
+	margin: 0;
 	padding: 0;
 	position: relative;
-	z-index: 1;
 }
-ul.ui-tree ul:before {
+ul.ui-tree li > .item {
+	padding: 0 0.5em;
+	position: relative;
+}
+ul.ui-tree li.node > .item {
+	cursor: pointer;
+}
+
+/* arrow, lined */
+ul.ui-tree.arrow li:after, ul.ui-tree.lined li:before {
+	content: "";
+	display: block;
+	font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+	position: absolute;
+	width: 1em;
+}
+
+/* arrow */
+ul.ui-tree.arrow {
+	margin-left: 1em;
+}
+ul.ui-tree.arrow li:after {
+	content: ">";
+	text-align: center;
+	top: 0.25em;
+	left: calc(-1em + 1px);
+	height: 1em;
+	line-height: 1em;
+	transform: rotate(90deg);
+	transition: all 0.2s;
+}
+ul.ui-tree.arrow li.collapsed:after, ul.ui-tree.arrow li.leaf:after {
+	transform: rotate(0deg);
+}
+ul.ui-tree.arrow li.leaf:after {
+	content: "-";
+}
+
+/* lined */
+ul.ui-tree.lined ul:before {
+	border-left: 1px solid var(--ui-tree-lined-color);
 	content: "";
 	display: block;
 	position: absolute;
@@ -1025,60 +1069,11 @@ ul.ui-tree ul:before {
 	top: 0;
 	bottom: 0;
 	width: 0;
-	z-index: -1;
-}
-ul.ui-tree li {
-	margin: 0;
-	padding: 0;
-	position: relative;
-}
-ul.ui-tree li:before {
-	content: "";
-	display: block;
-	position: absolute;
-	font: normal 1em monospace;
-	left: 0;
-	top: 0.5em;
-	width: 1em;
-	height: 1em;
-	line-height: 1em;
-	z-index: -1;
-}
-ul.ui-tree li.node > .item {
-	cursor: pointer;
-}
-
-/* arrow */
-ul.ui-tree.arrow ul {
-	margin: 0 0 0 1.5em;
-}
-ul.ui-tree.arrow li:before {
-	content: ">";
-	transform: rotate(90deg);
-	transition: all 0.2s;
-}
-ul.ui-tree.arrow li.collapsed:before, ul.ui-tree.arrow li.leaf:before {
-	left: 0.2em;
-	top: 0.25em;
-	transform: rotate(0deg);
-}
-ul.ui-tree.arrow li.leaf:before {
-	content: "-";
-}
-ul.ui-tree.arrow li > .item {
-	padding: 0 1em 0 1.5em;
-}
-
-/* lined */
-ul.ui-tree.lined ul:before {
-	border-left: 1px solid var(--ui-tree-lined-color);
-}
-ul.ui-tree.lined ul > li {
-	padding: 0 0 0 1em;
 }
 ul.ui-tree.lined li:before {
 	border-top: 1px solid var(--ui-tree-lined-color);
-	top: 0.7em;
+	left: -1em;
+	top: 0.75em;
 	height: 100%;
 }
 ul.ui-tree.lined > li:before {
@@ -1089,8 +1084,12 @@ ul.ui-tree.lined li:last-child:before {
 	bottom: 0;
 	height: auto;
 }
-ul.ui-tree.lined li > .item {
-	padding: 0 0.5em;
+ul.ui-tree.arrow.lined ul > li:after {
+	background-color: var(--ui-tree-bgcolor);
+	left: calc(-1.5em + 1px);
+}
+ul.ui-tree.arrow.lined li.leaf:after {
+	display: none;
 }
 
 /* boxed */
@@ -1100,37 +1099,26 @@ ul.ui-tree.boxed li > .item {
 	border-radius: 5px;
 	box-shadow: 1px 1px 4px #8F949A;
 	width: 15em;
-	min-width: 15em;
 	padding: 0.5em 1em;
 }
-ul.ui-tree.boxed > li {
-	margin: 0 0 1em 0;
+ul.ui-tree.boxed ul {
+	padding-top: 1em;
 }
-ul.ui-tree.boxed ul > li {
-	padding: 1em 0 0 1em;
+ul.ui-tree.boxed li {
+	margin-bottom: 1em;
 }
 ul.ui-tree.lined.boxed li:before {
-	top: 2.2em;
+	top: 1.25em;
 }
-ul.ui-tree.arrow.boxed ul {
-	margin: 0;
-}
-ul.ui-tree.arrow.boxed li:before {
-	top: 2em;
-}
-ul.ui-tree.arrow.boxed li.collapsed:before, ul.ui-tree.arrow.boxed li.leaf:before {
-	top: 1.75em;
-}
-ul.ui-tree.arrow.boxed > li {
-	padding: 0 0 0 1.5em;
-}
-ul.ui-tree.arrow.boxed ul > li {
-	padding: 1em 0 0 1.5em;
+ul.ui-tree.arrow.boxed li:after {
+	top: 0.75em;
+	left: calc(-1.5em + 1px);
 }
 
 /* sticky */
 ul.ui-tree.sticky ul {
 	margin: 0 0 0 14em;
+	z-index: 1;
 }
 ul.ui-tree.sticky li > .item {
 	position: sticky;
