@@ -1451,11 +1451,11 @@ form.lined > .form-group:last-of-type, form.lined > .row:last-of-type {
 .ui-sidenavi > .panel, .ui-sidenavi > .card {
 	background-color: transparent;
 	border: none;
-	margin-bottom: 20px;
+	margin-bottom: 1rem;
 }
 .ui-sidenavi > .panel > .panel-heading, .ui-sidenavi > .card > .card-header {
 	background-color: transparent;
-	padding: 8px 10px;
+	padding: 0.5rem;
 	position: relative;
 }
 .ui-sidenavi > .panel > .panel-body, .ui-sidenavi > .card > .card-body {
@@ -1463,17 +1463,16 @@ form.lined > .form-group:last-of-type, form.lined > .row:last-of-type {
 	padding: 2px 0;
 }
 
-.ui-sidenavi > .panel > .panel-heading > span, .ui-sidenavi .card-header > span,
-.ui-sidenavi ul.nav > li > a > span {
-	margin: 0 0 0 8px;
+.ui-sidenavi .panel i + span, .ui-sidenavi .card i + span {
+	margin-left: 0.5rem;
 }
 
-.ui-sidenavi ul.nav > li > a {
+.ui-sidenavi ul.nav > li > * {
 	align-items: center;
 	display: flex;
-	padding: 5px 10px;
+	padding: 0.25rem 0.5rem;
 }
-.ui-sidenavi ul.nav > li > a > i {
+.ui-sidenavi ul.nav > li > * > i {
 	display: inline-block;
 	text-align: center;
 }
@@ -1488,11 +1487,7 @@ form.lined > .form-group:last-of-type, form.lined > .row:last-of-type {
 .ui-sidenavi.mininav > .panel, .ui-sidenavi.mininav > .card {
 	text-align: center;
 }
-.ui-sidenavi.mininav > .panel > .panel-heading, .ui-sidenavi.mininav > .card > .card-header {
-	padding: 10px 5px;
-}
-.ui-sidenavi.mininav > .panel > .panel-heading span, .ui-sidenavi.mininav > .panel > .panel-body a > span,
-.ui-sidenavi.mininav > .card  > .card-header span,   .ui-sidenavi.mininav > .card  > .card-body a > span {
+.ui-sidenavi.mininav > .panel i + span, .ui-sidenavi.mininav > .card i + span {
 	display: none;
 }
 
@@ -1504,11 +1499,7 @@ form.lined > .form-group:last-of-type, form.lined > .row:last-of-type {
 	.ui-sidenavi.minimal > .panel, .ui-sidenavi.minimal > .card {
 		text-align: center;
 	}
-	.ui-sidenavi.minimal > .panel > .panel-heading, .ui-sidenavi.minimal > .card > .card-header {
-		padding: 10px 5px;
-	}
-	.ui-sidenavi.minimal > .panel > .panel-heading span, .ui-sidenavi.minimal > .panel > .panel-body a > span,
-	.ui-sidenavi.minimal > .card  > .card-header span,   .ui-sidenavi.minimal > .card  > .card-body a > span {
+	.ui-sidenavi.minimal > .panel i + span, .ui-sidenavi.minimal > .card i + span {
 		display: none;
 	}
 }
@@ -1520,7 +1511,7 @@ form.lined > .form-group:last-of-type, form.lined > .row:last-of-type {
 .ui-sidenavi.flatbar > .panel, .ui-sidenavi.flatbar > .card {
 	display: inline-block;
 	text-align: left;
-	margin-bottom: 5px;
+	margin-bottom: 0.5rem;
 	width: auto;
 }
 .ui-sidenavi.flatbar > .panel > .panel-heading, .ui-sidenavi.flatbar > .card > .card-header {
@@ -1539,7 +1530,7 @@ form.lined > .form-group:last-of-type, form.lined > .row:last-of-type {
 	.ui-sidenavi.barable > .panel, .ui-sidenavi.barable > .card {
 		display: inline-block;
 		text-align: left;
-		margin-bottom: 5px;
+		margin-bottom: 0.5rem;
 		width: auto;
 	}
 	.ui-sidenavi.barable > .panel > .panel-heading, .ui-sidenavi.barable > .card > .card-header {
