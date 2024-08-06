@@ -1,8 +1,8 @@
-package bootswatch3
+package darkly
 
 import (
 	"embed"
 )
 
-//go:embed */*
+//go:embed *.css
 var FS embed.FS
