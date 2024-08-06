@@ -1,8 +1,8 @@
-package bootswatch4
+package minty
 
 import (
 	"embed"
 )
 
-//go:embed */*
+//go:embed *.css *.scss
 var FS embed.FS

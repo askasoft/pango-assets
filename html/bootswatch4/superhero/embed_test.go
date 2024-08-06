@@ -1,4 +1,4 @@
-package bootswatch4
+package superhero
 
 import (
 	"fmt"
