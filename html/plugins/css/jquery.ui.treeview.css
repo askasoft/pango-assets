@@ -115,6 +115,11 @@ ul.ui-tree.arrow.boxed li:after {
 	left: calc(-1.5em + 1px);
 }
 
+/* indent */
+ul.ui-tree.indent ul {
+	margin: 0 0 0 14em;
+}
+
 /* sticky */
 ul.ui-tree.sticky ul {
 	margin: 0 0 0 14em;

@@ -47,13 +47,13 @@
 	margin-bottom: 0;
 	padding: var(--ui-row-py) 0;
 }
-.ui-form.ui-row-py1 > .row, .ui-view.ui-row-py1 > .row {
+.ui-row-py1 > .row {
 	--ui-row-py: var(--ui-row-py1) !important;
 }
-.ui-form.ui-row-py2 > .row, .ui-view.ui-row-py2 > .row {
+.ui-row-py2 > .row {
 	--ui-row-py: var(--ui-row-py2) !important;
 }
-.ui-form.ui-row-py3 > .row, .ui-view.ui-row-py3 > .row {
+.ui-row-py3 > .row {
 	--ui-row-py: var(--ui-row-py3) !important;
 }
 
