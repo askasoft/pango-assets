@@ -1,4 +1,4 @@
-package lightbox
+package summernote
 
 import (
 	"fmt"
