@@ -74,30 +74,32 @@ The remaining 29.2% of Earth's crust is land, most of which is located in the fo
 					</div>
 				</div>
 			</div>
-			<fieldset data-spy="fieldset">
+			<fieldset data-spy="fieldset" class="mt-3">
 				<legend>Date Time Fields:</legend>
-				<div class="row">
-					<label for="tags_datefield" class="col-md-3 col-form-label required">Date Field:</label>
-					<div class="col-md-9">
-						<input type="date" id="tags_datefield" name="datefield"class="form-control"/>
+				<div class="ui-form">
+					<div class="row">
+						<label for="tags_datefield" class="col-md-3 col-form-label required">Date Field:</label>
+						<div class="col-md-9">
+							<input type="date" id="tags_datefield" name="datefield"class="form-control"/>
+						</div>
 					</div>
-				</div>
-				<div class="row">
-					<label for="tags_timefield" class="col-md-3 col-form-label required">Time Field:</label>
-					<div class="col-md-9">
-						<input type="time" id="tags_timefield" name="timefield" class="form-control"/>
+					<div class="row">
+						<label for="tags_timefield" class="col-md-3 col-form-label required">Time Field:</label>
+						<div class="col-md-9">
+							<input type="time" id="tags_timefield" name="timefield" class="form-control"/>
+						</div>
 					</div>
-				</div>
-				<div class="row">
-					<label for="tags_datetimefield" class="col-md-3 col-form-label required">DateTime Field:</label>
-					<div class="col-md-9">
-						<input type="datetime-local" id="tags_datetimefield" name="datetimefield" class="form-control"/>
+					<div class="row">
+						<label for="tags_datetimefield" class="col-md-3 col-form-label required">DateTime Field:</label>
+						<div class="col-md-9">
+							<input type="datetime-local" id="tags_datetimefield" name="datetimefield" class="form-control"/>
+						</div>
 					</div>
-				</div>
-				<div class="row">
-					<label for="tags_monthfield" class="col-md-3 col-form-label required">Month Field:</label>
-					<div class="col-md-9">
-						<input type="month" id="tags_monthfield" name="monthfield" class="form-control"/>
+					<div class="row">
+						<label for="tags_monthfield" class="col-md-3 col-form-label required">Month Field:</label>
+						<div class="col-md-9">
+							<input type="month" id="tags_monthfield" name="monthfield" class="form-control"/>
+						</div>
 					</div>
 				</div>
 			</fieldset>
@@ -118,24 +120,29 @@ The remaining 29.2% of Earth's crust is land, most of which is located in the fo
 					</select>
 				</div>
 			</div>
-			<div class="row">
-				<label for="tags_hradios" class="col-md-3 col-form-label required">Horizontal Radio List:</label>
-				<div class="col-md-9">
-					<div id="tags_hradios" class="ui-radios">
-						<label><input type="radio" name="hradio" id="tags_hradio_1" value="a">Abc</label>
-						<label><input type="radio" name="hradio" id="tags_hradio_2" value="b">Xyz</label>
+			<fieldset data-spy="fieldset" class="mt-3">
+				<legend class="circle">Radios:</legend>
+				<div class="ui-form">
+					<div class="row">
+						<label for="tags_hradios" class="col-md-3 col-form-label required">Horizontal Radio List:</label>
+						<div class="col-md-9">
+							<div id="tags_hradios" class="ui-radios">
+								<label><input type="radio" name="hradio" id="tags_hradio_1" value="a">Abc</label>
+								<label><input type="radio" name="hradio" id="tags_hradio_2" value="b">Xyz</label>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<label for="tags_vradios" class="col-md-3 col-form-label required">Vertical Radio List:</label>
+						<div class="col-md-9">
+							<div id="tags_vradios" class="ui-radios vertical">
+								<label><input type="radio" name="vradio" id="tags_vradio_1" value="a">Abc</label>
+								<label><input type="radio" name="vradio" id="tags_vradio_2" value="b">Xyz</label>
+							</div>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="row">
-				<label for="tags_vradios" class="col-md-3 col-form-label required">Vertical Radio List:</label>
-				<div class="col-md-9">
-					<div id="tags_vradios" class="ui-radios vertical">
-						<label><input type="radio" name="vradio" id="tags_vradio_1" value="a">Abc</label>
-						<label><input type="radio" name="vradio" id="tags_vradio_2" value="b">Xyz</label>
-					</div>
-				</div>
-			</div>
+			</fieldset>
 			<div class="row">
 				<label for="tags_hcheckboxlist" class="col-md-3 col-form-label required">Horizontal Checkbox List:</label>
 				<div class="col-md-9">

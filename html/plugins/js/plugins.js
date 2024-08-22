@@ -790,15 +790,15 @@
 
 	function _collapse($f, t) {
 		t = t || $f.data('fieldset').hideTransition;
-		$f.trigger('collapse.fieldset').children(':not(legend)')[t](function() {
-			$f.addClass('collapsed').trigger('collapsed.fieldset');
+		$f.addClass('collapsing').trigger('collapse.fieldset').children(':not(legend)')[t](function() {
+			$f.removeClass('collapsing').addClass('collapsed').trigger('collapsed.fieldset');
 		});
 	}
 
 	function _expand($f, t) {
 		t = t || $f.data('fieldset').showTransition;
-		$f.trigger('expand.fieldset').children(':not(legend)')[t](function() {
-			$f.removeClass('collapsed').trigger('expanded.fieldset');
+		$f.addClass('expanding').trigger('expand.fieldset').children(':not(legend)')[t](function() {
+			$f.removeClass('expanding collapsed').trigger('expanded.fieldset');
 		});
 	}
 
