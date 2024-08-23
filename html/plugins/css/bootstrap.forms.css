@@ -1,6 +1,7 @@
 :root {
 	--ui-lined-color: #ccc;
 	--ui-input-py: calc(0.375rem + var(--bs-border-width, 1px));
+	--ui-row-py0: 0;
 	--ui-row-py1: 0.25rem;
 	--ui-row-py2: 0.5rem;
 	--ui-row-py3: 1rem;

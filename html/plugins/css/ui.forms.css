@@ -47,6 +47,9 @@
 	margin-bottom: 0;
 	padding: var(--ui-row-py) 0;
 }
+.ui-row-py0 > .row {
+	--ui-row-py: var(--ui-row-py0) !important;
+}
 .ui-row-py1 > .row {
 	--ui-row-py: var(--ui-row-py1) !important;
 }
