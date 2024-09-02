@@ -1314,6 +1314,9 @@ input.form-control[type="time"],
 input.form-control[type="datetime-local"] {
 	width: auto;
 }
+input.form-control[readonly], textarea.form-control[readonly] {
+	background-color: var(--bs-secondary-bg, #e9ecef);
+}
 
 select.form-control, select.form-select {
 	width: auto;
