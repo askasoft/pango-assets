@@ -1031,7 +1031,7 @@ ul.ui-tree.arrow li:after, ul.ui-tree.lined li:before {
 
 /* arrow */
 ul.ui-tree.arrow {
-	margin-left: 1em;
+	margin-left: 1.5em;
 }
 ul.ui-tree.arrow li:after {
 	content: ">";
