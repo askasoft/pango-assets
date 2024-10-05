@@ -14,7 +14,6 @@
 
 .ui-fieldset > legend {
 	border: 0;
-	cursor: pointer;
 	float: none;
 	font-size: inherit;
 	margin: 0;
@@ -22,6 +21,9 @@
 	position: relative;
 	width: auto;
 }
+.ui-fieldset.collapsible > legend {
+	cursor: pointer;
+} 
 .ui-fieldset > legend.circle {
 	border: solid 1px var(--ui-border-color);
 	border-radius: 1em;
