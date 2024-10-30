@@ -53,21 +53,36 @@
 	}
 
 	if (typeof String.prototype.stripLeft != "function") {
-		var re = /^[\s\u3000]+/;
+		var re = /^[\s\u0085\u00a0\u2000\u3000]+/;
 		String.prototype.stripLeft = function() {
 			return this.replace(re, "");
 		};
 	}
 	if (typeof String.prototype.stripRight != "function") {
-		var re = /[\s\u3000]+$/;
+		var re = /[\s\u0085\u00a0\u2000\u3000]+$/;
 		String.prototype.stripRight = function() {
 			return this.replace(re, "");
 		};
 	}
 	if (typeof String.prototype.strip != "function") {
-		var re = /^[\s\u3000]+|[\s\u3000]+$/g;
+		var re = /^[\s\u0085\u00a0\u2000\u3000]+|[\s\u0085\u00a0\u2000\u3000]+$/g;
 		String.prototype.strip = function() {
 			return this.replace(re, "");
+		};
+	}
+
+	if (typeof String.prototype.fields != "function") {
+		var ws = /[\s\u0085\u00a0\u2000\u3000]/g;
+		String.prototype.fields = function(re) {
+			re ||= ws;
+
+			var ss = this.split(re), rs = [];
+			for (var i = 0; i < ss.length; i++) {
+				if (ss[i].length) {
+					rs.push(ss[i])
+				}
+			}
+			return rs;
 		};
 	}
 
