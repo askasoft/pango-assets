@@ -3,7 +3,7 @@
 
 	function _autosize() {
 		var $t = $(this);
-		$t.css('height', 'auto').height($t.prop('scrollHeight'));
+		$t.css('height', 'auto').outerHeight($t.prop('scrollHeight'));
 	}
 
 	var evts = 'input.autosize change.autosize';
