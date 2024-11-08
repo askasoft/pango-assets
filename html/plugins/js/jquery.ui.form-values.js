@@ -2,13 +2,14 @@
 	"use strict";
 
 	$.fn.changeValue = function(v) {
-		var o = this.val();
+		return this.each(function() {
+			var $t = $(this), o = $t.val();
 
-		this.val(v);
-		if (o != v) {
-			this.trigger('change');
-		}
-		return this;
+			$t.val(v);
+			if (o != v) {
+				$t.trigger('change');
+			}
+		});
 	};
 
 	$.fn.formClear = function(trigger) {
