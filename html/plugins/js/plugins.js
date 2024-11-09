@@ -710,26 +710,48 @@
 	}
 
 	function _drop() {
+		var $l = $(this);
 		if (_d && _d !== this) {
-			var $l = $(this), $t = $(this).parent();
-			if ($t.children('label').filter(function() { return this === _d; }).length) {
-				$(_d).find(':checkbox').prop('checked', $l.find(':checkbox').prop('checked'));
-				$(_d).insertBefore($l);
+			var $d = $(_d), $p = $l.parent(), $ls = $p.children('label');
+			if ($ls.filter(function() { return this === _d; }).length) {
+				var c = $l.find(':checkbox').prop('checked');
+
+				var vs = [];
+				$ls.each(function() {
+					if (this !== _d) {
+						if (this === $l[0]) {
+							vs.push({ label: _d, drop: true, check: c });
+						}
+						vs.push({ label: this });
+					}
+				});
+
+				$p.data('checkorder', '').trigger('dropstart.checkorder', vs);
+				if ($p.data('checkorder') != 'cancel') {
+					$d.find(':checkbox').prop('checked', c);
+					$d.insertBefore($l);
+					$p.trigger('dropend.checkorder');
+				}
 			}
 		}
-		$(this).removeClass('dragover');
+		$l.removeClass('dragover');
 	}
 
 	function _click() {
-		var $c = $(this), $l = $c.closest('label'), $h = $c.closest('.ui-checks').find('hr');
-		$l.fadeOut(200, function() {
-			if ($c.is(':checked')) {
-				$l.insertBefore($h);
-			} else {
-				$l.insertAfter($h);
-			}
-			$l.fadeIn(200);
-		});
+		var $c = $(this), $l = $c.closest('label'), $p = $l.parent();
+
+		$p.data('checkorder', '').trigger('checkclick.checkorder', [ $c[0] ]);
+		if ($p.data('checkorder') != 'cancel') {
+			$l.fadeOut(200, function() {
+				var $h = $c.closest('.ui-checks').find('hr');
+				if ($c.prop('checked')) {
+					$l.insertBefore($h);
+				} else {
+					$l.insertAfter($h);
+				}
+				$l.fadeIn(200);
+			});
+		}
 	}
 
 	$.fn.checkorder = function() {

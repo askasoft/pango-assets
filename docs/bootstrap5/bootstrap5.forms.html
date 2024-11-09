@@ -247,6 +247,10 @@ The remaining 29.2% of Earth's crust is land, most of which is located in the fo
 				$('#form')[$(this).prop('checked') ? 'addClass' : 'removeClass']('lined');
 			}).trigger('click');
 
+			$('.ui-checks.ordered')
+				.on('dropstart.checkorder', function(evt) { console.log('dropstart', arguments); })
+				.on('checkclick.checkorder', function(evt, el) { console.log('checkclick', arguments); });
+
 			$('#form').submit(function() {
 				var $t = $('#tags_textarea');
 				$t.val($t.val() + "\nsubmit!");
