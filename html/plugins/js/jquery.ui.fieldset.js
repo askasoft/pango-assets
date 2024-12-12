@@ -43,7 +43,7 @@
 	
 			$f.data('fieldset', c).addClass('ui-fieldset collapsible' + (h ? ' collapsed' : ''));
 			$f.children('legend').off(e).on(e, _click);
-			$f.children(':not(legend)')[h ? 'hide' : 'show']();
+			$f.children(':not(legend)').toggle(!h);
 		}
 	}
 

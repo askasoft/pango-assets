@@ -39,6 +39,7 @@
 			<label><input class='option' name="mask" type="checkbox"> Show mask</label>
 			<label><input class='option' name="loader" type="checkbox"> Show loading</label>
 			<label><input class='option' name="closer" type="checkbox"> Show close icon</label>
+			<label><input class='option' name="scroll" type="checkbox" checked> Body scroll</label>
 			<hr>
 			Transition: 
 			<label><input class='option' name="transition" type="radio" value="show"> Plain</label>
@@ -74,7 +75,8 @@
 		<hr>
 		<div class="text-center">
 			<button class="btn btn-primary" popup-target="#popup_error">Popup Error</button>
-			<button class="btn btn-primary" popup-target="#popup_static">Popup Static</button>
+			<button class="btn btn-primary" popup-target="#popup_large">Popup Large</button>
+			<button class="btn btn-primary" popup-target="#popup_small">Popup Small</button>
 			<button class="btn btn-primary" popup-target="#popup_dynamic">Popup Dynamic</button>
 			<button class="btn btn-primary" popup-target="#popup_custom">Custom Popup Dynamic</button>
 			<br><br>
@@ -85,10 +87,10 @@
 	<div id="popup_error" class="ui-popup" data-spy="popup" popup-ajax-url="./jquery.ui.popup.error.html"></div>
 	<div id="popup_dynamic" class="ui-popup" data-spy="popup" popup-ajax-url="./jquery.ui.popup.table.html"></div>
 	<div id="popup_custom" class="ui-popup" data-spy="popup" popup-ajax-url="./jquery.ui.popup.table.html" popup-ajax-done="customDone.apply(this, arguments)"></div>
-	<div id="popup_static" class="ui-popup" data-spy="popup">
+	<div id="popup_large" class="ui-popup" data-spy="popup">
 		<div class="ui-popup-header">Title</div>
 		<div class="ui-popup-body">
-			<table id="popup_list2" class="table table-striped table-bordered">
+			<table id="popup_list_large" class="table table-striped table-bordered">
 				<thead>
 					<tr>
 						<th>#</th>
@@ -348,6 +350,77 @@
 			<button type="button" class="btn btn-secondary" popup-dismiss="true"><i class="fa fa-times"></i> Close</button>
 		</div>
 	</div>
+	<div id="popup_small" class="ui-popup" data-spy="popup">
+		<div class="ui-popup-header">Title</div>
+		<div class="ui-popup-body">
+			<table id="popup_list_small" class="table table-striped table-bordered">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>First Name</th>
+						<th>Last Name</th>
+						<th>First Name</th>
+						<th>Last Name</th>
+						<th>Username</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th scope="row">1</th>
+						<td>Mark</td>
+						<td>Otto</td>
+						<td>Mark</td>
+						<td>Otto</td>
+						<td>@mdo</td>
+					</tr>
+					<tr>
+						<th scope="row">2</th>
+						<td>Jacob</td>
+						<td>Thornton</td>
+						<td>Jacob</td>
+						<td>Thornton</td>
+						<td>@fat</td>
+					</tr>
+					<tr>
+						<th scope="row">3</th>
+						<td>Larry</td>
+						<td>the Bird</td>
+						<td>Larry</td>
+						<td>the Bird</td>
+						<td>@twitter</td>
+					</tr>
+					<tr>
+						<th scope="row">4</th>
+						<td>Tom</td>
+						<td>Otto</td>
+						<td>Tom</td>
+						<td>Otto</td>
+						<td>@tom</td>
+					</tr>
+					<tr>
+						<th scope="row">5</th>
+						<td>Jerry</td>
+						<td>Thornton</td>
+						<td>Jerry</td>
+						<td>Thornton</td>
+						<td>@jerry</td>
+					</tr>
+					<tr>
+						<th scope="row">6</th>
+						<td>Hydra</td>
+						<td>the Bird</td>
+						<td>Hydra</td>
+						<td>the Bird</td>
+						<td>@hydra</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="text-center ui-popup-footer">
+			<button type="button" class="btn btn-primary"><i class="fa fa-check"></i> OK</button>
+			<button type="button" class="btn btn-secondary" popup-dismiss="true"><i class="fa fa-times"></i> Close</button>
+		</div>
+	</div>
 
 	<script src="../../html/jquery/jquery-3.7.1.js"></script>
 	<script src="../../html/bootstrap5/js/bootstrap.bundle.js"></script>
@@ -382,7 +455,7 @@
 
 			$('.option').change(setOptions);
 
-			$('#popup_list2 tbody>tr').click(function () {
+			$('#popup_list_large tbody>tr, #popup_list_small tbody>tr').click(function () {
 				$(this).closest('.ui-popup')
 					.popup('hide')
 					.popup('trigger', 'callback.popup', $(this).find('td:last').text());

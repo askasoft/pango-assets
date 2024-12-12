@@ -194,6 +194,7 @@
 		if ($p.is(':visible')) {
 			$c.trigger('hide.popup');
 			$p.hide();
+			$('body').removeClass('ui-popup-noscroll');
 			$(document).off('.popup');
 			$(window).off('.popup');
 			$c.trigger('hidden.popup');
@@ -236,6 +237,10 @@
 		c.trigger = trigger || window;
 
 		$c.trigger('show.popup', c.trigger);
+
+		if (!c.scroll) {
+			$('body').addClass('ui-popup-noscroll');
+		}
 
 		$p.find('.ui-popup-closer').toggle(c.closer);
 
@@ -365,7 +370,7 @@
 
 	function _options($c) {
 		var fs = ['ajax-done', 'ajax-fail'];
-		var bs = ['loaded', 'autoload', 'mask', 'loader', 'closer', 'mouse', 'keyboard', 'resize'];
+		var bs = ['loaded', 'autoload', 'mask', 'loader', 'closer', 'mouse', 'keyboard', 'resize', 'scroll'];
 
 		var c = {};
 		$.each($c[0].attributes, function(i, a) {
@@ -482,6 +487,7 @@
 		mouse: true,
 		keyboard: true,
 		resize: true,
+		scroll: true,
 		ajax: {},
 		ajaxDone: _ajaxDone,
 		ajaxFail: _ajaxFail
