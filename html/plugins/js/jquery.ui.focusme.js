@@ -2,9 +2,9 @@
 	"use strict";
 
 	$.fn.focusme = function() {
-		var f = false;
-		$(this).each(function() {
-			if (f) {
+		var done = false;
+		return this.each(function() {
+			if (done) {
 				return;
 			}
 
@@ -23,10 +23,10 @@
 			}
 			
 			if ($a && $a.length) {
-				f = true;
 				var $w = $(window), st = $w.scrollTop(), sl = $w.scrollLeft();
 				$a.focus();
 				$(window).scrollTop(st).scrollLeft(sl);
+				done = true;
 			}
 		});
 	};

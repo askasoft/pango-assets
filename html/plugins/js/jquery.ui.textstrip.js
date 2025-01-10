@@ -11,7 +11,7 @@
 	}
 
 	$.fn.textstrip = function() {
-		$(this).off(E).on(E, _textstrip);
+		return this.off(E).on(E, _textstrip);
 	};
 	
 	// ==================

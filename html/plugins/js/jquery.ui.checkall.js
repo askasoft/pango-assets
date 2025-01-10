@@ -4,7 +4,7 @@
 	var E = 'change', P = 'checked';
 
 	$.fn.checkall = function(s) {
-		$(this).each(function() {
+		return this.each(function() {
 			var $a = $(this),
 				b = s || $a.attr('checkall'),
 				t = b, f = '',

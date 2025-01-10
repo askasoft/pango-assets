@@ -2,7 +2,7 @@
 	"use strict";
 
 	$.fn.enableby = function(s) {
-		$(this).each(function() {
+		return this.each(function() {
 			var $a = $(this),
 				b = s || $a.attr('enableby'),
 				t = b, f = '',

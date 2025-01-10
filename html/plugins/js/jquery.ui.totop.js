@@ -2,7 +2,7 @@
 	"use strict";
 
 	$.fn.totop = function() {
-		$(this).each(function() {
+		return this.each(function() {
 			var $t = $(this), $w = $(window);
 
 			$t.click(function() {

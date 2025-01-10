@@ -81,6 +81,7 @@
 			.on(DL, "label", _dragleave)
 			.on(DP, "label", _drop);
 		$t.children('label').prop('draggable', true);
+		return this;
 	}
 
 	// ==================

@@ -13,7 +13,7 @@
 	}
 
 	$.fn.enterfire = function() {
-		$(this).off('keyup.enterfire').on('keyup.enterfire', _enterfire);
+		return this.off('keyup.enterfire').on('keyup.enterfire', _enterfire);
 	};
 
 	$(window).on('load', function() {
