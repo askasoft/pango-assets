@@ -647,7 +647,7 @@
 	var E = 'change', P = 'checked';
 
 	$.fn.checkall = function(s) {
-		$(this).each(function() {
+		return this.each(function() {
 			var $a = $(this),
 				b = s || $a.attr('checkall'),
 				t = b, f = '',
@@ -767,6 +767,7 @@
 			.on(DL, "label", _dragleave)
 			.on(DP, "label", _drop);
 		$t.children('label').prop('draggable', true);
+		return this;
 	}
 
 	// ==================
@@ -778,7 +779,7 @@
 	"use strict";
 
 	$.fn.enableby = function(s) {
-		$(this).each(function() {
+		return this.each(function() {
 			var $a = $(this),
 				b = s || $a.attr('enableby'),
 				t = b, f = '',
@@ -894,9 +895,9 @@
 	"use strict";
 
 	$.fn.focusme = function() {
-		var f = false;
-		$(this).each(function() {
-			if (f) {
+		var done = false;
+		return this.each(function() {
+			if (done) {
 				return;
 			}
 
@@ -915,10 +916,10 @@
 			}
 			
 			if ($a && $a.length) {
-				f = true;
 				var $w = $(window), st = $w.scrollTop(), sl = $w.scrollLeft();
 				$a.focus();
 				$(window).scrollTop(st).scrollLeft(sl);
+				done = true;
 			}
 		});
 	};
@@ -1365,6 +1366,35 @@
 		// Return the jQuery object for chaining. The off method is used to avoid click conflict when the plugin is called more than once
 		return this.off(settings.bindEvent).on(settings.bindEvent, _initialize);
 	};
+})(jQuery);
+(function($) {
+	"use strict";
+
+	$.linkify = function(s, c) {
+		c = $.extend({}, $.linkify.defaults, c);
+		return s.replace(c.regexp, '<a href="$1" target="' + c.target + '">' + c.prepend + '$1' + c.append + '</a>');
+	};
+	
+	$.linkify.defaults = {
+		// URLs starting with http://, https://
+		regexp: /(\bhttps?:\/\/[\w!\?\/\+\-_~=;\.,\*&@#\$%\(\)'\[\]]+)/gim,
+		target: '_blank',
+		prepend: '',
+		append: ''
+	};
+
+	$.fn.linkify = function(c) {
+		return this.each(function() {
+			var $t = $(this), h = $.linkify($t.html(), c);
+			$t.html(h).removeAttr('linkify');
+		});
+	};
+
+
+	// ==================
+	$(window).on('load', function() {
+		$('[linkify]').linkify();
+	});
 })(jQuery);
 (function($) {
 	"use strict";
@@ -2529,9 +2559,10 @@
 		$t.css('height', 'auto').outerHeight($t.prop('scrollHeight'));
 	}
 
-	var evts = 'input.autosize change.autosize';
+	var E = 'input.autosize change.autosize';
+
 	$.fn.autosize = function() {
-		return $(this).off(evts).on(evts, _autosize).css({
+		return this.off(E).on(E, _autosize).css({
 			'overflow-y': 'hidden',
 			'resize': 'none'
 		}).trigger('input');
@@ -2557,7 +2588,7 @@
 	}
 
 	$.fn.enterfire = function() {
-		$(this).off('keyup.enterfire').on('keyup.enterfire', _enterfire);
+		return this.off('keyup.enterfire').on('keyup.enterfire', _enterfire);
 	};
 
 	$(window).on('load', function() {
@@ -2606,7 +2637,7 @@
 	}
 
 	$.fn.textstrip = function() {
-		$(this).off(E).on(E, _textstrip);
+		return this.off(E).on(E, _textstrip);
 	};
 	
 	// ==================
@@ -2965,7 +2996,7 @@
 	"use strict";
 
 	$.fn.totop = function() {
-		$(this).each(function() {
+		return this.each(function() {
 			var $t = $(this), $w = $(window);
 
 			$t.click(function() {
