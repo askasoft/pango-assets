@@ -6,7 +6,7 @@
 }
 .ui-sidenavi > .panel > .panel-heading, .ui-sidenavi > .card > .card-header {
 	background-color: transparent;
-	padding: 0.5rem;
+	padding: 0.25rem 0;
 	position: relative;
 }
 .ui-sidenavi > .panel > .panel-body, .ui-sidenavi > .card > .card-body {
@@ -14,21 +14,17 @@
 	padding: 2px 0;
 }
 
-.ui-sidenavi .panel i + span, .ui-sidenavi .card i + span {
-	margin-left: 0.5rem;
-}
-
 .ui-sidenavi ul.nav > li > * {
 	align-items: center;
 	display: flex;
 	padding: 0.25rem 0.5rem;
 }
-.ui-sidenavi ul.nav > li > * > i {
-	display: inline-block;
-	text-align: center;
-}
 .ui-sidenavi ul.nav > li.active {
 	font-weight: bold;
+}
+
+.ui-sidenavi .panel i + span, .ui-sidenavi .card i + span {
+	margin-left: 0.5rem;
 }
 
 /* mininav */

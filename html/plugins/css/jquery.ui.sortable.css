@@ -4,7 +4,7 @@
 	position: relative
 }
 .ui-sortable .sortable:hover {
-	background-color: #f5fffa;
+	background-color: var(--bs-secondary-bg, #f5fffa);
 }
 
 .ui-sortable .sortable:before, .ui-sortable .sortable:after {
