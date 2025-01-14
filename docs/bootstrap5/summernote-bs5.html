@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+<link href="../../html/bootstrap5/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="../../html/fontawesome6/css/all.min.css" rel="stylesheet" type="text/css"/>
+<link href="../../html/summernote/summernote-bs5.min.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<body style="padding: 20px;">
+<p>a</p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
+
+<textarea id="note"></textarea>
+
+<p>a</p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
+<p>a</p>
+
+<script src="../../html/jquery/jquery-3.7.1.js" type="text/javascript"></script>
+<script src="../../html/bootstrap5/js/bootstrap.bundle.js" type="text/javascript"></script>
+<script src="../../html/summernote/summernote.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+	$(function() {
+		$('#note').summernote();
+
+		// summernote bs5 bug fix
+		$('.note-toolbar').find('[data-toggle]').each(function() {
+			$(this).attr('data-bs-toggle', $(this).attr('data-toggle')).removeAttr('data-toggle');
+		});
+	});
+</script>
+</body>
+</html>
