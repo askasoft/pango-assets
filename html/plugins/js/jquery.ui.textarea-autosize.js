@@ -6,7 +6,7 @@
 		$t.css('height', 'auto').outerHeight($t.prop('scrollHeight'));
 	}
 
-	var E = 'input.autosize change.autosize';
+	var E = 'input.autosize';
 
 	$.fn.autosize = function() {
 		return this.off(E).on(E, _autosize).css({

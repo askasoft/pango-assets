@@ -647,7 +647,7 @@
 	var E = 'change', P = 'checked';
 
 	$.fn.checkall = function(s) {
-		$(this).each(function() {
+		return this.each(function() {
 			var $a = $(this),
 				b = s || $a.attr('checkall'),
 				t = b, f = '',
@@ -767,6 +767,7 @@
 			.on(DL, "label", _dragleave)
 			.on(DP, "label", _drop);
 		$t.children('label').prop('draggable', true);
+		return this;
 	}
 
 	// ==================
@@ -778,7 +779,7 @@
 	"use strict";
 
 	$.fn.enableby = function(s) {
-		$(this).each(function() {
+		return this.each(function() {
 			var $a = $(this),
 				b = s || $a.attr('enableby'),
 				t = b, f = '',
@@ -894,9 +895,9 @@
 	"use strict";
 
 	$.fn.focusme = function() {
-		var f = false;
-		$(this).each(function() {
-			if (f) {
+		var done = false;
+		return this.each(function() {
+			if (done) {
 				return;
 			}
 
@@ -915,10 +916,10 @@
 			}
 			
 			if ($a && $a.length) {
-				f = true;
 				var $w = $(window), st = $w.scrollTop(), sl = $w.scrollLeft();
 				$a.focus();
 				$(window).scrollTop(st).scrollLeft(sl);
+				done = true;
 			}
 		});
 	};
@@ -1369,6 +1370,57 @@
 (function($) {
 	"use strict";
 
+	function linkify(node, c) {
+		switch (node.nodeType) {
+		case 3: // Text Node
+			c.regexp.lastIndex = 0;
+			var r = c.regexp.exec(node.textContent);
+			if (r) {
+				var m = node.splitText(r.index);
+				m.splitText(r[0].length);
+				$(m).replaceWith($('<a>', { target: c.target, href: r[0] }).text(c.prepend + r[0] + c.append));
+				return 1;
+			}
+			break;
+		case 1: // Element Node
+			if (node.childNodes && !/(script|style)/i.test(node.tagName)) {
+				for (var i = 0; i < node.childNodes.length; i++) {
+					i += linkify(node.childNodes[i], c);
+				}
+			}
+			break;
+		}
+		return 0;
+	}
+
+	$.linkify = {
+		defaults: {
+			// URLs starting with http://, https://
+			regexp: /https?:\/\/[\w~!@#\$%&\*\(\)_\-\+=\[\]\|:;,\.\?\/']+/i,
+			target: '_blank',
+			prepend: '',
+			append: ''
+		}
+	};
+
+	$.fn.linkify = function(c) {
+		c = $.extend({}, $.linkify.defaults, c);
+
+		return this.each(function() {
+			linkify(this, c);
+			$(this).removeAttr('linkify');
+		});
+	};
+
+
+	// ==================
+	$(window).on('load', function() {
+		$('[linkify]').linkify();
+	});
+})(jQuery);
+(function($) {
+	"use strict";
+
 	function _clearTimeout($el) {
 		//if this element has delayed mask scheduled then remove it
 		var t = $el.data("_mask_timeout");
@@ -1500,6 +1552,84 @@
 	$.fn.isLoadMasked = function() {
 		return this.hasClass("ui-loadmasked");
 	};
+})(jQuery);
+(function($) {
+	"use strict";
+
+	var ws = /[\s\u0085\u00a0\u2000\u3000]/g;
+
+	function split(s) {
+		var ss = s.split(ws), rs = [];
+		for (var i = 0; i < ss.length; i++) {
+			if (ss[i].length) {
+				rs.push(ss[i])
+			}
+		}
+		return rs;
+	}
+
+	function index_any(s, ks) {
+		var i = 0;
+		while (s.length > 0) {
+			for (var j = 0; j < ks.length; j++) {
+				if (s.substring(0, ks[j].length) == ks[j]) {
+					return [i, ks[j]]
+				}
+			}
+			s = s.substring(1);
+			i++;
+		}
+		return false;
+	}
+
+	function markup(node, c) {
+		switch (node.nodeType) {
+		case 3: // Text Node
+			var r = index_any(node.textContent, c.markups);
+			if (r) {
+				var m = node.splitText(r[0]);
+				m.splitText(r[1].length);
+				$(m).wrap(c.wrap);
+				return 1;
+			}
+			break;
+		case 1: // Element Node
+			if (node.childNodes && !/(script|style)/i.test(node.tagName)) {
+				for (var i = 0; i < node.childNodes.length; i++) {
+					i += markup(node.childNodes[i], c);
+				}
+			}
+			break;
+		}
+		return 0;
+	}
+
+	$.markup = {
+		defaults: {
+			wrap: '<mark></mark>',
+		}
+	};
+
+	$.fn.markup = function(o) {
+		if (typeof(o) == 'string') {
+			o = { markup: o };
+		}
+		return this.each(function() {
+			var $t = $(this), c = $.extend({}, $.markup.defaults, o);
+
+			c.markups ||= split(c.markup || $t.attr('markup') || '');
+			if (c.markups.length) {
+				markup(this, c);
+			}
+			$t.removeAttr('markup');
+		});
+	};
+
+
+	// ==================
+	$(window).on('load', function() {
+		$('[markup]').markup();
+	});
 })(jQuery);
 // jQuery Nice Select - v1.1.0
 // https://github.com/hernansartorio/jquery-nice-select
@@ -2529,9 +2659,10 @@
 		$t.css('height', 'auto').outerHeight($t.prop('scrollHeight'));
 	}
 
-	var evts = 'input.autosize change.autosize';
+	var E = 'input.autosize';
+
 	$.fn.autosize = function() {
-		return $(this).off(evts).on(evts, _autosize).css({
+		return this.off(E).on(E, _autosize).css({
 			'overflow-y': 'hidden',
 			'resize': 'none'
 		}).trigger('input');
@@ -2557,7 +2688,7 @@
 	}
 
 	$.fn.enterfire = function() {
-		$(this).off('keyup.enterfire').on('keyup.enterfire', _enterfire);
+		return this.off('keyup.enterfire').on('keyup.enterfire', _enterfire);
 	};
 
 	$(window).on('load', function() {
@@ -2606,7 +2737,7 @@
 	}
 
 	$.fn.textstrip = function() {
-		$(this).off(E).on(E, _textstrip);
+		return this.off(E).on(E, _textstrip);
 	};
 	
 	// ==================
@@ -2965,7 +3096,7 @@
 	"use strict";
 
 	$.fn.totop = function() {
-		$(this).each(function() {
+		return this.each(function() {
 			var $t = $(this), $w = $(window);
 
 			$t.click(function() {

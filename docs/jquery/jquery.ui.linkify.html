@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+	<link href="../../html/bootstrap5/css/bootstrap.css" rel="stylesheet" type="text/css" />
+	<link href="../../html/fontawesome6/css/all.css" rel="stylesheet" type="text/css" />
+	<style>
+		.highlight {
+			background-color: yellow;
+		}
+	</style>
+</head>
+
+<body>
+	<div style="padding: 20px">
+		<h1 style="text-align: center; margin: 20px 0px;">jQuery Linkify Plugin</h1>
+		<hr>
+
+		<div class="text-center" linkify>
+			<p><i>linkify</i>: This is a http://foo.com and https://bar.com . <br> <b>This is inner http://foo.com and https://bar.com in b.</b></p>
+		</div>
+	</div>
+
+	<script src="../../html/jquery/jquery-1.12.4.js" type="text/javascript"></script>
+	<script src="../../html/plugins/js/jquery.ui.linkify.js" type="text/javascript"></script>
+	<script>
+		$.extend($.linkify.defaults, {
+			prepend: '<i class="fa-solid fa-arrow-right"></i> ',
+			append: ' <i class="fa-solid fa-up-right-from-square"></i>'
+		});
+	</script>
+</body>
+
+</html>
