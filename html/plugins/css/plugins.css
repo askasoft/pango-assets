@@ -1217,6 +1217,12 @@ ul.ui-tree.sticky li > .item {
 	90%  { background-color: #eee; }
 	100% { background-color: #fff; }
 }
+.btn-xs {
+	--bs-btn-padding-y: 0.15rem;
+	--bs-btn-padding-x: 0.25rem;
+	--bs-btn-font-size: 0.75rem;
+	--bs-btn-border-radius: var(--bs-border-radius-sm);
+}
 /** grid fix */
 .container {
 	width: 100%;

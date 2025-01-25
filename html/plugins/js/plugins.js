@@ -1374,11 +1374,19 @@
 		switch (node.nodeType) {
 		case 3: // Text Node
 			c.regexp.lastIndex = 0;
-			var r = c.regexp.exec(node.textContent);
+			var r = c.regexp.exec(node.nodeValue);
 			if (r) {
+				var $a = $('<a>', { target: c.target, href: r[0] }).text(r[0]);
+				if (c.prepend) {
+					$a.prepend(c.prepend);
+				}
+				if (c.append) {
+					$a.append(c.append);
+				}
+
 				var m = node.splitText(r.index);
 				m.splitText(r[0].length);
-				$(m).replaceWith($('<a>', { target: c.target, href: r[0] }).text(c.prepend + r[0] + c.append));
+				$(m).replaceWith($a);
 				return 1;
 			}
 			break;
@@ -1585,7 +1593,7 @@
 	function markup(node, c) {
 		switch (node.nodeType) {
 		case 3: // Text Node
-			var r = index_any(node.textContent, c.markups);
+			var r = index_any(node.nodeValue, c.markups);
 			if (r) {
 				var m = node.splitText(r[0]);
 				m.splitText(r[1].length);
