@@ -22,7 +22,7 @@
 			}
 			break;
 		case 1: // Element Node
-			if (node.childNodes && !/(script|style)/i.test(node.tagName)) {
+			if (node.childNodes && !c.ignore.test(node.tagName)) {
 				for (var i = 0; i < node.childNodes.length; i++) {
 					i += linkify(node.childNodes[i], c);
 				}
@@ -34,6 +34,7 @@
 
 	$.linkify = {
 		defaults: {
+			ignore: /(script|style|a)/i,
 			// URLs starting with http://, https://
 			regexp: /https?:\/\/[\w~!@#\$%&\*\(\)_\-\+=\[\]\|:;,\.\?\/']+/i,
 			target: '_blank',

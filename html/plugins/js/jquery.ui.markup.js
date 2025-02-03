@@ -39,7 +39,7 @@
 			}
 			break;
 		case 1: // Element Node
-			if (node.childNodes && !/(script|style)/i.test(node.tagName)) {
+			if (node.childNodes && !c.ignore.test(node.tagName)) {
 				for (var i = 0; i < node.childNodes.length; i++) {
 					i += markup(node.childNodes[i], c);
 				}
@@ -51,6 +51,7 @@
 
 	$.markup = {
 		defaults: {
+			ignore: /(script|style|mark)/i,
 			wrap: '<mark></mark>',
 		}
 	};
