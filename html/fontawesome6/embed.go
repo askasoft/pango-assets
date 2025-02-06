@@ -4,5 +4,5 @@ import (
 	"embed"
 )
 
-//go:embed *.txt */*
+//go:embed */*
 var FS embed.FS

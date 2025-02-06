@@ -29,7 +29,7 @@ func TestEmbedFS(t *testing.T) {
 		fmt.Println(path)
 		base := filepath.Base(path)
 		ext := filepath.Ext(base)
-		if !strings.HasPrefix(base, "__debug_bin") && ext != ".go" {
+		if !strings.HasPrefix(base, "LICENSE") && !strings.HasPrefix(base, "__debug_bin") && ext != ".go" {
 			wfs = append(wfs, strings.ReplaceAll(path, "\\", "/"))
 		}
 		return nil
