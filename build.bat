@@ -22,6 +22,9 @@ call :minjs corejs
 cd /d %HTMLDIR%\datetimepicker\
 call :minjs bootstrap-datetimepicker
 
+cd /d %HTMLDIR%\jszip\
+call :minjs jszip
+
 cd /d %HTMLDIR%\plugins\js\
 type jquery.*.js    >  plugins.js
 type bootstrap.*.js >> plugins.js

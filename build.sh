@@ -34,6 +34,9 @@ minjs corejs
 cd $HTMLDIR/datetimepicker/
 minjs bootstrap-datetimepicker
 
+cd $HTMLDIR/jszip/
+minjs jszip
+
 cd $HTMLDIR/plugins/js/
 cat jquery.*.js    >  plugins.js
 cat bootstrap.*.js >> plugins.js
