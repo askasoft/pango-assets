@@ -8,45 +8,19 @@
 </head>
 
 <body style="padding: 20px;">
-<p>a</p>
-<p>a</p>
-<p>a</p>
-<p>a</p>
-<p>a</p>
-<p>a</p>
-<p>a</p>
-<p>a</p>
-<p>a</p>
+	<div class="container">
+		<h1 style="text-align: center; margin: 20px 0px;">Bootstrap5 Summernote</h1>
+		<hr>
 
-<textarea id="note"></textarea>
+		<div class="text-center">
+			<button id="light" class="btn btn-primary">Light</button>
+			<button id="dark" class="btn btn-secondary">Dark</button>
+		</div>
+		<hr>
 
-<p>a</p>
-<p>a</p>
-<p>a</p>
-<p>a</p>
-<p>a</p>
-<p>a</p>
-<p>a</p>
-<p>a</p>
-<p>a</p>
-<p>a</p>
-<p>a</p>
-<p>a</p>
-<p>a</p>
-<p>a</p>
-<p>a</p>
-<p>a</p>
-<p>a</p>
-<p>a</p>
-<p>a</p>
-<p>a</p>
-<p>a</p>
-<p>a</p>
-<p>a</p>
-<p>a</p>
-<p>a</p>
-<p>a</p>
-<p>a</p>
+		<textarea id="note"></textarea>
+	</div>
+</div>
 
 <script src="../../html/jquery/jquery-3.7.1.js" type="text/javascript"></script>
 <script src="../../html/bootstrap5/js/bootstrap.bundle.js" type="text/javascript"></script>
@@ -55,6 +29,10 @@
 <script type="text/javascript">
 	$(function() {
 		$('#note').summernote();
+
+		$('#light, #dark').click(function() {
+			$('body').attr('data-bs-theme', $(this).attr('id'));
+		});
 
 		// summernote bs5 bug fix
 		$('.note-toolbar').find('[data-toggle]').each(function() {
