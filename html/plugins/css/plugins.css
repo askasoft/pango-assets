@@ -1129,20 +1129,14 @@ ul.ui-tree.sticky li > .item {
 	max-width: 15em;
 	z-index: 2;
 }
-.ui-uploader-btn {
-	margin-right: 20px;
-}
-.ui-uploader-progress {
-	margin: 5px 0;
-}
 .ui-uploader-items {
-	margin: 7px 0 0 0;
+	margin: 1em 0 0 0;
 }
 .ui-uploader-item {
 	border: 1px dashed #ccc;
 	display: inline-block;
-	padding: 8px 24px;
-	margin: 0 7px 7px 0;
+	padding: 0.5em 1em 0.5em 2.2em;
+	margin: 0 0.5em 0.5em 0;
 	vertical-align: top;
 	position: relative;
 }
@@ -1165,7 +1159,7 @@ ul.ui-tree.sticky li > .item {
 	right: 4px;
 }
 .ui-uploader-icon {
-	margin: 0 8px 0 -14px;
+	margin: 0 0.5em 0 -1.5em;
 }
 .ui-uploader-image img {
 	margin: 5px 0;
