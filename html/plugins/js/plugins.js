@@ -1564,12 +1564,13 @@
 		return rs;
 	}
 
-	function index_any(s, ks) {
+	function index_any(s, c) {
 		var i = 0;
 		while (s.length > 0) {
-			for (var j = 0; j < ks.length; j++) {
-				if (s.substring(0, ks[j].length) == ks[j]) {
-					return [i, ks[j]]
+			for (var j = 0; j < c.markups.length; j++) {
+				var m = c.markups[j], l = m.length, t = s.substring(0, l);
+				if (t == m || (c.caseInsensitive && t.toLowerCase() == m)) {
+					return [i, l]
 				}
 			}
 			s = s.substring(1);
@@ -1581,10 +1582,10 @@
 	function markup(node, c) {
 		switch (node.nodeType) {
 		case 3: // Text Node
-			var r = index_any(node.nodeValue, c.markups);
+			var r = index_any(node.nodeValue, c);
 			if (r) {
 				var m = node.splitText(r[0]);
-				m.splitText(r[1].length);
+				m.splitText(r[1]);
 				$(m).wrap(c.wrap);
 				return 1;
 			}
@@ -1602,6 +1603,7 @@
 
 	$.markup = {
 		defaults: {
+			caseInsensitive: true,
 			ignore: /(script|style|mark)/i,
 			wrap: '<mark></mark>',
 		}
@@ -1616,6 +1618,11 @@
 
 			c.markups ||= split(c.markup || $t.attr('markup') || '');
 			if (c.markups.length) {
+				if (c.caseInsensitive) {
+					for (var i = 0; i < c.markups.length; i++) {
+						c.markups[i] = c.markups[i].toLowerCase();
+					}
+				}
 				markup(this, c);
 			}
 			$t.removeAttr('markup');
