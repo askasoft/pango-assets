@@ -1,3 +1,14 @@
+:root {
+	--ui-border-color: #ccc;
+}
+[data-bs-theme=dark] {
+	--ui-border-color: #555;
+}
+
+.ui-bordered {
+	border: solid 1px var(--ui-border-color);
+}
+
 .ui-close {
 	display: block;
 	width: 16px;
@@ -39,16 +50,9 @@
 	background-color: #000;
 	border-color: #ccc;
 }
-:root {
-	--ui-border-color: #ccc;
-}
-[data-bs-theme=dark] {
-	--ui-border-color: #555;
-}
-
 .ui-fieldset {
 	--ui-arrow-color: #999;
-	border: solid 1px var(--ui-border-color);
+	border: solid 1px var(--ui-border-color, #ccc);
 	margin: 0 0 1em 0;
 	padding: 1em;
 }
@@ -66,7 +70,7 @@
 	cursor: pointer;
 } 
 .ui-fieldset > legend.circle {
-	border: solid 1px var(--ui-border-color);
+	border: solid 1px var(--ui-border-color, #ccc);
 	border-radius: 1em;
 	padding-top: 0.25em;
 	padding-bottom: 0.25em;
@@ -89,7 +93,7 @@
 }
 
 .ui-fieldset.collapsed {
-	border-color: var(--ui-border-color) transparent transparent transparent;
+	border-color: var(--ui-border-color, #ccc) transparent transparent transparent;
 	border-radius: 0;
 	padding: 0 1em;
 }
