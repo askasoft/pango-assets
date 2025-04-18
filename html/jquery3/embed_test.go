@@ -1,4 +1,4 @@
-package jquery
+package jquery3
 
 import (
 	"fmt"
