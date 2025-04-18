@@ -26,11 +26,11 @@ func TestEmbedFS(t *testing.T) {
 
 	wfs := []string{}
 	filepath.Walk(".", func(path string, info os.FileInfo, err error) error {
-		fmt.Println(path)
 		base := filepath.Base(path)
 		ext := filepath.Ext(base)
-		if !strings.HasPrefix(base, "__debug_bin") && ext != ".go" {
+		if info.IsDir() || strings.HasPrefix(base, "plugins") && ext != ".go" {
 			wfs = append(wfs, strings.ReplaceAll(path, "\\", "/"))
+			fmt.Println(path)
 		}
 		return nil
 	})

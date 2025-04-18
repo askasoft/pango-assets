@@ -27,8 +27,8 @@ func TestEmbedFS(t *testing.T) {
 
 	wfs := []string{}
 	filepath.Walk(".", func(path string, info os.FileInfo, err error) error {
-		ext := filepath.Ext(path)
-		if path == "." || ext == ".js" || ext == ".map" {
+		base := filepath.Base(path)
+		if path == "." || strings.HasPrefix(base, "corejs") {
 			wfs = append(wfs, strings.ReplaceAll(path, "\\", "/"))
 		}
 		return nil
