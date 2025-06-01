@@ -6,7 +6,7 @@
 		var o = {};
 
 		if ((typeof options === 'string') || $.isArray(options)) {
-			o.text = options;
+			o.message = options;
 		} else {
 			o = options;
 		}
@@ -25,21 +25,23 @@
 			$t.append($('<span class="ui-toast-close">&times;</span>'));
 		}
 
-		var sm = os.html ? 'html' : 'text';
+		var m = os.html ? 'html' : 'text';
 		if (os.heading) {
-			$t.append($('<h4 class="ui-toast-heading">')[sm](os.heading));
+			$t.append($('<h4 class="ui-toast-heading">')[m](os.heading));
 		}
 
-		if ($.isArray(os.text)) {
-			var $ul = $('<ul class="ui-toast-ul">');
-			$.each(os.text, function(i, t) {
+		var $c = $('<div class="ui-toast-content">').appendTo($t);
+		var t = os.message || os.text;
+		if ($.isArray(t)) {
+			var $ul = $('<ul class="ui-toast-list">');
+			$.each(t, function(i, t) {
 				if (t) {
-					$ul.append($('<li class="ui-toast-' + sm + '">')[sm](t));
+					$ul.append($('<li>')[m](t));
 				}
 			});
-			$t.append($ul);
+			$c.append($ul);
 		} else {
-			$t.append($('<div class="ui-toast-' + sm + '">')[sm](os.text));
+			$c.append($('<div class="ui-toast-text">')[m](t));
 		}
 
 		if (os.bgColor !== false) {
@@ -55,7 +57,7 @@
 		}
 
 		if (os.icon !== false) {
-			$t.addClass('ui-toast-has-icon ui-toast-icon-' + os.icon);
+			$t.addClass('has-icon ' + os.icon);
 		}
 
 		if (os['class'] !== false) {
@@ -329,8 +331,8 @@
 	$.toast.defaults = {
 		icon: false,
 		html: false,
-		text: '',
 		heading: '',
+		message: '',
 		loader: true,
 		transition: 'fade',
 		closeable: true,
