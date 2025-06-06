@@ -1701,6 +1701,9 @@ form.lined > .form-group:last-of-type, form.lined > .row:last-of-type {
 	right: 5px;
 }
 /** checks, radios */
+.ui-checks, .ui-radios {
+	display: inline-block;
+}
 .ui-checks > label, .ui-radios > label {
 	padding: 0 1.5em;
 }

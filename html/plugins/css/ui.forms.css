@@ -1,4 +1,7 @@
 /** checks, radios */
+.ui-checks, .ui-radios {
+	display: inline-block;
+}
 .ui-checks > label, .ui-radios > label {
 	padding: 0 1.5em;
 }
