@@ -866,7 +866,7 @@ div.ui-simple-color-picker ul li {
 }
 
 /**
- * jQuery toast plugin created by Kamran Ahmed copyright MIT license 2014
+ * jQuery toast plugin created by Kamran Ahmed copyright MIT license 2014 (modified by Frank Wang)
  */
 .ui-toast-wrap {
 	display: block;
@@ -953,23 +953,23 @@ div.ui-simple-color-picker ul li {
 
 .ui-toast-single.info {
 	background-color: #31708f;
-	color: #d9edf7;
 	border-color: #bce8f1;
+	color: #d9edf7;
 }
 .ui-toast-single.success {
-	color: #dff0d8;
 	background-color: #3c763d;
 	border-color: #d6e9c6;
+	color: #dff0d8;
 }
 .ui-toast-single.warning {
 	background-color: #8a6d3b;
-	color: #fcf8e3;
 	border-color: #faebcc;
+	color: #fcf8e3;
 }
 .ui-toast-single.error {
 	background-color: #a94442;
-	color: #f2dede;
 	border-color: #ebccd1;
+	color: #f2dede;
 }
 
 .ui-toast-single.has-icon .ui-toast-content {

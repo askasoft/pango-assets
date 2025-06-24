@@ -6,7 +6,7 @@
 			var $t = $(this), $w = $(window);
 
 			$t.click(function() {
-				$('html,body').animate({ scrollTop: 0 }, 'slow');
+				$('html').animate({ scrollTop: 0 }, 'slow');
 			}).css({ cursor: 'pointer' });
 
 			$w.scroll(function() {

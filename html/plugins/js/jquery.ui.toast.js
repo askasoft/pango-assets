@@ -5,7 +5,7 @@
 	function setOptions(os, base, options) {
 		var o = {};
 
-		if ((typeof options === 'string') || $.isArray(options)) {
+		if ((typeof(options) == 'string') || $.isArray(options)) {
 			o.message = options;
 		} else {
 			o = options;
@@ -77,7 +77,7 @@
 				bottom: 'auto'
 			};
 
-		if (typeof sp === 'object') {
+		if (typeof(sp) == 'object') {
 			$.extend(op, sp);
 		} else {
 			switch (sp) {
@@ -140,32 +140,32 @@
 			transitionOut($t, os);
 		});
 
-		if (typeof os.beforeShow == 'function') {
+		if (typeof(os.beforeShow) == 'function') {
 			$t.on('show.toast', function() {
 				os.beforeShow($t);
 			});
 		}
 
-		if (typeof os.afterShown == 'function') {
+		if (typeof(os.afterShown) == 'function') {
 			$t.on('shown.toast', function() {
 				os.afterShown($t);
 			});
 		}
 
-		if (typeof os.beforeHide == 'function') {
+		if (typeof(os.beforeHide) == 'function') {
 			$t.on('hide.toast', function() {
 				os.beforeHide($t);
 			});
 		}
 
-		if (typeof os.afterHidden == 'function') {
+		if (typeof(os.afterHidden) == 'function') {
 			$t.on('hidden.toast', function() {
 				os.afterHidden($t);
 			});
 		}
 
-		if (typeof os.onClick == 'function') {
-			$t.on('click', function() {
+		if (typeof(os.onClick) == 'function') {
+			$t.on('click.toast', function() {
 				os.onClick($t);
 			});
 		}
@@ -304,22 +304,18 @@
 		}
 
 		var api = {
-			reset: function(resetWhat) {
-				if (resetWhat === 'all') {
-					$('.ui-toast-wrap').remove();
-				} else {
-					$t.remove();
-				}
+			hide: function() {
+				transitionOut($t, os);
+			},
+
+			remove: function() {
+				$t.remove();
 			},
 
 			update: function(options) {
 				setOptions(os, {}, options);
 				setup($t, os);
 				bindToast($t, os);
-			},
-
-			clsose: function() {
-				transitionOut($t, os);
 			}
 		};
 
@@ -327,6 +323,10 @@
 	}
 
 	$.toast = Toast;
+
+	$.toast.clear = function() {
+		$('.ui-toast-wrap').remove();
+	}
 
 	$.toast.defaults = {
 		icon: false,

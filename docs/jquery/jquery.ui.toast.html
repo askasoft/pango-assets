@@ -111,8 +111,8 @@
 					<li><a href="#toasts-bg-color">Background &amp; text color</a></li>
 					<li><a href="#toasts-text-alignment">Setting the text alignment</a></li>
 					<li><a href="#toasts-events">Toast Events</a></li>
-					<li><a href="#updating-toasts">Updating Toasts</a></li>
-					<li><a href="#resetting-toasts">Resetting Toasts</a></li>
+					<li><a href="#update-toasts">Update Toasts</a></li>
+					<li><a href="#remove-toasts">Remove Toasts</a></li>
 				</ul>
 			</li>
 		</ul>
@@ -566,7 +566,7 @@
 })</code></pre>
 		</div>
 
-		<h2 id="updating-toasts"><span class="muted">12.</span> Updating Toasts</h2>
+		<h2 id="update-toasts"><span class="muted">12.</span> Update Toasts</h2>
 		<p>If you have a reference to a toast and want to update that, you can do so by calling the <span
 				class="code">update</span> method on the instance.</p>
 
@@ -605,20 +605,20 @@ window.setTimeout(function(){
 </code></pre>
 		</div>
 
-		<h2 id="resetting-toasts"><span class="muted">13.</span> Resetting Toasts</h2>
+		<h2 id="remove-toasts"><span class="muted">13.</span> Remove Toasts</h2>
 		<p>If you have the reference to a specific toast, you can reset that by doing the following</p>
 
 		<div class="code-runner">
 			<pre><code>
 var myToast = $.toast('Some toast that needs to be removed.');
-myToast.reset(); // remove the toast "Some toast that needs to be removed"
+myToast.remove(); // remove the toast "Some toast that needs to be removed"
 </code></pre>
 		</div>
 
-		<p>If you do not have the reference to a specific toast and want to reset every toast, do the following:</p>
+		<p>If you do not have the reference to a specific toast and want to remove every toast, do the following:</p>
 		<div class="code-runner">
 			<pre><code>
-$.toast().reset('all');
+$.toast.clear();
 </code></pre>
 		</div>
 
