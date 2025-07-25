@@ -34,6 +34,9 @@ minjs corejs
 cd $HTMLDIR/datetimepicker/
 minjs bootstrap-datetimepicker
 
+cd $HTMLDIR/docxjs/
+minjs docx-preview
+
 cd $HTMLDIR/jszip/
 minjs jszip
 

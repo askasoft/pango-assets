@@ -22,6 +22,9 @@ call :minjs corejs
 cd /d %HTMLDIR%\datetimepicker\
 call :minjs bootstrap-datetimepicker
 
+cd /d %HTMLDIR%\docxjs\
+call :minjs docx-preview
+
 cd /d %HTMLDIR%\jszip\
 call :minjs jszip
 
