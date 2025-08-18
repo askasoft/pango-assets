@@ -12,14 +12,16 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
       - name: Setup
         uses: actions/setup-go@v5
         with:
-          go-version: '1.23'
-      - name: Checkout
-        uses: actions/checkout@v4
+          go-version: "^1"
       - name: Run golangci-lint
-        uses: golangci/golangci-lint-action@v6.3.2
+        uses: golangci/golangci-lint-action@v8
         with:
           version: latest
           args: --verbose
@@ -29,7 +31,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        go: ['1.20', '1.21', '1.22', '1.23', '1.24']
+        go: ['1.23', '1.24']
         include:
           - os: ubuntu-latest
             go-build: ~/.cache/go-build
@@ -43,13 +45,14 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.go }}
+          cache: false
 
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: ${{ github.ref }}
           
-      - uses: actions/cache@v4.2.0
+      - uses: actions/cache@v4
         with:
           path: |
             ${{ matrix.go-build }}

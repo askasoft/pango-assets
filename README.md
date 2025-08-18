@@ -1,4 +1,4 @@
-Pango Assets
+Pangox Assets
 ================
 
 A HTML/JavaScript/CSS library.

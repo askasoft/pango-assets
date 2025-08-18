@@ -34,5 +34,5 @@ Hello world
 ## Environment
 
 - go version:
-- gin version (or commit ref):
+- pangox-assets version (or commit ref):
 - operating system:
